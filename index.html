@@ -533,7 +533,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 <!-- ===== OPERATIONS ===== -->
 <section id="operations">
   <h2>Terminal Operations</h2>
-  <p class="subtitle">Click each operational problem to see its description, challenges, goals, and key components</p>
+  <p class="subtitle">Seaside operational problems — formulations, solution methods, and real-world context. Yardside and Gateside use the card-expand format.</p>
 
   <div class="zone-tab-bar">
     <div class="zone-tab active" onclick="showZone('seaside',this)"><span class="zt-icon">🌊</span>SEASIDE</div>
@@ -541,110 +541,552 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <div class="zone-tab" onclick="showZone('gateside',this)"><span class="zt-icon">🚛</span>GATESIDE / ITV</div>
   </div>
 
-  <!-- SEASIDE -->
+  <!-- SEASIDE — rich sub-tab layout -->
   <div id="seaside" class="zone-content active">
-    <div class="problem-grid">
-      <div class="prob-card" onclick="toggleProblem('p-berth',this)">
-        <div class="pc-type">Optimization Problem</div>
-        <div class="pc-title">Berth Allocation Problem</div>
-        <div class="pc-desc">Assigning incoming ships to specific berths to minimize waiting times and maximize berth utilization.</div>
-      </div>
-      <div class="prob-card" onclick="toggleProblem('p-crane',this)">
-        <div class="pc-type">Scheduling Problem</div>
-        <div class="pc-title">Quay Crane Scheduling</div>
-        <div class="pc-desc">Efficiently scheduling quay cranes to minimize vessel turnaround time.</div>
-      </div>
-      <div class="prob-card" onclick="toggleProblem('p-stowage',this)">
-        <div class="pc-type">Planning Problem</div>
-        <div class="pc-title">Stowage Planning</div>
-        <div class="pc-desc">Optimal sequence for loading/unloading containers — the Ship Stowage Problem.</div>
-      </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('ss-bap',this)">⚓ Berth Allocation (BAP)</button>
+      <button class="tab-btn" onclick="showTab('ss-cap',this)">🏗️ Crane Scheduling (CAP)</button>
+      <button class="tab-btn" onclick="showTab('ss-stow',this)">📐 Stowage Planning</button>
+      <button class="tab-btn" onclick="showTab('ss-integration',this)">🔗 Integrated Problems</button>
     </div>
 
-    <div id="p-berth" class="prob-detail">
-      <h3>Berth Allocation Problem</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Variations in ship arrival times (weather, sea traffic)</li>
-          <li>Differences in ship sizes and draft requirements</li>
-          <li>Availability of berths and equipment alignment</li>
-          <li>Real-time adaptation to schedule disruptions</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Reduce ship waiting times and idle berth time</li>
-          <li>Increase berth utilization rate</li>
-          <li>Improve overall terminal efficiency</li>
-          <li>Minimize vessel turnaround time (TAT)</li>
-        </ul>
-      </div>
-      <div style="grid-column:1/-1;">
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Key Components</div>
-        <div class="component-tags">
-          <span class="ctag">Berth Assignment</span><span class="ctag">Vessel Arrival Prediction</span><span class="ctag">Cargo Handling Requirements</span><span class="ctag">Resource Management</span><span class="ctag">Environmental Constraints</span><span class="ctag">Operational Constraints (tides/weather)</span><span class="ctag">Real-Time Adaptation</span><span class="ctag popup-trigger" onclick="openPopup('edifact')">Coordination &amp; Communication (EDI)<span class="pip">ⓘ</span></span><span class="ctag">Maintenance Scheduling</span>
-        </div>
-      </div>
-    </div>
+    <!-- ══ BAP ══ -->
+    <div id="ss-bap" class="tab-content active">
 
-    <div id="p-crane" class="prob-detail">
-      <h3>Quay Crane Scheduling</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Coordinating multiple cranes to avoid conflicts (crane interference)</li>
-          <li>Managing crane movement sequences across bays</li>
-          <li>Adapting to real-time operational changes</li>
-          <li>Balancing workload across all cranes</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Optimize crane movements and minimize idle time</li>
-          <li>Reduce loading and unloading times</li>
-          <li>Maximize gross crane rate (GCR)</li>
-          <li>Ensure safety and compliance</li>
-        </ul>
-      </div>
-      <div style="grid-column:1/-1;">
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Key Components</div>
-        <div class="component-tags">
-          <span class="ctag">Crane Allocation</span><span class="ctag">Crane Sequencing</span><span class="ctag">Crane Capacity</span><span class="ctag">Vessel Characteristics</span><span class="ctag">Berth Alignment</span><span class="ctag">Resource Management</span><span class="ctag">Environmental & Safety</span><span class="ctag">Real-Time Adaptation</span><span class="ctag">Coordination & Communication</span>
+      <!-- Header strip -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">NP-Hard</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Computational complexity</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">24–72h</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Typical planning horizon</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">2D</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Space-time packing problem</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">BAP+CAP</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Preferred integrated form</div>
         </div>
       </div>
-    </div>
 
-    <div id="p-stowage" class="prob-detail">
-      <h3>Stowage Planning (Ship Stowage Problem)</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Balancing vessel load for stability (trim, list, GM)</li>
-          <li>Ensuring safety with hazardous cargo (IMDG compliance)</li>
-          <li>Optimizing discharge sequence for port rotation</li>
-          <li>Real-time adaptation to cargo changes at cutoff</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Minimize crane reshuffles at destination ports</li>
-          <li>Maintain vessel stability (GM > minimum)</li>
-          <li>Reduce total port turnaround time</li>
-          <li>Comply with <span class="popup-trigger" onclick="openPopup('imdg')">IMDG<span class="pip">ⓘ</span></span>, SOLAS, and <span class="popup-trigger" onclick="openPopup('vgm')">VGM<span class="pip">ⓘ</span></span> regulations</li>
-        </ul>
-      </div>
-      <div style="grid-column:1/-1;">
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Key Components</div>
-        <div class="component-tags">
-          <span class="ctag">Container Placement</span><span class="ctag">Weight Distribution</span><span class="ctag popup-trigger" onclick="openPopup('oog')">Cargo Type (reefer/hazmat/<span style="text-decoration:underline dotted">OOG</span>)<span class="pip">ⓘ</span></span><span class="ctag">Port Call Sequence</span><span class="ctag">Vessel Design</span><span class="ctag popup-trigger" onclick="openPopup('imdg')">Safety &amp; Compliance (IMDG/SOLAS)<span class="pip">ⓘ</span></span><span class="ctag popup-trigger" onclick="openPopup('lsg')">Lashing &amp; Securing<span class="pip">ⓘ</span></span><span class="ctag">Real-Time Adaptation</span><span class="ctag popup-trigger" onclick="openPopup('vgm')">VGM (Verified Gross Mass)<span class="pip">ⓘ</span></span>
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <!-- Problem definition -->
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Problem Definition</div>
+          <p class="body">Assign each incoming vessel a <strong>berthing position</strong> (where along the quay) and a <strong>service start time</strong> (when handling begins), subject to physical, operational, and contractual constraints, so that a chosen objective — typically minimising total waiting time or weighted turnaround time — is optimised.</p>
+          <p class="body">The BAP is equivalent to a <strong>2D space-time bin-packing problem</strong>: the horizontal axis is quay position (metres), the vertical axis is time, and each vessel is a rectangle whose width = LOA and height = service duration. No two rectangles may overlap.</p>
+
+          <div style="margin-top:1rem;">
+            <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Two fundamental dimensions of classification</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+              <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;">
+                <div style="font-size:.65rem;color:var(--white);font-weight:600;margin-bottom:.3rem;">Berth layout model</div>
+                <div style="font-size:.72rem;color:var(--muted);line-height:1.6;"><span style="color:var(--cyan);">Continuous:</span> quay treated as a line of length L; any position valid. More realistic, harder to solve.<br><span style="color:var(--amber);">Discrete:</span> quay divided into fixed berth slots. Simpler; misses position flexibility.</div>
+              </div>
+              <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;">
+                <div style="font-size:.65rem;color:var(--white);font-weight:600;margin-bottom:.3rem;">Arrival knowledge model</div>
+                <div style="font-size:.72rem;color:var(--muted);line-height:1.6;"><span style="color:var(--cyan);">Static:</span> all vessels and their ETAs known before the plan is made. Ideal for periodic replanning.<br><span style="color:var(--amber);">Dynamic:</span> vessels arrive stochastically; plan updated in a rolling horizon as new ETAs come in.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objectives and constraints -->
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Objective Functions</div>
+            <ul class="var-list">
+              <li><span class="vname">Min WT</span><span class="vdesc">Minimise total (or weighted) vessel <strong>waiting time</strong> — time from anchorage arrival to berth start. Most common objective.</span></li>
+              <li><span class="vname">Min TAT</span><span class="vdesc">Minimise total <strong>turnaround time</strong> (waiting + service). Favoured by shipping lines; directly linked to fleet utilisation.</span></li>
+              <li><span class="vname">Min makespan</span><span class="vdesc">Minimise time until <em>all</em> vessels in the planning window have departed. Favoured for batch planning.</span></li>
+              <li><span class="vname">Max util.</span><span class="vdesc">Maximise <strong>berth utilisation</strong>. Can conflict with min WT — high utilisation leads to queuing.</span></li>
+              <li><span class="vname">Weighted</span><span class="vdesc">Priority-weighted objectives: larger vessels, premium-service customers, or time-sensitive cargo assigned higher weights.</span></li>
+            </ul>
+          </div>
+
+          <div class="panel" style="border-top:3px solid var(--red);">
+            <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Key Constraints</div>
+            <ul class="var-list">
+              <li><span class="vname">Draft</span><span class="vdesc">Vessel draught ≤ berth depth. Restricts which vessels can use which berth sections.</span></li>
+              <li><span class="vname">LOA</span><span class="vdesc">Vessel length ≤ available quay segment. Mega-vessels (>350m LOA) can only use certain sections.</span></li>
+              <li><span class="vname">Cranes</span><span class="vdesc">Number of cranes reachable from assigned position ≥ minimum required for contracted service time.</span></li>
+              <li><span class="vname">Tidal window</span><span class="vdesc">Some berths (especially in tidal ports) are only accessible within specific tide windows. Adds hard time-of-day constraints.</span></li>
+              <li><span class="vname">Priority</span><span class="vdesc">Contracted vessels have guaranteed berthing windows. Spot calls must fit around contracted slots.</span></li>
+              <li><span class="vname">Hazmat</span><span class="vdesc">Vessels carrying dangerous goods may require minimum separation from adjacent berths (IMDG segregation rules).</span></li>
+              <li><span class="vname">Quay strength</span><span class="vdesc">Maximum distributed load (t/m) limits on which berths can serve fully loaded mega-vessels.</span></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+
+      <!-- Solution methods -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Solution Methods</div>
+        <div class="g3" style="gap:1rem;">
+          <div>
+            <div style="font-size:.62rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Exact Methods</div>
+            <ul class="var-list">
+              <li><span class="vname">MIP</span><span class="vdesc">Mixed Integer Programming. Optimal but only tractable for small instances (≤15 vessels). Used as a benchmark.</span></li>
+              <li><span class="vname">B&amp;B</span><span class="vdesc">Branch-and-Bound. Enumerates the solution tree. Impractical for real terminals without tight bounds.</span></li>
+              <li><span class="vname">B&amp;P</span><span class="vdesc">Branch-and-Price. Column generation improves tractability; used in academic BACAP models.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Heuristics &amp; Rules</div>
+            <ul class="var-list">
+              <li><span class="vname">FCFS</span><span class="vdesc">First-Come, First-Served. Simple and fair; default in most real TOS systems. Sub-optimal but robust.</span></li>
+              <li><span class="vname">SPT</span><span class="vdesc">Shortest Processing Time first. Minimises average wait; risks starving large vessels.</span></li>
+              <li><span class="vname">Priority</span><span class="vdesc">Contracted vessels pre-assigned; remaining capacity allocated to spot calls via FCFS or SPT.</span></li>
+              <li><span class="vname">Rolling horizon</span><span class="vdesc">Plan is rebuilt every T hours using latest ETAs. Standard approach for dynamic BAP in practice.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:.62rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Metaheuristics</div>
+            <ul class="var-list">
+              <li><span class="vname">GA</span><span class="vdesc">Genetic Algorithm. Population-based; explores large solution spaces. Widely used in BAP literature (Kim &amp; Moon 2003).</span></li>
+              <li><span class="vname">SA</span><span class="vdesc">Simulated Annealing. Single-solution; accepts worsening moves probabilistically to escape local optima.</span></li>
+              <li><span class="vname">Tabu</span><span class="vdesc">Tabu Search. Maintains a "forbidden" list of recent moves to avoid cycling.</span></li>
+              <li><span class="vname">PSO</span><span class="vdesc">Particle Swarm Optimisation. Swarm-based; effective for continuous BAP formulations.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Space-time diagram -->
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Space-Time Diagram — Continuous BAP</div>
+          <p class="body" style="margin-bottom:.8rem;">Each vessel is a rectangle in (quay position, time) space. Rectangles cannot overlap. The planner's task is to pack all rectangles with minimum vertical displacement (= waiting time) from each vessel's ETA line.</p>
+          <svg viewBox="0 0 420 220" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);">
+            <!-- Axes -->
+            <line x1="40" y1="10" x2="40" y2="190" stroke="#1a3a5c" stroke-width="1.5"/>
+            <line x1="40" y1="190" x2="410" y2="190" stroke="#1a3a5c" stroke-width="1.5"/>
+            <!-- Axis labels -->
+            <text x="8" y="100" font-family="monospace" font-size="8" fill="#4a6a8a" transform="rotate(-90,8,100)">TIME →</text>
+            <text x="220" y="210" font-family="monospace" font-size="8" fill="#4a6a8a" text-anchor="middle">QUAY POSITION (metres) →</text>
+            <!-- Quay length ticks -->
+            <text x="40" y="200" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">0</text>
+            <text x="160" y="200" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">120m</text>
+            <text x="280" y="200" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">240m</text>
+            <text x="400" y="200" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">360m</text>
+            <!-- Time ticks -->
+            <text x="32" y="190" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">0h</text>
+            <text x="32" y="140" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">8h</text>
+            <text x="32" y="90" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">16h</text>
+            <text x="32" y="40" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">24h</text>
+            <!-- Grid lines -->
+            <line x1="40" y1="140" x2="410" y2="140" stroke="#0d2040" stroke-width="1" stroke-dasharray="3,4"/>
+            <line x1="40" y1="90" x2="410" y2="90" stroke="#0d2040" stroke-width="1" stroke-dasharray="3,4"/>
+            <line x1="40" y1="40" x2="410" y2="40" stroke="#0d2040" stroke-width="1" stroke-dasharray="3,4"/>
+            <!-- Vessel V1: arrives t=0, berth 0–100m, service 0–8h (pos 40–123, time 190–140) -->
+            <rect x="40" y="140" width="83" height="50" rx="2" fill="rgba(0,188,212,.3)" stroke="#00bcd4" stroke-width="1.5"/>
+            <text x="81" y="167" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00bcd4" text-anchor="middle">V1</text>
+            <text x="81" y="178" font-family="monospace" font-size="7" fill="#4a8aaa" text-anchor="middle">wait: 0h</text>
+            <!-- ETA line V1 -->
+            <line x1="40" y1="190" x2="40" y2="140" stroke="#00bcd4" stroke-width="1" stroke-dasharray="2,2" opacity=".5"/>
+            <!-- Vessel V2: arrives t=2h (175), berth 100–220m, service t=2–14h (175–97) -->
+            <rect x="123" y="97" width="100" height="78" rx="2" fill="rgba(255,179,0,.25)" stroke="#ffb300" stroke-width="1.5"/>
+            <text x="173" y="137" font-family="Bebas Neue,sans-serif" font-size="11" fill="#ffb300" text-anchor="middle">V2</text>
+            <text x="173" y="149" font-family="monospace" font-size="7" fill="#aa8800" text-anchor="middle">wait: 0h</text>
+            <!-- ETA V2 -->
+            <line x1="123" y1="190" x2="123" y2="174" stroke="#ffb300" stroke-width="1" stroke-dasharray="2,2" opacity=".5"/>
+            <!-- Vessel V3: arrives t=4h (165), berth 220–310m, service t=6–20h -->
+            <rect x="223" y="57" width="75" height="108" rx="2" fill="rgba(0,230,118,.2)" stroke="#00e676" stroke-width="1.5"/>
+            <text x="260" y="113" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00e676" text-anchor="middle">V3</text>
+            <text x="260" y="125" font-family="monospace" font-size="7" fill="#008844" text-anchor="middle">wait: 2h</text>
+            <!-- ETA V3 (arrives t=4h → y=165; service starts t=6h → y=140+13=153... let me use simpler positioning) -->
+            <line x1="223" y1="190" x2="223" y2="165" stroke="#00e676" stroke-width="1" stroke-dasharray="2,2" opacity=".5"/>
+            <line x1="223" y1="165" x2="223" y2="165" stroke="#00e676" stroke-width="2" opacity=".7"/>
+            <!-- Wait indicator for V3 -->
+            <line x1="298" y1="165" x2="298" y2="165" stroke="#ff5252" stroke-width="1" stroke-dasharray="2,2"/>
+            <!-- Vessel V4: berth 0–83m, service t=8–18h (blocked by V1 until t=8h) -->
+            <rect x="40" y="72" width="83" height="68" rx="2" fill="rgba(255,82,82,.2)" stroke="#ff5252" stroke-width="1.5"/>
+            <text x="81" y="107" font-family="Bebas Neue,sans-serif" font-size="11" fill="#ff5252" text-anchor="middle">V4</text>
+            <text x="81" y="119" font-family="monospace" font-size="7" fill="#aa2222" text-anchor="middle">wait: 5h</text>
+            <line x1="40" y1="140" x2="40" y2="103" stroke="#ff5252" stroke-width="1" stroke-dasharray="2,2" opacity=".5"/>
+            <!-- Wait bracket for V4 -->
+            <line x1="37" y1="140" x2="37" y2="103" stroke="#ff5252" stroke-width="2"/>
+            <text x="30" y="122" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="end">wait</text>
+            <!-- Legend -->
+            <rect x="40" y="15" width="8" height="8" fill="rgba(0,188,212,.3)" stroke="#00bcd4" stroke-width="1"/>
+            <text x="52" y="22" font-family="monospace" font-size="7" fill="#7a99b8">Service block</text>
+            <line x1="110" y1="19" x2="125" y2="19" stroke="#4a6a8a" stroke-width="1" stroke-dasharray="2,2"/>
+            <text x="128" y="22" font-family="monospace" font-size="7" fill="#7a99b8">ETA arrival</text>
+            <line x1="210" y1="15" x2="210" y2="24" stroke="#ff5252" stroke-width="2"/>
+            <text x="215" y="22" font-family="monospace" font-size="7" fill="#ff5252">Wait time</text>
+          </svg>
+          <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">V4 arrives at hour 3 but berth 0–83m is occupied by V1 until hour 8 — incurring 5h waiting time. The planner's goal is to minimise the total area of all waiting brackets.</p>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--green);">
+            <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Real-World Practice</div>
+            <ul class="var-list">
+              <li><span class="vname">Advance Berth Request</span><span class="vdesc">Vessels submit cargo manifest 24–72h before arrival. Terminal assigns a berth window; shipping line updates stowage plan accordingly.</span></li>
+              <li><span class="vname">Contracted windows</span><span class="vdesc">Major liner customers (e.g. Maersk, MSC) receive guaranteed berthing windows in terminal service agreements (TSAs). Spot calls fill remaining capacity.</span></li>
+              <li><span class="vname">TOS berth planner</span><span class="vdesc">Navis N4, SPARCS, TBA OPUS Terminal — all include a berth planning module. Most use rolling horizon FCFS + manual planner intervention, not formal optimisation.</span></li>
+              <li><span class="vname">Replan triggers</span><span class="vdesc">Vessel delay &gt;2h, equipment breakdown, cargo cutoff changes, weather. Each trigger initiates a partial replan of the affected berth window.</span></li>
+              <li><span class="vname">Pre-arrival alignment</span><span class="vdesc">Berth plan drives yard pre-positioning: containers for the vessel must be staged near the assigned berth 2–4h before arrival.</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--cyan);">
+            <div class="sh sh-cyan" style="margin-bottom:.7rem;">Literature Milestones</div>
+            <ul class="var-list">
+              <li><span class="vname">Lim (1998)</span><span class="vdesc">First proof that berth scheduling is NP-hard (reduction from interval graph colouring). Established the computational difficulty.</span></li>
+              <li><span class="vname">Imai et al. (2001)</span><span class="vdesc">Introduced the continuous BAP formulation. Proposed a heuristic using a Lagrangian relaxation of the MIP.</span></li>
+              <li><span class="vname">Kim &amp; Moon (2003)</span><span class="vdesc">Simulated annealing for the discrete BAP. First metaheuristic paper; widely cited as the benchmark approach.</span></li>
+              <li><span class="vname">Bierwirth &amp; Meisel (2010, 2015)</span><span class="vdesc">Comprehensive surveys of BAP and BACAP literature. Classification framework still used today.</span></li>
+              <li><span class="vname">Correcher et al. (2019)</span><span class="vdesc">Integrated BACASP (BAP + CAP + Stowage Planning). Column generation exact method; demonstrated value of full integration.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduling rules comparison -->
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.8rem;">Dispatch Rules — Comparison</div>
+        <p class="body" style="margin-bottom:.8rem;">In practice, most terminals use one of these rules rather than formal optimisation. The trade-offs are well understood:</p>
+        <div style="overflow-x:auto;">
+        <table class="equipment-comparison">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Rule</th>
+              <th>Objective minimised</th>
+              <th>Avg wait time</th>
+              <th>Fairness</th>
+              <th>Complexity</th>
+              <th>When to use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="text-align:left;color:var(--white);">FCFS</td><td>Waiting time (arrival order)</td><td class="mid">Medium</td><td class="good">High</td><td class="good">Very low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Default; contractual fairness required</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">SPT</td><td>Average waiting time</td><td class="good">Low</td><td class="bad">Low</td><td class="good">Low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">High-frequency feeder services; small calls</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Priority + FCFS</td><td>Weighted TAT</td><td class="mid">Medium</td><td class="mid">Medium</td><td class="mid">Low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Mixed liner + spot call portfolio (most common)</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Rolling horizon MIP</td><td>Weighted turnaround time</td><td class="good">Low</td><td class="mid">Medium</td><td class="bad">High</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Large terminals with dedicated planning systems</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">GA / SA</td><td>Total waiting or makespan</td><td class="good">Low–Medium</td><td class="mid">Medium</td><td class="mid">Medium</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Research benchmark; some commercial TOS modules</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div><!-- end ss-bap -->
+
+    <!-- ══ CAP ══ -->
+    <div id="ss-cap" class="tab-content">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">NP-Hard</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Complexity (even 2 cranes)</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">Non-passing</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Key physical constraint</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">2–5</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Typical cranes per vessel</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">QCSP</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Quay Crane Scheduling Problem</div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Problem Definition</div>
+          <p class="body">Given a vessel at berth with a set of <strong>bays</strong> (numbered positions along the ship from bow to stern) and a number of assigned cranes, determine the <strong>sequence and assignment</strong> of bays to cranes so that total completion time (or crane idle time) is minimised.</p>
+          <p class="body">The defining physical constraint is <strong>non-crossing</strong>: since cranes run on the same rail along the quay wall, they cannot pass each other. At any point in time, cranes must maintain their left-to-right order. This is what makes the problem hard — a crane cannot "skip" to a more urgent bay if another crane is in the way.</p>
+
+          <div style="margin-top:1rem;">
+            <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Key decision variables</div>
+            <ul class="var-list">
+              <li><span class="vname">Assignment</span><span class="vdesc">Which crane handles which bay (or subset of bays)</span></li>
+              <li><span class="vname">Sequence</span><span class="vdesc">Order in which a crane visits its assigned bays</span></li>
+              <li><span class="vname">Timing</span><span class="vdesc">Start time for each bay-crane pair (accounts for crane travel time between bays)</span></li>
+            </ul>
+          </div>
+
+          <div style="margin-top:1rem;padding:.8rem;background:rgba(0,0,0,.25);border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem;">Inter-crane interference (ICI)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">When a faster crane catches up with a slower neighbour, it must wait — wasting productive time. ICI is the primary reason adding a 6th crane at 58% utilisation yields only marginal gains vs 5 cranes at 65%. Each additional crane increases ICI for all others.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Objective Functions</div>
+            <ul class="var-list">
+              <li><span class="vname">Min makespan</span><span class="vdesc">Minimise time from first lift to last lift on the vessel. Most common — directly determines vessel departure time.</span></li>
+              <li><span class="vname">Min total time</span><span class="vdesc">Minimise sum of completion times across all bays. Distributes work evenly.</span></li>
+              <li><span class="vname">Min idle time</span><span class="vdesc">Minimise total crane waiting time (due to ICI and hatch sequencing constraints).</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--red);">
+            <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Key Constraints</div>
+            <ul class="var-list">
+              <li><span class="vname">Non-crossing</span><span class="vdesc">Cranes cannot pass each other on the rail. Crane i is always left of crane i+1.</span></li>
+              <li><span class="vname">Safety margin</span><span class="vdesc">Minimum distance between adjacent cranes (typically 1 bay). Prevents simultaneous work in adjacent bays.</span></li>
+              <li><span class="vname">Bay precedence</span><span class="vdesc">Some bays must be completed before others (hatches must be opened top-down; deck containers before below-deck).</span></li>
+              <li><span class="vname">Hatch restrictions</span><span class="vdesc">Each hatch cover must be removed before containers underneath can be accessed. Adds precedence constraints between bays.</span></li>
+              <li><span class="vname">Crane capacity</span><span class="vdesc">Maximum load per crane per move. Typically 65–80t SWL. Overweight containers require special lifting gear.</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--green);">
+            <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Solution Methods</div>
+            <ul class="var-list">
+              <li><span class="vname">MIP / CP</span><span class="vdesc">Mixed Integer Programming and Constraint Programming. Exact; tractable for small vessels (&lt;20 bays).</span></li>
+              <li><span class="vname">Dynamic programming</span><span class="vdesc">Optimal for special cases (e.g. 2 cranes, no ICI). Polynomial time.</span></li>
+              <li><span class="vname">Beam search</span><span class="vdesc">Truncated tree search; good quality solutions quickly. Used in commercial TOS systems.</span></li>
+              <li><span class="vname">GA / SA</span><span class="vdesc">Standard metaheuristics. GA representations typically encode crane-to-bay assignment + sequence.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crane scheduling illustration -->
+      <div class="panel panel-orange">
+        <div class="sh" style="margin-bottom:.8rem;">Non-Crossing Constraint — Illustrated</div>
+        <svg viewBox="0 0 500 130" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);">
+          <!-- Vessel hull -->
+          <rect x="20" y="70" width="460" height="30" rx="2" fill="#2a1a0a" stroke="#664400" stroke-width="1.5"/>
+          <!-- Bay labels -->
+          <text x="20" y="66" font-family="monospace" font-size="7" fill="#4a6a8a">BAY:</text>
+          <text x="55" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">1</text>
+          <text x="100" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">2</text>
+          <text x="145" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">3</text>
+          <text x="190" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">4</text>
+          <text x="235" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">5</text>
+          <text x="280" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">6</text>
+          <text x="325" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">7</text>
+          <text x="370" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">8</text>
+          <text x="415" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">9</text>
+          <text x="460" y="66" font-family="monospace" font-size="7" fill="#7a99b8" text-anchor="middle">10</text>
+          <!-- Bay dividers -->
+          <line x1="78" y1="68" x2="78" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="123" y1="68" x2="123" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="168" y1="68" x2="168" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="213" y1="68" x2="213" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="258" y1="68" x2="258" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="303" y1="68" x2="303" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="348" y1="68" x2="348" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="393" y1="68" x2="393" y2="100" stroke="#332200" stroke-width="1"/>
+          <line x1="438" y1="68" x2="438" y2="100" stroke="#332200" stroke-width="1"/>
+          <!-- Crane 1 (leftmost) at bay 2 -->
+          <rect x="88" y="30" width="24" height="38" rx="2" fill="#cc4400" stroke="#ff6600" stroke-width="1.5"/>
+          <text x="100" y="44" font-family="Bebas Neue,sans-serif" font-size="10" fill="white" text-anchor="middle">C1</text>
+          <text x="100" y="56" font-family="monospace" font-size="7" fill="#ffaa00" text-anchor="middle">Bay 2</text>
+          <!-- Crane 2 at bay 5 -->
+          <rect x="213" y="30" width="24" height="38" rx="2" fill="#0066aa" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="225" y="44" font-family="Bebas Neue,sans-serif" font-size="10" fill="white" text-anchor="middle">C2</text>
+          <text x="225" y="56" font-family="monospace" font-size="7" fill="#00bcd4" text-anchor="middle">Bay 5</text>
+          <!-- Crane 3 at bay 8 -->
+          <rect x="348" y="30" width="24" height="38" rx="2" fill="#006622" stroke="#00e676" stroke-width="1.5"/>
+          <text x="360" y="44" font-family="Bebas Neue,sans-serif" font-size="10" fill="white" text-anchor="middle">C3</text>
+          <text x="360" y="56" font-family="monospace" font-size="7" fill="#00e676" text-anchor="middle">Bay 8</text>
+          <!-- Non-crossing arrows showing order must be maintained -->
+          <text x="150" y="22" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="middle">C1 cannot skip to Bay 4</text>
+          <text x="150" y="32" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="middle">← C2 is in the way →</text>
+          <!-- Legend -->
+          <text x="20" y="118" font-family="monospace" font-size="7.5" fill="#7a99b8">C1 (bays 1–3) · C2 (bays 4–6) · C3 (bays 7–10)  |  Order must be preserved at all times — cranes cannot cross</text>
+        </svg>
+      </div>
+    </div><!-- end ss-cap -->
+
+    <!-- ══ STOWAGE PLANNING ══ -->
+    <div id="ss-stow" class="tab-content">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">SSP</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Ship Stowage Problem</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">Multi-port</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Rotation planning horizon</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">BAPLIE</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Key data exchange format</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">GM &gt; min</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Metacentric height stability req.</div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Problem Definition</div>
+          <p class="body">Determine the <strong>placement of every container</strong> on a vessel across multiple port calls, so that (a) the vessel remains stable and structurally sound throughout the voyage, (b) containers are accessible in the correct sequence at each port, and (c) crane operations at each port are efficient.</p>
+          <p class="body">The SSP is inherently a <strong>multi-port, multi-stage problem</strong>: a decision made at Port A determines what reshuffles are required at Port B. Good stowage plans look ahead across the entire rotation.</p>
+
+          <div style="margin-top:1rem;">
+            <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Two-stage decomposition (standard approach)</div>
+            <div style="display:flex;flex-direction:column;gap:.4rem;">
+              <div style="background:rgba(0,0,0,.25);padding:.6rem;border-radius:4px;border-left:3px solid var(--cyan);">
+                <div style="font-size:.65rem;color:var(--white);font-weight:600;">Stage 1 — Master stowage plan (by shipping line)</div>
+                <div style="font-size:.72rem;color:var(--muted);">Allocates container groups (bay/tier ranges) to each port of call. Done 24–72h before arrival. Optimises for multi-port stability and efficiency.</div>
+              </div>
+              <div style="background:rgba(0,0,0,.25);padding:.6rem;border-radius:4px;border-left:3px solid var(--amber);">
+                <div style="font-size:.65rem;color:var(--white);font-weight:600;">Stage 2 — Slot planning (by terminal planner)</div>
+                <div style="font-size:.72rem;color:var(--muted);">Assigns individual containers to specific slots within the allocated groups. Must respect weight limits, hazmat segregation, reefer plug points, and OOG clearances.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Stability Constraints</div>
+            <ul class="var-list">
+              <li><span class="vname">GM &gt; min</span><span class="vdesc">Metacentric height must exceed the minimum positive value throughout the voyage. If GM is too low the vessel rolls dangerously; too high causes uncomfortable snap-rolling.</span></li>
+              <li><span class="vname">Trim</span><span class="vdesc">Longitudinal balance — difference in draught between bow and stern. Typically −0.5m to +1.5m. Affects propeller efficiency.</span></li>
+              <li><span class="vname">List</span><span class="vdesc">Lateral heel angle. Must be within ±0.5° under SOLAS. Caused by asymmetric loading across port/starboard.</span></li>
+              <li><span class="vname">Bending moment</span><span class="vdesc">Longitudinal stress on the hull girder. Hogging (sag amidships) and sagging must stay within class limits.</span></li>
+              <li><span class="vname">Shear force</span><span class="vdesc">Local structural loads between adjacent holds. Heavy containers adjacent to empty holds create high shear.</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--red);">
+            <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Operational Constraints</div>
+            <ul class="var-list">
+              <li><span class="vname">Discharge sequence</span><span class="vdesc">Containers for the next port must be on deck or at the top of holds — not buried under boxes destined for later ports (avoids overstow).</span></li>
+              <li><span class="vname">IMDG segregation</span><span class="vdesc">Dangerous goods classes must maintain minimum separation distances (e.g. Class 1 explosives cannot be adjacent to Class 3 flammable liquids).</span></li>
+              <li><span class="vname">Reefer plug points</span><span class="vdesc">Refrigerated containers must be placed within cable reach of electrical sockets. Number of sockets per bay limits reefer concentration.</span></li>
+              <li><span class="vname">Weight limits</span><span class="vdesc">Cell guide weight capacity per stack, maximum stack weight on hatch covers, and IMO weight distribution rules all constrain container placement.</span></li>
+              <li><span class="vname">OOG clearance</span><span class="vdesc">Out-of-gauge cargo needs overhead and lateral clearance; cannot be placed under cranes with insufficient outreach.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;">
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.8rem;">Impact on Terminal Operations</div>
+          <ul class="var-list">
+            <li><span class="vname">Overstow moves</span><span class="vdesc">Each overstow requires lifting and temporarily placing a container before accessing the target box. Directly reduces crane utilisation. Poor stowage = lower effective GCR.</span></li>
+            <li><span class="vname">Crane assignment</span><span class="vdesc">Stowage plan determines which bays need service and in what sequence — directly feeds into the CAP. A well-structured plan enables parallel crane deployment with minimal ICI.</span></li>
+            <li><span class="vname">Yard pre-positioning</span><span class="vdesc">Terminal yard manager needs the confirmed stowage plan to pre-stage containers near the assigned berth. Late plan changes force yard reshuffles.</span></li>
+            <li><span class="vname">Port rotation efficiency</span><span class="vdesc">Containers correctly positioned for the next port reduce crane moves per call at downstream ports — a network-level efficiency gain.</span></li>
+          </ul>
+        </div>
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.8rem;">Data Exchange — BAPLIE</div>
+          <p class="body" style="margin-bottom:.8rem;">The <strong>BAPLIE</strong> (Bay Plan / Stowage Information) message is the EDIFACT standard for transmitting container stowage plans between shipping lines and terminals. It contains:</p>
+          <ul class="var-list">
+            <li><span class="vname">Container ID</span><span class="vdesc">ISO 6346 number — owner code, serial, check digit</span></li>
+            <li><span class="vname">Slot position</span><span class="vdesc">Bay-row-tier designation (e.g. 042284) for every container</span></li>
+            <li><span class="vname">Weight &amp; type</span><span class="vdesc">VGM, ISO type code (20GP, 40HC, 45R1, etc.)</span></li>
+            <li><span class="vname">Port of loading/discharge</span><span class="vdesc">UN/LOCODE for each container's origin and destination</span></li>
+            <li><span class="vname">Hazmat info</span><span class="vdesc">IMDG class, UN number, flashpoint — required for dangerous goods</span></li>
+          </ul>
+          <div style="margin-top:.8rem;padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);">Terminal TOS systems import BAPLIE on vessel arrival to populate the working stowage plan. Any late changes after cutoff must be transmitted as BAPLIE updates — a major source of disruption.</div>
+        </div>
+      </div>
+    </div><!-- end ss-stow -->
+
+    <!-- ══ INTEGRATION ══ -->
+    <div id="ss-integration" class="tab-content">
+
+      <div class="panel panel-cyan" style="margin-bottom:1.5rem;">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Why Integration Matters</div>
+        <p class="body">The BAP, CAP, and Stowage Planning are solved sequentially in most real terminals — berth first, then cranes, then stowage. But they are deeply interdependent: the berth assignment determines which cranes are reachable; the crane assignment determines service time (which feeds back into the berth plan); and the stowage plan determines the sequence of crane operations. Solving them jointly yields measurably better solutions.</p>
+
+        <div class="g3" style="gap:1rem;margin-top:1rem;">
+          <div style="background:rgba(0,0,0,.25);padding:.8rem;border-radius:4px;border-top:3px solid var(--cyan);">
+            <div style="font-size:.65rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">BAP + CAP (BACAP)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">Joint berth and crane assignment. The crane assignment determines service duration, which is needed to set the berthing time window. Most commercial TOS systems solve these jointly on a 24–48h rolling horizon.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.8rem;border-radius:4px;border-top:3px solid var(--amber);">
+            <div style="font-size:.65rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">BAP + CAP + Stowage (BACASP)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">The most comprehensive formulation. Stowage determines crane sequences; crane sequences affect service times; service times feed the berth plan. Correcher et al. (2019) solved this with column generation for the first time.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.8rem;border-radius:4px;border-top:3px solid var(--green);">
+            <div style="font-size:.65rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">Yard pre-positioning</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">Often overlooked in research. The berth+stowage plan must be communicated to the yard manager to pre-stage containers near the correct berth 2–4h before arrival. Late changes cascade through yard crane schedules.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planning cascade diagram -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="sh" style="margin-bottom:.8rem;">Hierarchical Planning Cascade</div>
+        <svg viewBox="0 0 600 110" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);">
+          <!-- Boxes -->
+          <rect x="10" y="20" width="100" height="70" rx="3" fill="#0a1628" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="60" y="48" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00bcd4" text-anchor="middle" letter-spacing="1">STOWAGE</text>
+          <text x="60" y="62" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00bcd4" text-anchor="middle" letter-spacing="1">PLANNING</text>
+          <text x="60" y="79" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">24–72h pre-arrival</text>
+
+          <rect x="140" y="20" width="100" height="70" rx="3" fill="#0a1628" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="190" y="48" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00bcd4" text-anchor="middle" letter-spacing="1">BERTH</text>
+          <text x="190" y="62" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00bcd4" text-anchor="middle" letter-spacing="1">ALLOCATION</text>
+          <text x="190" y="79" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">24–48h pre-arrival</text>
+
+          <rect x="270" y="20" width="100" height="70" rx="3" fill="#0a1628" stroke="#ffb300" stroke-width="1.5"/>
+          <text x="320" y="48" font-family="Bebas Neue,sans-serif" font-size="10" fill="#ffb300" text-anchor="middle" letter-spacing="1">CRANE</text>
+          <text x="320" y="62" font-family="Bebas Neue,sans-serif" font-size="10" fill="#ffb300" text-anchor="middle" letter-spacing="1">ASSIGNMENT</text>
+          <text x="320" y="79" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">2–6h pre-arrival</text>
+
+          <rect x="400" y="20" width="100" height="70" rx="3" fill="#0a1628" stroke="#ffb300" stroke-width="1.5"/>
+          <text x="450" y="48" font-family="Bebas Neue,sans-serif" font-size="10" fill="#ffb300" text-anchor="middle" letter-spacing="1">YARD PRE-</text>
+          <text x="450" y="62" font-family="Bebas Neue,sans-serif" font-size="10" fill="#ffb300" text-anchor="middle" letter-spacing="1">POSITIONING</text>
+          <text x="450" y="79" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">2–4h pre-arrival</text>
+
+          <rect x="530" y="20" width="60" height="70" rx="3" fill="#0a1628" stroke="#00e676" stroke-width="1.5"/>
+          <text x="560" y="48" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00e676" text-anchor="middle" letter-spacing="1">VESSEL</text>
+          <text x="560" y="62" font-family="Bebas Neue,sans-serif" font-size="10" fill="#00e676" text-anchor="middle" letter-spacing="1">ARRIVES</text>
+          <text x="560" y="79" font-family="monospace" font-size="7" fill="#00e676" text-anchor="middle">t = 0</text>
+
+          <!-- Arrows -->
+          <line x1="110" y1="55" x2="138" y2="55" stroke="#1976d2" stroke-width="1.5" marker-end="url(#a2)"/>
+          <line x1="240" y1="55" x2="268" y2="55" stroke="#1976d2" stroke-width="1.5" marker-end="url(#a2)"/>
+          <line x1="370" y1="55" x2="398" y2="55" stroke="#1976d2" stroke-width="1.5" marker-end="url(#a2)"/>
+          <line x1="500" y1="55" x2="528" y2="55" stroke="#1976d2" stroke-width="1.5" marker-end="url(#a2)"/>
+          <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#1976d2"/></marker></defs>
+
+          <!-- Feedback arrow (integration) -->
+          <path d="M190 20 Q190 10 320 10 Q450 10 450 20" fill="none" stroke="#ff6d00" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <text x="320" y="8" font-family="monospace" font-size="7" fill="#ff6d00" text-anchor="middle">← feedback: service time changes berth plan</text>
+        </svg>
+      </div>
+
+      <!-- Literature and practical gap -->
+      <div class="g2" style="gap:1.5rem;">
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.8rem;">Research vs Practice Gap</div>
+          <table class="equipment-comparison" style="font-size:.72rem;">
+            <thead><tr><th style="text-align:left;">Aspect</th><th>Research literature</th><th>Real terminals</th></tr></thead>
+            <tbody>
+              <tr><td style="text-align:left;">BAP formulation</td><td class="mid">Continuous, dynamic</td><td class="mid">Discrete, rolling horizon</td></tr>
+              <tr><td style="text-align:left;">Integration</td><td class="good">BAP+CAP+Stowage (BACASP)</td><td class="bad">Sequential (BAP → CAP → Stowage)</td></tr>
+              <tr><td style="text-align:left;">Solution method</td><td class="mid">GA / SA / MIP</td><td class="bad">FCFS + manual override</td></tr>
+              <tr><td style="text-align:left;">Replanning</td><td class="good">Event-driven, online</td><td class="mid">Planner-initiated</td></tr>
+              <tr><td style="text-align:left;">Uncertainty</td><td class="mid">Stochastic models</td><td class="bad">Deterministic (ETA used as certain)</td></tr>
+              <tr><td style="text-align:left;">Objective</td><td class="good">Weighted multi-objective</td><td class="mid">Contractual priority + TAT</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">Sources: Bierwirth &amp; Meisel (2010, 2015) surveys; Kurniawan et al. (2022) literature review.</p>
+        </div>
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.8rem;">Key Takeaways for Terminal Design</div>
+          <ul class="stacking-rules-list">
+            <li><span class="ri">🔗</span><div class="rt"><strong>Solve BAP and CAP jointly.</strong> Sequential solving leaves significant turnaround time on the table — crane assignment changes service duration, which changes the optimal berthing time.</div></li>
+            <li><span class="ri">📋</span><div class="rt"><strong>Stowage quality directly impacts GCR.</strong> Each overstow reduces crane utilisation. A structured stowage plan for parallel crane deployment can reduce berth time by 15–25%.</div></li>
+            <li><span class="ri">⏱️</span><div class="rt"><strong>Rolling horizon &gt; one-shot planning.</strong> Vessel ETAs change. A plan rebuilt every 6–12 hours using latest AIS data consistently outperforms a static 48h plan.</div></li>
+            <li><span class="ri">🚪</span><div class="rt"><strong>Gate TAT is the hidden driver.</strong> IAPH (2016): Truck TAT explains 42% of CMPH variation. Gate automation and TAS improve quayside productivity without touching berth or crane planning.</div></li>
+            <li><span class="ri">📦</span><div class="rt"><strong>Coordinate with the yard planner.</strong> The berth + stowage plan must drive yard pre-positioning 2–4h before arrival. Late plan changes cascade into yard crane reschedules and delay vessel departure.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- end ss-integration -->
+
+  </div><!-- end seaside zone-content -->
 
   <!-- YARDSIDE -->
   <div id="yardside" class="zone-content">
