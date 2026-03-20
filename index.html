@@ -372,6 +372,10 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
   .charts-row{grid-template-columns:1fr;}
   .prob-detail.open{grid-template-columns:1fr;}
 }
+
+/* Cross-section navigation links */
+.xlink{color:var(--amber);font-size:.72rem;cursor:pointer;text-decoration:underline dotted;font-family:'Space Mono',monospace;white-space:nowrap;}
+.xlink:hover{color:var(--cyan);}
 </style>
 </head>
 <body>
@@ -406,7 +410,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <button onclick="showSection('birdseye',this)">🛰 Bird's Eye</button>
     <button onclick="showSection('operations',this)">Operations</button>
     <button onclick="showSection('equipment',this)">Equipment</button>
-    <button onclick="showSection('yard',this)">Yard</button>
+    <button onclick="showSection('yard',this)">Yard Map</button>
     <button onclick="showSection('gate',this)">Gate</button>
     <button onclick="showSection('cfs',this)">CFS</button>
     <button onclick="showSection('kpis',this)">KPIs</button>
@@ -418,7 +422,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 <!-- ===== OVERVIEW ===== -->
 <section id="overview" class="active">
   <h2>Terminal Overview</h2>
-  <p class="subtitle">SHP 513 · Week 8 · Mihalis Golias — Interactive reference covering terminal operations, KPIs, dimensioning, and scheduling</p>
+  <p class="subtitle">SHP 513 · Weeks 6–9 · Mihalis Golias — Container terminal operations, KPIs, dimensioning, scheduling, and yard management</p>
 
   <div id="terminal-canvas">
     <div class="stars"></div>
@@ -464,36 +468,107 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <div class="canvas-label" style="right:40px;bottom:220px;">Landside →</div>
   </div>
 
+  <!-- Key stats strip -->
   <div class="info-strip">
-    <div class="info-card"><div class="val">3</div><div class="lbl">Operational Zones</div></div>
-    <div class="info-card"><div class="val">24/7</div><div class="lbl">Terminal Operation</div></div>
-    <div class="info-card"><div class="val">25–35</div><div class="lbl">Crane Moves/hr</div></div>
-    <div class="info-card"><div class="val">0.8d</div><div class="lbl">Container Ship Median Port Stay (2024)</div></div>
-    <div class="info-card"><div class="val">TOS</div><div class="lbl">Terminal Operating System</div></div>
+    <div class="info-card"><div class="val">18.1</div><div class="lbl">GCR median lifts/ship-hr (UNCTAD PPS 2024)</div></div>
+    <div class="info-card"><div class="val">3.1d</div><div class="lbl">Container dwell time median (UNCTAD PPS 2024)</div></div>
+    <div class="info-card"><div class="val">0.8d</div><div class="lbl">Container ship median port stay (2024)</div></div>
+    <div class="info-card"><div class="val">47.9%</div><div class="lbl">EBITDA/revenue median (UNCTAD PPS 2024)</div></div>
+    <div class="info-card"><div class="val">NP-Hard</div><div class="lbl">Complexity of BAP, CAP, CSAP</div></div>
   </div>
 
-  <div class="g2">
+  <!-- What is a terminal + zones -->
+  <div class="g2" style="margin-bottom:1.5rem;">
     <div class="panel panel-cyan">
       <div class="sh">What is a Container Terminal?</div>
-      <p class="body">A container terminal is a facility where cargo containers are transshipped between different transport vehicles — ships, trains, and trucks. It is a critical node in the global supply chain, requiring the precise coordination of <strong>vessels, equipment, people, and information systems</strong>.</p>
-      <p class="body">Operations are controlled by a <strong><span class="popup-trigger" onclick="openPopup('tos')">Terminal Operating System (TOS)<span class="pip">ⓘ</span></span></strong>, which plans vessel stowage, crane sequences, yard allocation, and gate movements in real-time.</p>
-      <p class="body">The terminal is divided into three functional zones: <strong>Seaside</strong> (berths, STS cranes), <strong>Yardside</strong> (storage, RTG/RMG cranes), and <strong>Landside</strong> (gate, road/rail connections).</p>
+      <p class="body">A container terminal is a facility where cargo containers are transshipped between different transport modes — ships, trains, and trucks. It is a critical node in the global supply chain, requiring precise coordination of <strong>vessels, equipment, people, and information systems</strong>.</p>
+      <p class="body">Operations are controlled by a <strong><span class="popup-trigger" onclick="openPopup('tos')">Terminal Operating System (TOS)<span class="pip">ⓘ</span></span></strong> (e.g. Navis N4, SPARCS, TBA OPUS Terminal), which plans vessel stowage, crane sequences, yard allocation, and gate movements in real-time across a rolling 24–72 hour horizon.</p>
+      <p class="body">The terminal divides into three functional zones: <strong>Seaside</strong> (berths, STS cranes), <strong>Yardside</strong> (storage, RTG/RMG/SC cranes), and <strong>Landside</strong> (gate, road/rail hinterland). Every KPI, every scheduling problem, and every dimensioning formula in this resource maps to one of these three zones.</p>
     </div>
     <div class="panel panel-amber">
       <div class="sh">Three Operational Zones</div>
       <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.3rem;">
         <div style="background:rgba(0,100,200,.15);border-left:4px solid var(--sky);padding:.8rem;border-radius:0 4px 4px 0;">
           <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--sky);margin-bottom:.3rem;">🌊 SEASIDE</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Berth Allocation · Quay Crane Scheduling · Stowage Planning · Vessel arrival/departure interface</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Berth Allocation Problem (BAP) · Quay Crane Scheduling (QCSP) · Stowage Planning (SSP) · Integrated BACAP / BACASP · Space-time bin-packing · NP-Hard optimisation</div>
         </div>
         <div style="background:rgba(255,179,0,.08);border-left:4px solid var(--amber);padding:.8rem;border-radius:0 4px 4px 0;">
           <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--amber);margin-bottom:.3rem;">📦 YARDSIDE</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Yard Crane Scheduling · Storage Location Assignment · Container Stacking · Yard Layout Optimization</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Container Storage Assignment (CSAP) · Yard Crane Scheduling (YCSP/YCAP) · Reshuffle &amp; Pre-marshalling · Internal Transport (AGV/ALV/SC/PM) · Special Cargo (empties, reefer, hazmat) · Block layout design</div>
         </div>
         <div style="background:rgba(0,230,118,.08);border-left:4px solid var(--green);padding:.8rem;border-radius:0 4px 4px 0;">
           <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--green);margin-bottom:.3rem;">🚛 LANDSIDE</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Gate Assignment · Gate Scheduling · Processing Time · Truck Turnaround · Hinterland Connection</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Gate Assignment · Truck Appointment System (TAS) · Gate Processing Time · OCR/ANPR automation · Truck Turnaround (GTT) · Hinterland connections (road, rail, barge)</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course content map -->
+  <div class="panel" style="margin-bottom:1.5rem;">
+    <div class="sh sh-cyan" style="margin-bottom:.8rem;">What's in This Resource — SHP 513 Weeks 6–9</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+      <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:.9rem;border-top:3px solid var(--sky);">
+        <div style="font-size:.62rem;color:var(--sky);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">🌊 Operations (Seaside)</div>
+        <ul style="list-style:none;font-size:.72rem;color:var(--muted);line-height:1.8;">
+          <li>→ BAP: continuous vs discrete, static vs dynamic</li>
+          <li>→ Space-time diagram, dispatch rules, FCFS/SPT</li>
+          <li>→ QCSP: non-crossing constraint, ICI, dual-cycling</li>
+          <li>→ Stowage: two-stage decomposition, BAPLIE</li>
+          <li>→ Integration: BACAP, BACASP, planning cascade</li>
+          <li>→ Literature: Lim 1998 → Correcher 2019</li>
+        </ul>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:.9rem;border-top:3px solid var(--amber);">
+        <div style="font-size:.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">📦 Operations (Yardside)</div>
+        <ul style="list-style:none;font-size:.72rem;color:var(--muted);line-height:1.8;">
+          <li>→ CSAP: 6 storage policies, slot planning</li>
+          <li>→ YCSP/YCAP: EDD, non-crossing, dual-cycling</li>
+          <li>→ Reshuffle: accessibility index S, pre-marshalling</li>
+          <li>→ ITV: AGV/ALV/SC/PM, deadlock, dual-cycling</li>
+          <li>→ Special cargo: empties, reefer, hazmat (IMDG)</li>
+          <li>→ Block layout: 56–72 slots optimal (Petering &amp; Murty)</li>
+        </ul>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:.9rem;border-top:3px solid var(--cyan);">
+        <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">📊 KPIs &amp; Dimensioning</div>
+        <ul style="list-style:none;font-size:.72rem;color:var(--muted);line-height:1.8;">
+          <li>→ 21 KPIs: GCR, BMPH, CMPH, TYM, RESHFP, GTT…</li>
+          <li>→ KPI hierarchy: GCR as master, causal chain to gate</li>
+          <li>→ IAPH (2016): 34 terminals, R²=0.42 Truck TAT → CMPH</li>
+          <li>→ UNCTAD PPS 2024: 76 ports, median benchmarks</li>
+          <li>→ Chu &amp; Huang (2005): 4 formulas, NC/NCR/CR/TGS</li>
+          <li>→ Tmax/Cmax, UNCTAD, Frankel: 4 capacity formulas</li>
+          <li>→ Terminal Designer: live calculator with all formulas</li>
+          <li>→ Capacity Tables: pre-computed lookup across 42 configs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key benchmarks strip -->
+  <div class="panel panel-green">
+    <div class="sh" style="margin-bottom:.8rem;">Key Benchmarks at a Glance — UNCTAD PPS 2024 &amp; IAPH (2016)</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+      <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">18.1</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">GCR — lifts/ship-hr median</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.2rem;">Range: 14.7 (2022 low) – 26.4 (2017 high)</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">3.1 days</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Container dwell median</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.2rem;">Halving dwell ≈ doubling Tmax — no CAPEX needed</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">10.9h</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Developing country vessel wait</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.2rem;">vs 6.4h developed (Dec 2024, rising)</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">R²=0.42</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Truck TAT → CMPH</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.2rem;">Strongest predictor of crane productivity (IAPH 2016)</div>
       </div>
     </div>
   </div>
@@ -1111,203 +1186,738 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 
   </div><!-- end seaside zone-content -->
 
+
   <!-- YARDSIDE -->
   <div id="yardside" class="zone-content">
-    <div class="problem-grid">
-      <div class="prob-card" onclick="toggleProblem('p-yardcrane',this)">
-        <div class="pc-type">Scheduling Problem</div>
-        <div class="pc-title">Yard Crane Scheduling</div>
-        <div class="pc-desc">Optimizing scheduling and routing of yard cranes to reduce container handling times within the yard.</div>
-      </div>
-      <div class="prob-card" onclick="toggleProblem('p-storage',this)">
-        <div class="pc-type">Assignment Problem</div>
-        <div class="pc-title">Storage Location Assignment</div>
-        <div class="pc-desc">Efficiently assigning storage locations to minimize retrieval times and maximize space utilization.</div>
-      </div>
-      <div class="prob-card" onclick="toggleProblem('p-stacking',this)">
-        <div class="pc-type">Strategy Problem</div>
-        <div class="pc-title">Container Stacking Strategy</div>
-        <div class="pc-desc">Developing strategies for stacking containers to optimize space and retrieval efficiency.</div>
-      </div>
-      <div class="prob-card" onclick="toggleProblem('p-layout',this)">
-        <div class="pc-type">Design Problem</div>
-        <div class="pc-title">Yard Layout Optimization</div>
-        <div class="pc-desc">Designing the yard layout to improve container flow and reduce equipment travel distances.</div>
-      </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('ys-storage',this)">📦 Storage Assignment</button>
+      <button class="tab-btn" onclick="showTab('ys-crane',this)">🏗️ Yard Crane Scheduling</button>
+      <button class="tab-btn" onclick="showTab('ys-reshuffle',this)">🔄 Reshuffle &amp; Pre-marshalling</button>
+      <button class="tab-btn" onclick="showTab('ys-itv',this)">🚛 Internal Transport</button>
+      <button class="tab-btn" onclick="showTab('ys-special',this)">🗂️ Special Cargo</button>
+      <button class="tab-btn" onclick="showTab('ys-layout',this)">📐 Block Layout &amp; Planning</button>
     </div>
 
-    <div id="p-yardcrane" class="prob-detail">
-      <h3>Yard Crane Scheduling</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Managing crane movements to avoid conflicts within blocks</li>
-          <li>Balancing workload among cranes across blocks</li>
-          <li>Adapting to changes in container demand (vessel priorities)</li>
-          <li>Minimizing non-productive moves (reshuffles)</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Improve crane utilization and yard crane rate (YCR)</li>
-          <li>Reduce container handling and waiting times</li>
-          <li>Enhance overall yard throughput</li>
-          <li>Support vessel departure deadlines</li>
-        </ul>
-      </div>
-      <div style="grid-column:1/-1;">
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Key Components</div>
-        <div class="component-tags">
-          <span class="ctag">Crane Assignment</span><span class="ctag">Task Prioritization</span><span class="ctag">Stacking Strategy</span><span class="ctag">Crane Capacity</span><span class="ctag">Container Location</span><span class="ctag">Coordination with Other Ops</span><span class="ctag">Real-Time Monitoring</span><span class="ctag">Environmental & Safety</span><span class="ctag">Maintenance Scheduling</span>
+    <!-- ══ TAB 1: STORAGE ASSIGNMENT ══ -->
+    <div id="ys-storage" class="tab-content active">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">NP-Hard</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Computational complexity</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">65–75%</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Target yard utilisation</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">S ≥ 0.6</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Itsuro accessibility index (import)</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">RESHFP &lt;0.2</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Reshuffle factor target</div>
         </div>
       </div>
-    </div>
 
-    <div id="p-storage" class="prob-detail">
-      <h3>Storage Location Assignment</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Managing dynamic availability of storage spaces</li>
-          <li>Considering container characteristics (size, type, destination)</li>
-          <li>Avoiding yard congestion and excessive reshuffles</li>
-          <li>Balancing utilization across all yard blocks</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Optimize storage space (target 65–75% utilization)</li>
-          <li>Reduce retrieval times and reshuffle factor</li>
-          <li>Improve yard efficiency and TOS accuracy</li>
-          <li>Pre-position containers for upcoming vessel operations</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="p-stacking" class="prob-detail">
-      <h3>Container Stacking Strategy</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Balancing stack height vs. accessibility trade-off</li>
-          <li>Managing access to specific containers in deep stacks</li>
-          <li>Considering container characteristics (weight, type, dwell)</li>
-          <li>Minimizing reshuffles during vessel loading operations</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Maximize storage capacity within safe stack limits</li>
-          <li>Reduce handling times and reshuffle moves</li>
-          <li>Ensure safe stacking (weight limits per ISO standard)</li>
-          <li>Optimize pre-marshalling before vessel calls</li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="p-layout" class="prob-detail">
-      <h3>Yard Layout Optimization</h3>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Challenges</div>
-        <ul class="challenge-list">
-          <li>Managing space constraints and future expansion</li>
-          <li>Optimizing placement of storage zones and equipment</li>
-          <li>Designing efficient traffic flow for all vehicle types</li>
-          <li>Integrating safety, utility infrastructure, and security</li>
-        </ul>
-      </div>
-      <div>
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Goals</div>
-        <ul class="goal-list">
-          <li>Minimize travel distances for cranes and vehicles</li>
-          <li>Reduce congestion and improve flow</li>
-          <li>Accommodate all container types (reefer, hazmat, OOG)</li>
-          <li>Support real-time monitoring and automation</li>
-        </ul>
-      </div>
-      <div style="grid-column:1/-1;">
-        <div class="sh sh-cyan" style="margin-bottom:.5rem;">Key Layout Components</div>
-        <div class="component-tags">
-          <span class="ctag">Container Storage Zones</span><span class="ctag">Traffic Flow Design</span><span class="ctag">Crane Operations Layout</span><span class="ctag">Access Routes</span><span class="ctag">Safety & Security</span><span class="ctag">Utility Infrastructure</span><span class="ctag">Maintenance Areas</span><span class="ctag">Environmental Design</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- End/Side Loading -->
-    <div class="sh" style="margin-top:1.5rem;">Block Layout: End-Loading vs. Side-Loading</div>
-    <div class="layout-compare">
-      <div class="layout-card">
-        <h3><span class="popup-trigger" onclick="openPopup('end-loading')">End Loading<span class="pip">ⓘ</span></span></h3>
-        <div class="layout-diagram">
-          <div class="quay-line">═══════════ QUAY WALL ═══════════</div>
-          <div>  ↑ (seaside vehicles only)         </div>
-          <div class="crane-sym">  [═╤═╤═╤═╤═╤═╤═╤═╤═╤═╤═]  BLOCK</div>
-          <div class="container-sym">  ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐  containers</div>
-          <div class="container-sym">  └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘         </div>
-          <div class="crane-sym">  [═╤═╤═╤═╤═╤═╤═╤═╤═╤═╤═]  BLOCK</div>
-          <div>  ↓ (landside trucks only)          </div>
-          <div class="truck-sym">  ──────────────────────────────</div>
-          <div>  🚛 ROAD TRANSPORT                 </div>
-        </div>
-        <div class="pros-cons">
-          <div>
-            <div class="pros-label">Advantages</div>
-            <ul class="pros">
-              <li>Seaside/landside traffic fully separated</li>
-              <li>Simpler traffic control</li>
-              <li>Used at Euromax (Rotterdam) &amp; Altenwerder (Hamburg)</li>
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Problem Definition (CSAP)</div>
+          <p class="body">Assign each arriving container to a specific yard slot (block, bay, row, tier) so that future retrieval requires the fewest crane moves. The <strong>Container Storage Assignment Problem</strong> is solved continuously as containers arrive at the gate or are discharged from vessels.</p>
+          <p class="body">The fundamental trade-off is unavoidable: <strong>tight grouping by retrieval sequence</strong> minimises future reshuffles but makes it harder to fill all slots evenly; <strong>random/loose assignment</strong> maximises utilisation but causes many reshuffles at retrieval.</p>
+          <div style="margin-top:1rem;">
+            <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Decision variables</div>
+            <ul class="var-list">
+              <li><span class="vname">Block</span><span class="vdesc">Which yard block receives the container (determines equipment type and distance to berth)</span></li>
+              <li><span class="vname">Bay / Row</span><span class="vdesc">Position within the block — affects future crane travel distance</span></li>
+              <li><span class="vname">Tier</span><span class="vdesc">Stack height — higher tiers cause reshuffles when lower containers are needed first</span></li>
             </ul>
           </div>
-          <div>
-            <div class="cons-label">Disadvantages</div>
-            <ul class="cons">
-              <li>YCs must do full round-trips per container</li>
-              <li>Long vehicle waiting times</li>
-              <li>Vehicles need parking buffer zone</li>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Objectives</div>
+            <ul class="var-list">
+              <li><span class="vname">Min reshuffles</span><span class="vdesc">Expected number of non-productive relocations at retrieval time — primary objective</span></li>
+              <li><span class="vname">Min travel</span><span class="vdesc">Total crane travel distance at retrieval — assign export containers to blocks adjacent to their loading berth</span></li>
+              <li><span class="vname">Max utilisation</span><span class="vdesc">Fill slots evenly across all blocks — target 65–75%. Above 85% reshuffles grow exponentially.</span></li>
+              <li><span class="vname">Balance workload</span><span class="vdesc">Distribute crane tasks evenly across blocks to avoid hotspot congestion</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--red);">
+            <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Constraints</div>
+            <ul class="var-list">
+              <li><span class="vname">Block capacity</span><span class="vdesc">TGS × stacking height per block cannot be exceeded</span></li>
+              <li><span class="vname">Equipment zones</span><span class="vdesc">Reefer containers → reefer-capable slots only. OOG → designated oversized areas.</span></li>
+              <li><span class="vname">Hazmat separation</span><span class="vdesc">IMDG class separation distances must be maintained — see Special Cargo tab</span></li>
+              <li><span class="vname">Vessel sequence</span><span class="vdesc">Export containers for the same vessel should be co-located to minimise crane travel at loading</span></li>
+              <li><span class="vname">Dwell estimate</span><span class="vdesc">Containers with long expected dwell should not block short-dwell containers in a stack</span></li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="layout-card">
-        <h3><span class="popup-trigger" onclick="openPopup('side-loading')">Side Loading<span class="pip">ⓘ</span></span></h3>
-        <div class="layout-diagram">
-          <div class="quay-line">═══════════ QUAY WALL ═══════════</div>
-          <div class="truck-sym">  🚛 vehicles park beside block    </div>
-          <div class="crane-sym">  ┌──╤──────────────────╤──┐      </div>
-          <div class="container-sym">  │  ┌─┬─┬─┬─┬─┬─┬─┬─┐  │  BLOCK  </div>
-          <div class="container-sym">  │  └─┴─┴─┴─┴─┴─┴─┴─┘  │         </div>
-          <div class="crane-sym">  └──╧──────────────────╧──┘      </div>
-          <div class="truck-sym">  🚛 🚛 🚛 vehicles along side     </div>
-          <div>  ↓ all traffic mixed              </div>
-          <div class="truck-sym">  ──────────────────────────────</div>
-        </div>
-        <div class="pros-cons">
-          <div>
-            <div class="pros-label">Advantages</div>
-            <ul class="pros">
-              <li>Better YC performance (shorter gantry travel)</li>
-              <li>Especially efficient with shuttle carriers</li>
-              <li>Common: Pasir Panjang (SG), Modern Terminal (HK)</li>
-            </ul>
-          </div>
-          <div>
-            <div class="cons-label">Disadvantages</div>
-            <ul class="cons">
-              <li>Traffic interference (mixed vehicle streams)</li>
-              <li>Complex traffic control requirements</li>
-              <li>Longer travel distances for some moves</li>
-            </ul>
-          </div>
-        </div>
-        <div style="margin-top:.7rem;background:rgba(0,188,212,.06);border:1px solid var(--steel);border-radius:4px;padding:.7rem;font-size:.75rem;color:var(--muted);">
-          <strong style="color:var(--cyan);">💡 Solution to interference:</strong> Split yard into import and export sections, placing export containers closer to the vessel to reduce mixed-traffic conflict.
+
+      <!-- Storage policies table -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Storage Policies — Taxonomy</div>
+        <div style="overflow-x:auto;">
+        <table class="equipment-comparison">
+          <thead><tr>
+            <th style="text-align:left;">Policy</th>
+            <th style="text-align:left;">Description</th>
+            <th>Utilisation</th>
+            <th>Reshuffles</th>
+            <th>Complexity</th>
+            <th style="text-align:left;">Best for</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;color:var(--white);">Random storage</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">First available slot assigned</td><td class="good">High</td><td class="bad">High</td><td class="good">Very low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Low-volume terminals; simple TOS</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Closest-available</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Slot nearest to loading berth</td><td class="mid">Medium</td><td class="mid">Medium</td><td class="good">Low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Export containers — reduces crane travel</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Category storage</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Dedicated blocks per cargo type</td><td class="mid">Medium</td><td class="mid">Medium</td><td class="mid">Medium</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Standard at most real terminals</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Advance sorting</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Sort by vessel/destination before arrival</td><td class="bad">Lower</td><td class="good">Low</td><td class="bad">High</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Export-heavy terminals with predictable flows</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Nearest-berth rule</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Export containers → blocks adjacent to assigned berth</td><td class="mid">Medium</td><td class="good">Low</td><td class="mid">Low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Pre-planned vessel calls with confirmed berth</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Simulation-scored</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">TOS simulates future reshuffles per candidate slot</td><td class="mid">Medium</td><td class="good">Low</td><td class="bad">High</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Modern TOS systems (Navis N4, SPARCS)</td></tr>
+          </tbody>
+        </table>
         </div>
       </div>
-    </div>
-  </div>
+
+      <!-- Solution methods + cross-links -->
+      <div class="g2" style="gap:1.5rem;">
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.7rem;">Solution Methods</div>
+          <ul class="var-list">
+            <li><span class="vname">MIP</span><span class="vdesc">Exact for small instances. Used as benchmark. Impractical at terminal scale in real time.</span></li>
+            <li><span class="vname">Greedy heuristics</span><span class="vdesc">Score candidate slots by estimated future reshuffles; assign to best-score slot. Fast and effective.</span></li>
+            <li><span class="vname">Lookahead simulation</span><span class="vdesc">Simulate multiple future vessel calls from each candidate slot; choose slot minimising expected total reshuffles across the window. Most commercial TOS systems use this approach.</span></li>
+            <li><span class="vname">ML / RL</span><span class="vdesc">Neural nets trained on historical reshuffle data to predict reshuffle cost per slot. Reinforcement learning agents emerging in research (2020+).</span></li>
+          </ul>
+        </div>
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.7rem;">Cross-references</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.6rem;">
+            <li style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+              <div style="font-size:.6rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Dimensioning link</div>
+              <div style="font-size:.75rem;color:var(--muted);">TGS, stacking height (h), and dwell time directly determine how quickly yard fills — and therefore reshuffle frequency. <span class="xlink" onclick="showSectionTab('dimensioning','dim-formulas')">→ Chu &amp; Huang Formulas ↗</span></div>
+            </li>
+            <li style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+              <div style="font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">KPIs link</div>
+              <div style="font-size:.75rem;color:var(--muted);">RESHFP (&lt;0.2) and YUTIL (65–75%) are the formal output KPIs of storage assignment quality. <span class="xlink" onclick="showSectionTab('kpis','kpi-reference')">→ KPI Reference (Yardside) ↗</span></div>
+            </li>
+            <li style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--green);">
+              <div style="font-size:.6rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Capacity link</div>
+              <div style="font-size:.75rem;color:var(--muted);">Halving dwell time approximately doubles annual throughput capacity — without changing TGS. <span class="xlink" onclick="showSectionTab('dimensioning','dim-supply')">→ Supply-Oriented Dimensioning ↗</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- end ys-storage -->
+
+    <!-- ══ TAB 2: YARD CRANE SCHEDULING ══ -->
+    <div id="ys-crane" class="tab-content">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">NP-Hard</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Even with 2 cranes per block</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">Non-crossing</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">RTGs on same rail cannot pass</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">EDD</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Primary dispatch rule</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">170 ft</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Min YC–YC safety separation</div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Two Related Sub-Problems</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem;">
+            <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--cyan);">
+              <div style="font-size:.65rem;color:var(--cyan);font-weight:600;margin-bottom:.3rem;">YCAP — Yard Crane Assignment Problem</div>
+              <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">Which crane serves which block during a given time window. Determines crane deployment across the yard — a tactical decision made every 1–4 hours.</p>
+            </div>
+            <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--amber);">
+              <div style="font-size:.65rem;color:var(--amber);font-weight:600;margin-bottom:.3rem;">YCSP — Yard Crane Scheduling Problem</div>
+              <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">The sequence of individual (source slot, destination slot) moves within a block assignment. An operational decision, updated continuously as tasks are completed or priorities change.</p>
+            </div>
+          </div>
+
+          <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Non-crossing constraint</div>
+          <p class="body">Multiple RTGs on the same block rail cannot pass each other — exactly analogous to the non-crossing constraint in the Quay Crane Scheduling Problem. A crane cannot skip to a higher-priority task if another crane is between it and the target slot. This makes the problem hard even with just 2 cranes per block.</p>
+
+          <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.25);border-radius:4px;border-left:3px solid var(--red);">
+            <div style="font-size:.62rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem;">170-ft minimum separation (Petering &amp; Murty 2009)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">Two RTGs on the same block must maintain at least 170 ft (≈52m, ~8 container slots) of separation at all times. Violating this creates truck traffic jams at the transfer zone that halve effective YCR. This constraint is enforced by the TOS in real-time.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--green);">
+            <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Work Order Generation</div>
+            <p class="body" style="margin-bottom:.6rem;">The TOS generates a prioritised task list for each crane — a sequence of (pick-up slot, delivery slot) pairs. Priority ordering:</p>
+            <ul class="var-list">
+              <li><span class="vname">1st — EDD</span><span class="vdesc">Vessel-bound containers sorted by vessel departure deadline (Earliest Due Date first). Starvation of quay cranes is the highest-cost failure mode.</span></li>
+              <li><span class="vname">2nd — Appointments</span><span class="vdesc">Truck-pickup containers sorted by TAS appointment time. Late truck = detention charges.</span></li>
+              <li><span class="vname">3rd — Housekeeping</span><span class="vdesc">Pre-marshalling, block rebalancing, and space-making moves. Deferred if vessel work is pending.</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Key Concepts</div>
+            <ul class="var-list">
+              <li><span class="vname">Dual-cycling</span><span class="vdesc">Crane handles a discharge task and a load task in a single traversal of the block — halves dead (unladen) travel. Requires TOS coordination with the berth plan to ensure the right container is available for pick-up on the return pass.</span></li>
+              <li><span class="vname">Intra-block tasks</span><span class="vdesc">Moves within a single block — the vast majority of yard crane work. Crane does not leave the block.</span></li>
+              <li><span class="vname">Inter-block tasks</span><span class="vdesc">Moves between blocks — requires ITV handoff. Crane drops container at transfer zone; ITV carries it to another block.</span></li>
+              <li><span class="vname">Gantry travel time</span><span class="vdesc">Crane travel time between slots is significant — acceleration and deceleration profiles matter for accurate scheduling. Typical peak speed: 130–150m/min (gantry), 70–100m/min (trolley).</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--cyan);">
+            <div class="sh sh-cyan" style="margin-bottom:.7rem;">Solution Methods</div>
+            <ul class="var-list">
+              <li><span class="vname">EDD dispatch</span><span class="vdesc">Practical standard. Fast, vessel-priority aware. Misses crane travel optimisation.</span></li>
+              <li><span class="vname">Rolling horizon MIP</span><span class="vdesc">Optimal for 1–4 hour window. Used in automated terminals (ASC systems).</span></li>
+              <li><span class="vname">Beam search</span><span class="vdesc">Truncated tree search. Good quality quickly. Standard in commercial TOS crane modules.</span></li>
+              <li><span class="vname">GA / SA</span><span class="vdesc">Research benchmarks. GA encodes crane-task assignment + sequence.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- RTG block illustration -->
+      <div class="panel panel-orange" style="margin-bottom:1.5rem;">
+        <div class="sh" style="margin-bottom:.8rem;">RTG Block — Non-Crossing Constraint Illustrated</div>
+        <svg viewBox="0 0 560 150" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);">
+          <!-- Block rail -->
+          <line x1="20" y1="115" x2="540" y2="115" stroke="#334455" stroke-width="3"/>
+          <line x1="20" y1="118" x2="540" y2="118" stroke="#334455" stroke-width="3"/>
+          <!-- Container stacks (6 stacks of 5 rows) -->
+          <g fill="#1a3a5c" stroke="#0d2030" stroke-width="0.5">
+            <!-- Stack 1 (bay 1-3) -->
+            <rect x="35" y="65" width="14" height="10" rx="1"/><rect x="35" y="75" width="14" height="10" rx="1"/><rect x="35" y="85" width="14" height="10" rx="1"/>
+            <rect x="51" y="65" width="14" height="10" rx="1"/><rect x="51" y="75" width="14" height="10" rx="1"/><rect x="51" y="85" width="14" height="10" rx="1"/>
+            <rect x="67" y="75" width="14" height="10" rx="1" fill="#1a4a2c"/><rect x="67" y="85" width="14" height="10" rx="1" fill="#1a4a2c"/>
+            <!-- Stack 2 (bay 4-6) -->
+            <rect x="115" y="55" width="14" height="10" rx="1"/><rect x="115" y="65" width="14" height="10" rx="1"/><rect x="115" y="75" width="14" height="10" rx="1"/><rect x="115" y="85" width="14" height="10" rx="1"/>
+            <rect x="131" y="65" width="14" height="10" rx="1"/><rect x="131" y="75" width="14" height="10" rx="1"/><rect x="131" y="85" width="14" height="10" rx="1"/>
+            <rect x="147" y="75" width="14" height="10" rx="1"/><rect x="147" y="85" width="14" height="10" rx="1"/>
+            <!-- Stack 3 (bay 7-9) highlighted — RTG1 target -->
+            <rect x="215" y="65" width="14" height="10" rx="1" fill="#1a3a6c" stroke="#00bcd4"/><rect x="215" y="75" width="14" height="10" rx="1" fill="#1a3a6c" stroke="#00bcd4"/><rect x="215" y="85" width="14" height="10" rx="1" fill="#1a3a6c" stroke="#00bcd4"/>
+            <rect x="231" y="65" width="14" height="10" rx="1"/><rect x="231" y="75" width="14" height="10" rx="1"/><rect x="231" y="85" width="14" height="10" rx="1"/>
+            <rect x="247" y="55" width="14" height="10" rx="1"/><rect x="247" y="65" width="14" height="10" rx="1"/><rect x="247" y="75" width="14" height="10" rx="1"/><rect x="247" y="85" width="14" height="10" rx="1"/>
+            <!-- Stack 4 (bay 10-12) -->
+            <rect x="315" y="75" width="14" height="10" rx="1"/><rect x="315" y="85" width="14" height="10" rx="1"/>
+            <rect x="331" y="65" width="14" height="10" rx="1"/><rect x="331" y="75" width="14" height="10" rx="1"/><rect x="331" y="85" width="14" height="10" rx="1"/>
+            <rect x="347" y="75" width="14" height="10" rx="1"/><rect x="347" y="85" width="14" height="10" rx="1"/>
+            <!-- Stack 5 (bay 13-15) RTG2 zone highlighted -->
+            <rect x="415" y="65" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="415" y="75" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="415" y="85" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/>
+            <rect x="431" y="55" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="431" y="65" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="431" y="75" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="431" y="85" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/>
+            <rect x="447" y="65" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="447" y="75" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/><rect x="447" y="85" width="14" height="10" rx="1" fill="#3a2a0a" stroke="#ffb300"/>
+          </g>
+          <!-- RTG 1 (cyan) at bay 5-6 zone -->
+          <rect x="160" y="35" width="60" height="80" rx="2" fill="rgba(0,188,212,.12)" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="190" y="70" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00bcd4" text-anchor="middle">RTG 1</text>
+          <text x="190" y="83" font-family="monospace" font-size="7" fill="#00bcd4" text-anchor="middle">at bay 5</text>
+          <!-- Arrow showing RTG1 wants to go to bay 9 (target) but RTG2 is in the way -->
+          <line x1="220" y1="75" x2="193" y2="75" stroke="#00bcd4" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#yarrow)"/>
+          <text x="207" y="70" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="middle">BLOCKED</text>
+          <!-- RTG 2 (amber) at bay 10 -->
+          <rect x="285" y="35" width="60" height="80" rx="2" fill="rgba(255,179,0,.12)" stroke="#ffb300" stroke-width="1.5"/>
+          <text x="315" y="70" font-family="Bebas Neue,sans-serif" font-size="11" fill="#ffb300" text-anchor="middle">RTG 2</text>
+          <text x="315" y="83" font-family="monospace" font-size="7" fill="#ffb300" text-anchor="middle">at bay 10</text>
+          <!-- Safety zone indicator -->
+          <rect x="193" y="100" width="92" height="8" rx="2" fill="rgba(255,82,82,.3)" stroke="#ff5252" stroke-width="1"/>
+          <text x="239" y="108" font-family="monospace" font-size="6" fill="#ff5252" text-anchor="middle">170ft min separation zone</text>
+          <!-- Transfer zones -->
+          <rect x="20" y="120" width="12" height="15" rx="1" fill="rgba(0,230,118,.2)" stroke="#00e676" stroke-width="1"/>
+          <text x="26" y="132" font-family="monospace" font-size="6" fill="#00e676" text-anchor="middle">ITV</text>
+          <rect x="528" y="120" width="12" height="15" rx="1" fill="rgba(0,230,118,.2)" stroke="#00e676" stroke-width="1"/>
+          <text x="534" y="132" font-family="monospace" font-size="6" fill="#00e676" text-anchor="middle">ITV</text>
+          <!-- Bay numbers -->
+          <text x="42" y="143" font-family="monospace" font-size="6" fill="#4a6a8a" text-anchor="middle">1</text>
+          <text x="120" y="143" font-family="monospace" font-size="6" fill="#4a6a8a" text-anchor="middle">4</text>
+          <text x="220" y="143" font-family="monospace" font-size="6" fill="#00bcd4" text-anchor="middle">7</text>
+          <text x="318" y="143" font-family="monospace" font-size="6" fill="#4a6a8a" text-anchor="middle">10</text>
+          <text x="420" y="143" font-family="monospace" font-size="6" fill="#ffb300" text-anchor="middle">13</text>
+          <defs><marker id="yarrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#00bcd4"/></marker></defs>
+          <text x="280" y="14" font-family="monospace" font-size="8" fill="#4a6a8a" text-anchor="middle">RTG 1 needs bay 7 (cyan target) but RTG 2 is between them — non-crossing enforced</text>
+        </svg>
+      </div>
+
+      <!-- Cross-links -->
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.7rem;">Cross-references</div>
+        <div class="g3" style="gap:.8rem;">
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.6rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Block length research</div>
+            <div style="font-size:.75rem;color:var(--muted);">Optimal 56–72 slots balances YT routing flexibility and YC interference. <span class="xlink" onclick="showSectionTab('dimensioning','dim-system')">→ Dimensioning: System Selection ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">YCR benchmark</div>
+            <div style="font-size:.75rem;color:var(--muted);">Target 15–20 moves/hr (RTG), 25–30 (ASC). <span class="xlink" onclick="showSectionTab('kpis','kpi-reference')">→ KPI Reference Table ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--green);">
+            <div style="font-size:.6rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">KPI hierarchy</div>
+            <div style="font-size:.75rem;color:var(--muted);">YCR feeds GCR — the master terminal KPI. <span class="xlink" onclick="showSectionTab('kpis','kpi-hierarchy')">→ KPI Hierarchy Diagram ↗</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end ys-crane -->
+
+    <!-- ══ TAB 3: RESHUFFLE & PRE-MARSHALLING ══ -->
+    <div id="ys-reshuffle" class="tab-content">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">RESHFP</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Target &lt;0.2</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">S ≥ 0.6</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Itsuro accessibility index (import)</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">40–70%</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Reshuffle reduction from pre-marshalling</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">Offline vs Online</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Two fundamentally different modes</div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-red">
+          <div class="sh" style="color:var(--red);margin-bottom:.8rem;">The Reshuffle Problem</div>
+          <p class="body">When a target container is buried under others in a stack, those containers above must be temporarily relocated before the target can be picked up. Each relocation is a <strong>non-productive move</strong> — it consumes crane capacity without advancing throughput.</p>
+          <div class="formula-box" style="margin-top:.8rem;">RESHFP = non-productive relocations ÷ productive moves</div>
+          <ul class="var-list" style="margin-top:.6rem;">
+            <li><span class="vname">Target</span><span class="vdesc">&lt;0.2 — fewer than 1 reshuffle per 5 productive moves</span></li>
+            <li><span class="vname">At 75% util.</span><span class="vdesc">RESHFP typically 0.2–0.3</span></li>
+            <li><span class="vname">At 85% util.</span><span class="vdesc">RESHFP spikes to 0.5+ as stacks become dense and retrieval order uncertain</span></li>
+          </ul>
+        </div>
+
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.8rem;">Itsuro Accessibility Index (S)</div>
+          <p class="body">S is the probability that a randomly chosen container in a stack can be directly accessed without moving any container above it.</p>
+          <ul class="var-list" style="margin-top:.6rem;">
+            <li><span class="vname">S = 1.0</span><span class="vdesc">Stack height h=1 — every container always accessible. Zero reshuffles possible.</span></li>
+            <li><span class="vname">S ≥ 0.6</span><span class="vdesc">Minimum acceptable for <strong>import containers</strong>. Retrieval order unpredictable — needs headroom.</span></li>
+            <li><span class="vname">S ≥ 0.5</span><span class="vdesc">Minimum for <strong>export / transship</strong>. More predictable retrieval sequence allows tighter stacking.</span></li>
+            <li><span class="vname">S decreases as h ↑</span><span class="vdesc">The key design trade-off with stacking height — higher h increases TEU capacity but degrades accessibility.</span></li>
+          </ul>
+          <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.25);border-radius:4px;font-size:.75rem;color:var(--muted);">
+            <strong style="color:var(--white);">Design implication:</strong> The stacking height values h used in the Dimensioning formulas are not simply "maximum possible" — they are the highest h consistent with maintaining S above its minimum. This is why Chu &amp; Huang (2005) specifies different h values for import vs export containers.
+          </div>
+        </div>
+      </div>
+
+      <!-- Offline vs online -->
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.8rem;">Offline Reshuffle — Pre-marshalling</div>
+          <p class="body">Deliberate physical rearrangement of export containers into vessel loading sequence, performed <em>before</em> the vessel arrives — typically overnight or during a quiet period.</p>
+          <ul class="var-list" style="margin-top:.7rem;">
+            <li><span class="vname">Timing</span><span class="vdesc">Typically starts 8–16h before vessel arrival. Completed before the vessel berths.</span></li>
+            <li><span class="vname">Crane cost</span><span class="vdesc">Typically 2–6 crane-hours per vessel call — time that could otherwise serve import pickups.</span></li>
+            <li><span class="vname">Benefit</span><span class="vdesc">40–70% reduction in live reshuffles during loading. Directly improves GCR during vessel service.</span></li>
+            <li><span class="vname">Depth of sort</span><span class="vdesc">Decision variable: sort by bay only? By row? Full sort to exact load sequence? Deeper sort = more crane time but fewer live reshuffles.</span></li>
+            <li><span class="vname">Trade-off</span><span class="vdesc">Pre-marshalling consumes crane capacity. If the vessel call changes size at cutoff, some pre-marshalling work is wasted. Must be balanced against other pending crane tasks.</span></li>
+          </ul>
+        </div>
+
+        <div class="panel panel-red">
+          <div class="sh" style="color:var(--red);margin-bottom:.8rem;">Online Reshuffle — Reactive</div>
+          <p class="body">Unplanned relocations that occur during live crane operations when a buried container must be accessed. Disruptive because they interrupt the planned work order queue.</p>
+          <ul class="var-list" style="margin-top:.7rem;">
+            <li><span class="vname">Trigger</span><span class="vdesc">TOS requests a specific container; another container blocks access to it.</span></li>
+            <li><span class="vname">Effect</span><span class="vdesc">Crane must place the blocking container somewhere (reshuffle destination); other tasks in the queue must wait.</span></li>
+            <li><span class="vname">Cascade risk</span><span class="vdesc">The reshuffle destination may itself cause a future reshuffle — exponential degradation at high yard utilisation.</span></li>
+            <li><span class="vname">Minimised by</span><span class="vdesc">Good initial storage assignment + pre-marshalling. Both are cheaper than live reshuffles.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slot planning -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">The Slot Planning Problem</div>
+        <p class="body">Before assigning a container to a slot, the TOS can estimate the expected number of future reshuffles for every candidate placement. Assigning a container with an early retrieval date deep in a tall stack is expensive; assigning a long-dwell container to the top of a stack near the exit lane is efficient.</p>
+        <div class="g3" style="gap:1rem;margin-top:1rem;">
+          <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;border-top:3px solid var(--green);">
+            <div style="font-size:.65rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Good assignment</div>
+            <p style="font-size:.75rem;color:var(--muted);">Short-dwell container → top tier, near exit lane, adjacent to assigned berth. Zero expected reshuffles.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;border-top:3px solid var(--amber);">
+            <div style="font-size:.65rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Acceptable assignment</div>
+            <p style="font-size:.75rem;color:var(--muted);">Long-dwell container → tier 2, block utilisation 60%. Low expected reshuffles because yard has headroom.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.2);padding:.8rem;border-radius:4px;border-top:3px solid var(--red);">
+            <div style="font-size:.65rem;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Bad assignment</div>
+            <p style="font-size:.75rem;color:var(--muted);">Early-departure vessel export → tier 4 (bottom), block at 85% utilisation. High probability of reshuffles — TOS should reject and find a better slot.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cross-links -->
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.7rem;">Cross-references</div>
+        <div class="g2" style="gap:.8rem;">
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.6rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Stacking height and accessibility</div>
+            <div style="font-size:.75rem;color:var(--muted);">The h values in Cmax and Tmax formulas reflect the accessibility constraint S ≥ 0.6, not maximum possible stacking. <span class="xlink" onclick="showSectionTab('dimensioning','dim-formulas')">→ Chu &amp; Huang Formulas ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">RESHFP as a KPI</div>
+            <div style="font-size:.75rem;color:var(--muted);">RESHFP &lt;0.2 is the formal operational target — benchmarked in the KPI Reference table. <span class="xlink" onclick="showSectionTab('kpis','kpi-reference')">→ KPI Reference (Yardside) ↗</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end ys-reshuffle -->
+
+    <!-- ══ TAB 4: INTERNAL TRANSPORT ══ -->
+    <div id="ys-itv" class="tab-content">
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">Coupling</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">ITV links quay crane to yard</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">R²=0.42</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Truck TAT → CMPH (IAPH 2016)</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">2–4</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Buffer positions per quay crane</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">Deadlock</div>
+          <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Key failure mode in AGV systems</div>
+        </div>
+      </div>
+
+      <!-- ITV types table -->
+      <div class="panel" style="margin-bottom:1.5rem;">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">ITV Technology Types — Comparison</div>
+        <div style="overflow-x:auto;">
+        <table class="equipment-comparison">
+          <thead><tr>
+            <th style="text-align:left;">Type</th>
+            <th style="text-align:left;">Full name</th>
+            <th>Autonomy</th>
+            <th>Stacking</th>
+            <th>Routing</th>
+            <th>Capital cost</th>
+            <th style="text-align:left;">Key characteristic</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;color:var(--white);">PM+chassis</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Prime Mover + flatbed trailer</td><td class="good">Manual</td><td class="bad">No (1-high)</td><td class="good">Free</td><td class="good">Low</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Cheapest; most flexible routing; driver required</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">SC</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Straddle Carrier</td><td class="good">Manual</td><td class="good">Yes (1-over-2)</td><td class="good">Free</td><td class="mid">Medium</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">No handoff — combines transport and stacking; driver required</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">AGV</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Automated Guided Vehicle</td><td class="bad">Full auto</td><td class="bad">No (1-high)</td><td class="bad">Fixed network</td><td class="bad">High</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">No driver; requires dedicated road network; deadlock risk</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">ALV</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">Automated Lifting Vehicle</td><td class="bad">Full auto</td><td class="mid">Yes (1-high stack)</td><td class="mid">Flexible</td><td class="bad">Very high</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">More flexible than AGV; can stack; fewer deadlock scenarios</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">Used at: AGV — Rotterdam ECT Delta, Hamburg Altenwerder; ALV — TPA Strand (pilot). PM+chassis dominant at most conventional terminals worldwide.</p>
+      </div>
+
+      <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div class="panel panel-cyan">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">Dispatch Problem</div>
+          <p class="body">Given N quay cranes generating tasks and M ITVs available, assign ITVs to crane tasks to minimise crane waiting time. The ITV cycle time — from receiving a task, picking up the container, delivering it, and returning empty — determines how many ITVs are needed per crane.</p>
+          <div style="margin-top:.8rem;">
+            <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">ITV cycle time components</div>
+            <ul class="var-list">
+              <li><span class="vname">Travel laden</span><span class="vdesc">Drive from quay crane transfer zone to yard crane transfer zone (with container)</span></li>
+              <li><span class="vname">Yard wait</span><span class="vdesc">Wait for yard crane to pick up / put down container at the stack</span></li>
+              <li><span class="vname">Travel unladen</span><span class="vdesc">Return to quay crane transfer zone (empty)</span></li>
+              <li><span class="vname">Quay wait</span><span class="vdesc">Wait for quay crane to load / unload (buffer zone)</span></li>
+            </ul>
+          </div>
+          <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.25);border-radius:4px;border-left:3px solid var(--green);">
+            <div style="font-size:.62rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem;">Dual-cycling</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">An ITV that has delivered a discharge container to the yard picks up an export container for the <em>same</em> quay crane before returning — halving dead (empty) travel. Requires TOS to coordinate crane schedule with ITV routing. Can increase ITV effective throughput by 20–35%.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+            <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Buffer Zone Sizing</div>
+            <p class="body">A buffer zone at the waterside transfer point allows the quay crane to continue working while ITVs are in transit. Without a buffer, the quay crane stops every time an ITV is late — directly reducing GCR.</p>
+            <ul class="var-list" style="margin-top:.5rem;">
+              <li><span class="vname">Rule of thumb</span><span class="vdesc">2–4 buffer positions per quay crane. Larger buffer decouples crane from ITV variability but takes up apron space.</span></li>
+              <li><span class="vname">Optimal size</span><span class="vdesc">Function of ITV cycle time variance and number of ITVs per crane. Solved analytically using queueing theory (M/G/c model).</span></li>
+            </ul>
+          </div>
+          <div class="panel" style="border-top:3px solid var(--red);">
+            <div class="sh" style="color:var(--red);margin-bottom:.7rem;">AGV-Specific Challenges</div>
+            <ul class="var-list">
+              <li><span class="vname">Deadlock</span><span class="vdesc">Two AGVs blocking each other on a one-way road segment. Prevented by conflict-free routing algorithms (reservation-based or zone-based).</span></li>
+              <li><span class="vname">Road network design</span><span class="vdesc">One-way loops with passing bays. Network topology directly affects deadlock probability and average travel time.</span></li>
+              <li><span class="vname">Battery recharging</span><span class="vdesc">Battery AGVs must periodically leave service for charging (30–60 min). Fleet must be oversized to maintain coverage. Opportunity charging at transfer zones emerging.</span></li>
+              <li><span class="vname">Mixed traffic exclusion</span><span class="vdesc">Human workers cannot enter AGV operating zones. Creates operational zoning constraints that affect maintenance access.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cross-links -->
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.7rem;">Cross-references</div>
+        <div class="g2" style="gap:.8rem;">
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--red);">
+            <div style="font-size:.6rem;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Truck TAT → CMPH mechanism</div>
+            <div style="font-size:.75rem;color:var(--muted);">Gate TAT propagates to ITV congestion, which starves quay cranes. R²=0.42 is the empirical evidence. <span class="xlink" onclick="showSectionTab('kpis','kpi-iaph')">→ IAPH Benchmarks ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.6rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">KPI causal chain</div>
+            <div style="font-size:.75rem;color:var(--muted);">ITV performance drives YCR, which drives GCR — the master terminal KPI. <span class="xlink" onclick="showSectionTab('kpis','kpi-hierarchy')">→ KPI Hierarchy Diagram ↗</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end ys-itv -->
+
+    <!-- ══ TAB 5: SPECIAL CARGO ══ -->
+    <div id="ys-special" class="tab-content">
+
+      <div class="g3" style="gap:1.2rem;margin-bottom:1.5rem;">
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--muted);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--muted);">15–25%</div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Empty containers</div>
+          <div style="font-size:.68rem;color:var(--muted);">of yard capacity at most terminals</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--cyan);">10–15%</div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Reefer plug density</div>
+          <div style="font-size:.68rem;color:var(--muted);">typical proportion of reefer-capable slots</div>
+        </div>
+        <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--red);">IMDG Classes 1–9</div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Hazmat segregation</div>
+          <div style="font-size:.68rem;color:var(--muted);">each class has minimum separation requirements</div>
+        </div>
+      </div>
+
+      <div class="g3" style="gap:1.2rem;margin-bottom:1.5rem;">
+
+        <!-- Empties -->
+        <div class="panel" style="border-top:3px solid var(--muted);">
+          <div class="sh" style="color:var(--muted);margin-bottom:.8rem;">📭 Empty Container Management</div>
+          <ul class="var-list">
+            <li><span class="vname">Volume</span><span class="vdesc">15–25% of yard capacity. Empties are shipped for repositioning — the global empty container imbalance costs the industry $20B+/yr.</span></li>
+            <li><span class="vname">Stacking height</span><span class="vdesc">5–8 high (lightweight — no structural weight stack limit). Very space-efficient but requires careful ISO type sorting.</span></li>
+            <li><span class="vname">Sorting</span><span class="vdesc">Must be sorted by ISO type (20GP, 40HC, 45R1 etc.) and shipping line for efficient retrieval and inspection.</span></li>
+            <li><span class="vname">Storage location</span><span class="vdesc">Typically placed at the rear of the yard (lowest real estate value) or in an off-dock empty depot to free prime yard space.</span></li>
+            <li><span class="vname">Repositioning revenue</span><span class="vdesc">Shipping lines pay terminals for empty repositioning moves — a meaningful ancillary revenue stream.</span></li>
+            <li><span class="vname">Inspection</span><span class="vdesc">Pre-trip inspection (PTI) required before empties are accepted — damage affects the shipping line's equipment pool.</span></li>
+          </ul>
+        </div>
+
+        <!-- Reefer -->
+        <div class="panel" style="border-top:3px solid var(--cyan);">
+          <div class="sh sh-cyan" style="margin-bottom:.8rem;">🌡️ Reefer Management</div>
+          <ul class="var-list">
+            <li><span class="vname">Constant power</span><span class="vdesc">Reefer containers require permanent electrical connection at all times — they cannot be placed in non-plug slots, even temporarily.</span></li>
+            <li><span class="vname">Plug density</span><span class="vdesc">Typically 10–15% of yard slots are reefer-capable. This caps the maximum reefer volume the terminal can handle simultaneously — a hard operational constraint.</span></li>
+            <li><span class="vname">Temperature monitoring</span><span class="vdesc">TOS tracks set-point vs actual temperature for every reefer. Alarms automatically dispatched to reefer technician on call. Required by cargo owners and shipping lines.</span></li>
+            <li><span class="vname">PTI</span><span class="vdesc">Pre-Trip Inspection conducted 24h before vessel loading to verify refrigeration unit integrity, door seals, and temperature log. Failures require repair or cargo transfer.</span></li>
+            <li><span class="vname">Stacking limit</span><span class="vdesc">Typically limited to 2–3 high — heavier units and need for individual plug management makes high stacking impractical.</span></li>
+            <li><span class="vname">Energy cost</span><span class="vdesc">Reefers are a major terminal electricity cost. Power management systems regulate voltage and load-shed non-critical plug points during grid peaks.</span></li>
+          </ul>
+        </div>
+
+        <!-- Hazmat -->
+        <div class="panel" style="border-top:3px solid var(--red);">
+          <div class="sh" style="color:var(--red);margin-bottom:.8rem;">⚠️ Hazmat Segregation (IMDG)</div>
+          <ul class="var-list">
+            <li><span class="vname">IMDG Classes</span><span class="vdesc">1 Explosives · 2 Gases · 3 Flammables · 4 Solid flammables · 5 Oxidisers · 6 Toxic · 7 Radioactive · 8 Corrosives · 9 Misc dangerous</span></li>
+            <li><span class="vname">Class 1 (Explosives)</span><span class="vdesc">Isolated corner with 50m minimum separation from all other dangerous goods. Requires dedicated fencing, signage, fire suppression, and 24h security.</span></li>
+            <li><span class="vname">Class 3 + Class 8</span><span class="vdesc">Flammables and corrosives cannot be stored adjacent — IMDG segregation table specifies "Separated from" for these combinations.</span></li>
+            <li><span class="vname">Manifest</span><span class="vdesc">Terminal must maintain a real-time hazmat manifest available to the port authority, fire brigade, and customs at all times.</span></li>
+            <li><span class="vname">Inspection priority</span><span class="vdesc">Hazmat containers are priority flagged for customs physical inspection — creates a dedicated inspection lane and pad requirement in the yard.</span></li>
+            <li><span class="vname">Yard design</span><span class="vdesc">Hazmat zone requires dedicated vehicle access routes (to avoid routing hazmat through populated areas of the yard), spill containment bunds, and separation from reefer electrical infrastructure.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cross-link -->
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.6rem;">Cross-references</div>
+        <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+          <div style="font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Special cargo and yard dimensioning</div>
+          <div style="font-size:.75rem;color:var(--muted);">Reefer zones and hazmat separation reduce effective usable TGS. The W<sub>S</sub> parameter in Chu &amp; Huang Formula 1 accounts for special-needs width subtracted from the quay wall length. <span class="xlink" onclick="showSectionTab('dimensioning','dim-formulas')">→ Chu &amp; Huang Formulas (W<sub>S</sub>) ↗</span></div>
+        </div>
+      </div>
+    </div><!-- end ys-special -->
+
+    <!-- ══ TAB 6: BLOCK LAYOUT & PLANNING ══ -->
+    <div id="ys-layout" class="tab-content">
+
+      <!-- Block orientation -->
+      <div class="sh" style="margin-top:.5rem;margin-bottom:1rem;">Block Layout: End-Loading vs Side-Loading</div>
+      <div class="layout-compare">
+        <div class="layout-card">
+          <h3><span class="popup-trigger" onclick="openPopup('end-loading')">End Loading<span class="pip">ⓘ</span></span></h3>
+          <div class="layout-diagram">
+            <div class="quay-line">═══════════ QUAY WALL ═══════════</div>
+            <div>  ↑ (seaside vehicles only)         </div>
+            <div class="crane-sym">  [═╤═╤═╤═╤═╤═╤═╤═╤═╤═╤═]  BLOCK</div>
+            <div class="container-sym">  ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐  containers</div>
+            <div class="container-sym">  └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘         </div>
+            <div class="crane-sym">  [═╤═╤═╤═╤═╤═╤═╤═╤═╤═╤═]  BLOCK</div>
+            <div>  ↓ (landside trucks only)          </div>
+            <div class="truck-sym">  ──────────────────────────────</div>
+            <div>  🚛 ROAD TRANSPORT                 </div>
+          </div>
+          <div class="pros-cons">
+            <div>
+              <div class="pros-label">Advantages</div>
+              <ul class="pros">
+                <li>Seaside/landside traffic fully separated — no conflict</li>
+                <li>Simpler traffic control and safety management</li>
+                <li>Used at Euromax (Rotterdam) &amp; Altenwerder (Hamburg)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="cons-label">Disadvantages</div>
+              <ul class="cons">
+                <li>YCs must do full round-trips per container</li>
+                <li>Longer vehicle waiting times at transfer ends</li>
+                <li>Vehicles need parking buffer zone at each end</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="layout-card">
+          <h3><span class="popup-trigger" onclick="openPopup('side-loading')">Side Loading<span class="pip">ⓘ</span></span></h3>
+          <div class="layout-diagram">
+            <div class="quay-line">═══════════ QUAY WALL ═══════════</div>
+            <div class="truck-sym">  🚛 vehicles park beside block    </div>
+            <div class="crane-sym">  ┌──╤──────────────────╤──┐      </div>
+            <div class="container-sym">  │  ┌─┬─┬─┬─┬─┬─┬─┬─┐  │  BLOCK  </div>
+            <div class="container-sym">  │  └─┴─┴─┴─┴─┴─┴─┴─┘  │         </div>
+            <div class="crane-sym">  └──╧──────────────────╧──┘      </div>
+            <div class="truck-sym">  🚛 🚛 🚛 vehicles along side     </div>
+            <div>  ↓ all traffic mixed              </div>
+            <div class="truck-sym">  ──────────────────────────────</div>
+          </div>
+          <div class="pros-cons">
+            <div>
+              <div class="pros-label">Advantages</div>
+              <ul class="pros">
+                <li>Better YC performance — shorter gantry travel per move</li>
+                <li>Especially efficient with straddle carriers</li>
+                <li>Common: Pasir Panjang (SG), Modern Terminal (HK)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="cons-label">Disadvantages</div>
+              <ul class="cons">
+                <li>Traffic interference between mixed vehicle streams</li>
+                <li>Complex traffic control requirements</li>
+                <li>Longer travel distances for some moves</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top:.7rem;background:rgba(0,188,212,.06);border:1px solid var(--steel);border-radius:4px;padding:.7rem;font-size:.75rem;color:var(--muted);">
+            <strong style="color:var(--cyan);">Solution to traffic interference:</strong> Split yard into import and export sections — export containers placed closer to the vessel to reduce mixed-traffic conflict.
+          </div>
+        </div>
+      </div>
+
+      <!-- Block length guidance -->
+      <div class="panel panel-green" style="margin-top:1.5rem;margin-bottom:1.5rem;">
+        <div class="sh" style="margin-bottom:.8rem;">Optimal Block Length — Petering &amp; Murty (2009)</div>
+        <p class="body" style="margin-bottom:.8rem;">Simulation across 432 scenarios (4 terminal sizes × 2 equipment levels × 54 block lengths) shows a concave GCR-vs-block-length relationship. The optimal range is consistent across all tested configurations.</p>
+        <div class="g2" style="gap:1.5rem;">
+          <div>
+            <ul class="var-list">
+              <li><span class="vname">&lt;28 slots</span><span class="vdesc" style="color:var(--red);">Only 1 YC can effectively operate per block — too short for multi-crane deployment.</span></li>
+              <li><span class="vname">56–72 slots</span><span class="vdesc" style="color:var(--green);">Optimal. Balances YT routing flexibility and YC–YC interference. Somewhat longer than average real-world block.</span></li>
+              <li><span class="vname">&gt;84 slots</span><span class="vdesc" style="color:var(--amber);">Diminishing returns — multiple YCs begin to interfere. GCR improvement levels off.</span></li>
+              <li><span class="vname">170-ft rule</span><span class="vdesc">Minimum YC–YC safety separation (8 slots). Must be enforced regardless of block length.</span></li>
+              <li><span class="vname">Buffer lane</span><span class="vdesc">A designated ITV / truck waiting lane at both ends of each block decouples yard crane schedule from vehicle arrival variability.</span></li>
+            </ul>
+          </div>
+          <div>
+            <div style="padding:.8rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--green);">
+              <div style="font-size:.62rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">YC Deployment rule</div>
+              <p style="font-size:.75rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--white);">Restrictive deployment</strong> (min/max YCs per block) consistently outperforms free deployment in all 34 tested configurations. The advantage grows with terminal size and when equipment is scarce. Coordination beats adding equipment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planning horizons -->
+      <div class="panel panel-amber" style="margin-bottom:1.5rem;">
+        <div class="sh" style="margin-bottom:.8rem;">Yard Planning Horizon Framework</div>
+        <div style="overflow-x:auto;">
+        <table class="equipment-comparison">
+          <thead><tr>
+            <th style="text-align:left;">Horizon</th>
+            <th>Timeframe</th>
+            <th style="text-align:left;">Key decisions</th>
+            <th style="text-align:left;">Who decides</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left;color:var(--white);font-weight:600;">Strategic</td>
+              <td>Months–years</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Yard layout, block count, equipment fleet sizing (TGS), automation investment</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Port authority / terminal operator</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;color:var(--white);font-weight:600;">Tactical</td>
+              <td>Days–weeks</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Block allocation by cargo type, reefer zone sizing for expected vessel calls, yard maintenance scheduling</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Yard planner</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;color:var(--white);font-weight:600;">Operational</td>
+              <td>Hours</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Pre-marshalling schedule, container positioning for upcoming vessels, crane task assignment</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Shift supervisor / TOS</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;color:var(--white);font-weight:600;">Real-time</td>
+              <td>Minutes</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">Individual crane work orders, ITV dispatch, reactive reshuffle response, equipment breakdown reallocation</td>
+              <td style="text-align:left;font-size:.72rem;color:var(--muted);">TOS (automated) + crane operator</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Cross-links -->
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.7rem;">Cross-references</div>
+        <div class="g3" style="gap:.8rem;">
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.6rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Block parameters → TGS</div>
+            <div style="font-size:.75rem;color:var(--muted);">Block length, row count, and stacking height all feed directly into the C&amp;H formula chain. Build your terminal in the interactive designer. <span class="xlink" onclick="showSectionTab('dimensioning','dim-designer')">→ Terminal Designer ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">System selection benchmarks</div>
+            <div style="font-size:.75rem;color:var(--muted);">IAPH area benchmarks (m²/TEU) and TYM-based crane sizing by system type. <span class="xlink" onclick="showSectionTab('dimensioning','dim-system')">→ System Selection ↗</span></div>
+          </div>
+          <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--green);">
+            <div style="font-size:.6rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Output KPIs</div>
+            <div style="font-size:.75rem;color:var(--muted);">YUTIL and RESHFP are the formal operational KPIs for layout quality. Target 65–75% and &lt;0.2. <span class="xlink" onclick="showSectionTab('kpis','kpi-reference')">→ KPI Reference (Yardside) ↗</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end ys-layout -->
+
+  </div><!-- end yardside zone-content -->
 
   <!-- GATESIDE -->
   <div id="gateside" class="zone-content">
@@ -4967,6 +5577,34 @@ function filterGloss(cat, btn) {
       card.classList.add('hidden');
     }
   });
+}
+
+// Cross-section navigation helper — used by .xlink buttons
+function showSectionTab(sectionId, tabId) {
+  // 1. Activate the section
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  section.classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    const fn = b.getAttribute('onclick') || '';
+    b.classList.toggle('active', fn.includes("'"+sectionId+"'") || fn.includes('"'+sectionId+'"'));
+  });
+  // 2. Activate the tab inside that section
+  const tabEl = document.getElementById(tabId);
+  if (tabEl && tabEl.classList.contains('tab-content')) {
+    section.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabEl.classList.add('active');
+    section.querySelectorAll('.tab-btn').forEach(b => {
+      const fn = b.getAttribute('onclick') || '';
+      if (fn.includes("'"+tabId+"'") || fn.includes('"'+tabId+'"')) b.classList.add('active');
+    });
+  }
+  // 3. Scroll to section heading
+  section.scrollIntoView({behavior:'smooth', block:'start'});
+  // 4. Update hash
+  history.replaceState(null,'','#'+sectionId+'/'+tabId);
 }
 
 function showSection(id, btn) {
