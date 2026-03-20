@@ -1845,6 +1845,8 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <button class="tab-btn" onclick="showTab('dim-frankel',this)">Frankel Formula</button>
     <button class="tab-btn" onclick="showTab('dim-example',this)">▶ Worked Example</button>
     <button class="tab-btn" onclick="showTab('dim-system',this)">System Selection</button>
+    <button class="tab-btn" onclick="showTab('dim-tables',this)">📊 Capacity Tables</button>
+    <button class="tab-btn" onclick="showTab('dim-designer',this)">🔧 Terminal Designer</button>
   </div>
 
   <div id="dim-demand" class="tab-content active">
@@ -2623,6 +2625,289 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
       <p class="body" style="margin-top:1rem;font-size:.75rem;"><em>Sources: Chu &amp; Huang (2005); IAPH (2016); Petering &amp; Murty (2009). Area benchmarks from Chu &amp; Huang Table 5 (W<sub>Y</sub>=320m, D<sub>Y</sub>=400m).</em></p>
     </div>
   </div>
+
+  <!-- ===== TAB 8: CAPACITY REFERENCE TABLES ===== -->
+  <div id="dim-tables" class="tab-content">
+    <div class="sh" style="margin-bottom:.3rem;">📊 Capacity Reference Tables</div>
+    <p class="subtitle">Pre-computed terminal capacities for standard configurations — select your layout, read off the TEU/yr. No calculation required. All values use Chu &amp; Huang (2005) formulas, P=1.3.</p>
+
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;">
+      <span style="font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Filter:</span>
+      <button class="tab-btn active" onclick="filterCapTable('all',this)">All Layouts</button>
+      <button class="tab-btn" onclick="filterCapTable('1berth',this)">1-Berth</button>
+      <button class="tab-btn" onclick="filterCapTable('2berth',this)">2-Berth</button>
+      <div style="margin-left:auto;font-size:.62rem;color:var(--muted);">
+        <span style="background:rgba(0,230,118,.25);padding:2px 8px;border-radius:2px;margin-right:4px;">&#9632; &gt;1M TEU/yr</span>
+        <span style="background:rgba(255,179,0,.25);padding:2px 8px;border-radius:2px;margin-right:4px;">&#9632; 500k–1M</span>
+        <span style="background:rgba(255,82,82,.25);padding:2px 8px;border-radius:2px;">&#9632; &lt;500k</span>
+      </div>
+    </div>
+
+    <!-- SECTION A: YARD -->
+    <div class="panel" style="margin-bottom:1.5rem;padding:0;overflow:hidden;">
+      <div style="padding:.9rem 1.4rem;background:rgba(0,188,212,.06);border-bottom:1px solid var(--steel);">
+        <div class="sh sh-cyan" style="margin-bottom:.2rem;">Section A — Yard Capacity by System &amp; Geometry (TEU/yr)</div>
+        <p style="font-size:.7rem;color:var(--muted);">T<sub>max</sub> = TGS &times; h &times; 365 &divide; (D&#x0304; &times; 1.3). Design target = T<sub>max</sub> &times; 0.75. Three dwell scenarios shown. Source: Chu &amp; Huang (2005).</p>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="cap-table-yard" class="equipment-comparison" style="font-size:.69rem;min-width:1050px;">
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align:left;vertical-align:bottom;min-width:75px;">Layout</th>
+              <th rowspan="2" style="text-align:left;vertical-align:bottom;min-width:120px;">System</th>
+              <th rowspan="2" style="min-width:50px;">TGS</th>
+              <th rowspan="2" style="min-width:65px;">TEU Cap</th>
+              <th colspan="3" style="border-bottom:1px solid var(--steel);color:var(--white);">T<sub>max</sub> TEU/yr by avg dwell</th>
+              <th rowspan="2" style="min-width:90px;color:var(--amber);">Design Target<br><span style="font-weight:400;font-size:.6rem;">(T<sub>max</sub>&times;0.75, D&#x0304;=3.1d)</span></th>
+            </tr>
+            <tr>
+              <th style="color:var(--green);">D&#x0304;=3.1d</th>
+              <th style="color:var(--amber);">D&#x0304;=5d</th>
+              <th style="color:var(--red);">D&#x0304;=7d</th>
+            </tr>
+          </thead>
+          <tbody id="cap-table-yard-body"></tbody>
+        </table>
+      </div>
+      <div style="padding:.5rem 1.4rem;font-size:.6rem;color:var(--muted);border-top:1px solid var(--steel);">
+        Standard params per equipment — SC: W<sub>C</sub>=3m, W<sub>T</sub>=1.6m, W<sub>R</sub>=5m, IAR=60 TEU (1-berth)/120 TEU (2-berth). RTG 5+1: W<sub>C</sub>=20m, W<sub>T</sub>=2m, W<sub>R</sub>=22m. RTG 6+1: W<sub>C</sub>=23.5m. RMG 11: W<sub>C</sub>=54m, W<sub>A</sub>=1m. RMG 12: W<sub>C</sub>=57m. All: L<sub>C</sub>=6.1m, C<sub>R</sub>=0.4m, W<sub>S</sub>=0, W<sub>P</sub> per config, P=1.3.
+      </div>
+    </div>
+
+    <!-- SECTION B: BERTH -->
+    <div class="panel" style="margin-bottom:1.5rem;padding:0;overflow:hidden;">
+      <div style="padding:.9rem 1.4rem;background:rgba(255,179,0,.06);border-bottom:1px solid var(--steel);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.2rem;">Section B — Berth / Seaside Capacity (TEU/yr)</div>
+        <p style="font-size:.7rem;color:var(--muted);">Net rate = GCR &times; 0.65. Vessel rate = cranes &times; net rate. Berth time = call size &divide; vessel rate. Calls/yr = (350d &times; 24h &times; 0.70) &divide; berth time. TEU/yr = calls &times; call size &divide; 2 &times; berths.</p>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;padding:.7rem 1.4rem;border-bottom:1px solid var(--steel);align-items:center;">
+        <span style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">GCR Scenario:</span>
+        <button class="tab-btn active" onclick="filterBerthTable('med',this)">18 lifts/hr (UNCTAD median)</button>
+        <button class="tab-btn" onclick="filterBerthTable('good',this)">25 lifts/hr (good)</button>
+        <button class="tab-btn" onclick="filterBerthTable('wc',this)">35 lifts/hr (world-class)</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="cap-table-berth" class="equipment-comparison" style="font-size:.69rem;min-width:700px;">
+          <thead>
+            <tr>
+              <th>Berths</th><th>Cranes/berth</th><th>Call size (moves)</th>
+              <th>Berth time (hr)</th><th>Calls/yr</th><th>TEU/yr (berth side)</th><th>Max vessel (TEU)</th>
+            </tr>
+          </thead>
+          <tbody id="cap-table-berth-body"></tbody>
+        </table>
+      </div>
+      <div style="padding:.5rem 1.4rem;font-size:.6rem;color:var(--muted);border-top:1px solid var(--steel);">
+        u=0.65, berth occupancy=70%, 350 op days/yr, berth length=350m. Max vessel TEU from Abramowski et al. (2018): LBP&#x2248;1.50+0.413&middot;ln&sup3;(TEU); berth&ge;1.1&times;LBP.
+      </div>
+    </div>
+
+    <!-- SECTION C: BOTTLENECK -->
+    <div class="panel panel-orange">
+      <div class="sh">Section C — Binding Constraint Identifier</div>
+      <p class="body">Terminal throughput = min(yard capacity, berth capacity). Enter your estimates to identify the bottleneck.</p>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-top:1rem;">
+        <div style="background:rgba(0,0,0,.3);border-radius:4px;padding:1rem;text-align:center;">
+          <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Yard Capacity (TEU/yr)</div>
+          <input id="bn-yard" type="number" value="600000" min="0" step="10000" oninput="updateBottleneck()"
+            style="width:100%;background:transparent;border:1px solid var(--steel);color:var(--white);padding:.4rem .6rem;border-radius:4px;font-family:'Space Mono',monospace;font-size:1rem;text-align:center;">
+        </div>
+        <div style="text-align:center;font-size:1.5rem;color:var(--amber);">vs</div>
+        <div style="background:rgba(0,0,0,.3);border-radius:4px;padding:1rem;text-align:center;">
+          <div style="font-size:.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Berth Capacity (TEU/yr)</div>
+          <input id="bn-berth" type="number" value="800000" min="0" step="10000" oninput="updateBottleneck()"
+            style="width:100%;background:transparent;border:1px solid var(--steel);color:var(--white);padding:.4rem .6rem;border-radius:4px;font-family:'Space Mono',monospace;font-size:1rem;text-align:center;">
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:1rem;border-radius:4px;text-align:center;background:rgba(0,0,0,.2);border:1px solid var(--steel);">
+        <div style="font-size:.62rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem;">Terminal Throughput = min(yard, berth)</div>
+        <div id="bn-value" style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--green);">600,000 TEU/yr</div>
+        <div id="bn-label" style="font-size:.75rem;color:var(--amber);margin-top:.2rem;">&#9888;&#65039; Yard is the binding constraint</div>
+      </div>
+    </div>
+  </div><!-- end dim-tables -->
+
+  <!-- ===== TAB 9: TERMINAL DESIGNER ===== -->
+  <div id="dim-designer" class="tab-content">
+    <div class="sh" style="margin-bottom:.3rem;">&#128295; Terminal Designer</div>
+    <p class="subtitle">Set your parameters — all capacity outputs update live. Select which formulas to apply and compare results side by side.</p>
+
+    <div style="display:grid;grid-template-columns:300px 1fr 1fr;gap:1rem;align-items:start;">
+
+      <!-- INPUT PANEL -->
+      <div style="display:flex;flex-direction:column;gap:.7rem;">
+
+        <div class="panel panel-cyan" style="padding:.9rem;">
+          <div class="sh sh-cyan" style="font-size:.82rem;margin-bottom:.6rem;">Yard Geometry</div>
+          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">W<sub>Y</sub> (m): <span id="d-wy-v" style="color:var(--cyan);">320</span></label>
+          <input type="range" id="d-wy" min="200" max="800" step="50" value="320" oninput="tdUpdate()" style="width:100%;accent-color:var(--cyan);margin-bottom:.5rem;">
+          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">D<sub>Y</sub> (m): <span id="d-dy-v" style="color:var(--cyan);">400</span></label>
+          <input type="range" id="d-dy" min="200" max="700" step="50" value="400" oninput="tdUpdate()" style="width:100%;accent-color:var(--cyan);margin-bottom:.5rem;">
+          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:.3rem;">Berth Config</label>
+          <div style="display:flex;gap:.3rem;" id="td-berth-btns">
+            <button onclick="tdBerthBtn(this)" data-v="1" style="flex:1;padding:.3rem;font-family:'Space Mono',monospace;font-size:.58rem;border:1px solid var(--cyan);background:var(--ocean);color:var(--white);border-radius:2px;cursor:pointer;">1</button>
+            <button onclick="tdBerthBtn(this)" data-v="2" style="flex:1;padding:.3rem;font-family:'Space Mono',monospace;font-size:.58rem;border:1px solid var(--steel);background:transparent;color:var(--muted);border-radius:2px;cursor:pointer;">2</button>
+            <button onclick="tdBerthBtn(this)" data-v="3" style="flex:1;padding:.3rem;font-family:'Space Mono',monospace;font-size:.58rem;border:1px solid var(--steel);background:transparent;color:var(--muted);border-radius:2px;cursor:pointer;">3</button>
+          </div>
+        </div>
+
+        <div class="panel panel-amber" style="padding:.9rem;">
+          <div class="sh" style="font-size:.82rem;color:var(--amber);margin-bottom:.6rem;">Yard Equipment</div>
+          <select id="d-equip" onchange="tdEquipFill()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.35rem;border-radius:2px;font-size:.72rem;margin-bottom:.6rem;">
+            <option value="sc2">SC — 1-over-2 (h=3.0)</option>
+            <option value="sc3">SC — 1-over-3 (h=3.5)</option>
+            <option value="rtg5" selected>RTG 5+1 (h=4.0)</option>
+            <option value="rtg6">RTG 6+1 (h=4.0)</option>
+            <option value="rmg11">RMG 11+2+2 (h=4.5)</option>
+            <option value="rmg12">RMG 12+2+2 (h=4.5)</option>
+          </select>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>C</sub>(m)</label><input id="d-wc" type="number" value="20" min="1" max="80" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>T</sub>(m)</label><input id="d-wt" type="number" value="2.0" min="0" max="5" step="0.1" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>R</sub>(m)</label><input id="d-wr" type="number" value="22" min="0" max="40" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>P</sub>(m)</label><input id="d-wp" type="number" value="44" min="0" max="120" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>A</sub>(m)</label><input id="d-wa" type="number" value="0" min="0" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">N rows/crane</label><input id="d-n" type="number" value="5" min="1" max="12" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">h stack ht</label><input id="d-h" type="number" value="4.0" min="1" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">IAR (TEU)</label><input id="d-iar" type="number" value="0" min="0" max="200" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:.9rem;border-top:3px solid var(--green);">
+          <div class="sh" style="font-size:.82rem;color:var(--green);margin-bottom:.6rem;">Cargo Mix &amp; Dwell</div>
+          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Transship ratio m: <span id="d-m-v" style="color:var(--green);">30%</span></label>
+          <input type="range" id="d-m" min="0" max="100" step="5" value="30" oninput="tdUpdate()" style="width:100%;accent-color:var(--green);margin-bottom:.5rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.35rem;margin-bottom:.5rem;">
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>i</sub> import</label><input id="d-di" type="number" value="5" min="1" max="30" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>e</sub> export</label><input id="d-de" type="number" value="3" min="1" max="14" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>t</sub> transship</label><input id="d-dt" type="number" value="2" min="1" max="10" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+          </div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.25);border-radius:4px;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;">Weighted D&#x0304; = <strong id="d-dbar" style="color:var(--white);">—</strong></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Peak factor P</label><input id="d-p" type="number" value="1.3" min="1.0" max="2.0" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Yard util.</label><input id="d-util" type="number" value="0.70" min="0.50" max="0.85" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:.9rem;border-top:3px solid var(--sky);">
+          <div class="sh" style="font-size:.82rem;color:var(--sky);margin-bottom:.6rem;">Seaside Parameters</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">STS Cranes</label><input id="d-cranes" type="number" value="3" min="1" max="20" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">GCR (lift/hr)</label><input id="d-gcr" type="number" value="18.1" min="8" max="50" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Utilisation u</label><input id="d-u" type="number" value="0.65" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Call (moves)</label><input id="d-call" type="number" value="1200" min="100" max="6000" step="100" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Op days/yr</label><input id="d-days" type="number" value="350" min="300" max="365" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Berth occ.</label><input id="d-occ" type="number" value="0.70" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:.9rem;border-top:3px solid var(--orange);">
+          <div class="sh" style="font-size:.82rem;color:var(--orange);margin-bottom:.6rem;">Formulas to Apply</div>
+          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-ch" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> Chu &amp; Huang T<sub>max</sub></label>
+          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-cmax" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> C&amp;H C<sub>max</sub> (Itsuro full)</label>
+          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-unctad" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> UNCTAD Handbook</label>
+          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;cursor:pointer;"><input type="checkbox" id="f-frankel" onchange="tdToggleFrankel()" style="accent-color:var(--cyan);"> Frankel (adds &#963; inputs)</label>
+          <div id="frankel-extra" style="display:none;background:rgba(0,0,0,.2);border-radius:4px;padding:.6rem;border:1px solid var(--steel);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
+              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">&#963; dwell</label><input id="d-sd" type="number" value="2" min="0" max="10" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">&#963; height</label><input id="d-sh" type="number" value="0.5" min="0" max="2" step="0.25" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Z stor. util.</label><input id="d-z" type="number" value="0.70" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">U area util.</label><input id="d-uf" type="number" value="0.65" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- end input panel -->
+
+      <!-- YARD RESULTS -->
+      <div style="display:flex;flex-direction:column;gap:.8rem;">
+        <div class="panel panel-cyan" style="padding:1rem;">
+          <div class="sh sh-cyan" style="font-size:.82rem;margin-bottom:.7rem;">&#128230; Yard Capacity Results</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:.7rem;">
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-nc" style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--cyan);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">N<sub>C</sub></div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-ncr" style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--cyan);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">N<sub>CR</sub></div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-cr" style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--cyan);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">CR</div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-tgs" style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--amber);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">TGS</div></div>
+          </div>
+          <div style="background:rgba(0,0,0,.3);padding:.6rem;border-radius:4px;text-align:center;margin-bottom:.8rem;">
+            <div id="r-teucap" style="font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--white);">—</div>
+            <div style="font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">TEU Capacity (TGS &times; h)</div>
+          </div>
+
+          <div id="yard-ch" style="margin-bottom:.5rem;padding:.7rem;border-radius:4px;background:rgba(0,188,212,.08);border:1px solid var(--cyan);">
+            <div style="font-size:.55rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Chu &amp; Huang — T<sub>max</sub></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.3rem;text-align:center;">
+              <div><div id="r-ch-tmax" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--green);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/yr (theor.)</div></div>
+              <div><div id="r-ch-design" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--amber);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/yr (&times;0.75)</div></div>
+              <div><div id="r-ch-weekly" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--muted);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/week</div></div>
+            </div>
+          </div>
+
+          <div id="yard-cmax" style="margin-bottom:.5rem;padding:.7rem;border-radius:4px;background:rgba(0,230,118,.06);border:1px solid var(--green);">
+            <div style="font-size:.55rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">C&amp;H C<sub>max</sub> (Itsuro full)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.3rem;text-align:center;">
+              <div><div id="r-cmax-v" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--green);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/yr (theor.)</div></div>
+              <div><div id="r-cmax-design" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--amber);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/yr (&times;0.75)</div></div>
+              <div><div id="r-cmax-diff" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--muted);">—</div><div style="font-size:.5rem;color:var(--muted);">vs T<sub>max</sub></div></div>
+            </div>
+          </div>
+
+          <div id="yard-unctad" style="margin-bottom:.5rem;padding:.7rem;border-radius:4px;background:rgba(255,179,0,.06);border:1px solid var(--amber);">
+            <div style="font-size:.55rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">UNCTAD Handbook</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem;text-align:center;">
+              <div><div id="r-unctad-v" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--amber);">—</div><div style="font-size:.5rem;color:var(--muted);">TEU/yr</div></div>
+              <div><div id="r-unctad-diff" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--muted);">—</div><div style="font-size:.5rem;color:var(--muted);">vs C&amp;H T<sub>max</sub></div></div>
+            </div>
+          </div>
+
+          <div id="yard-frankel" style="display:none;padding:.7rem;border-radius:4px;background:rgba(170,68,255,.06);border:1px solid #aa44ff;">
+            <div style="font-size:.55rem;color:#aa44ff;letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Frankel Formula</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem;text-align:center;">
+              <div><div id="r-frankel-v" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:#aa44ff;">—</div><div style="font-size:.5rem;color:var(--muted);">Required area (m&sup2;)</div></div>
+              <div><div id="r-frankel-diff" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--muted);">—</div><div style="font-size:.5rem;color:var(--muted);">more conservative</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BERTH RESULTS -->
+      <div style="display:flex;flex-direction:column;gap:.8rem;">
+        <div class="panel" style="padding:1rem;border-top:3px solid var(--sky);">
+          <div class="sh" style="font-size:.82rem;color:var(--sky);margin-bottom:.7rem;">&#127754; Berth / Seaside Results</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.7rem;">
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-netcr" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--sky);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">Net crane rate</div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-vrate" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--sky);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">Vessel rate (mov/hr)</div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-btime" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--sky);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">Berth time/call (hr)</div></div>
+            <div style="background:rgba(0,0,0,.3);padding:.5rem;border-radius:4px;text-align:center;"><div id="r-calls" style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--sky);">—</div><div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;">Calls/yr</div></div>
+          </div>
+          <div style="background:rgba(25,118,210,.12);border:1px solid var(--sky);border-radius:4px;padding:.7rem;text-align:center;margin-bottom:.7rem;">
+            <div style="font-size:.55rem;color:var(--sky);letter-spacing:2px;text-transform:uppercase;margin-bottom:.2rem;">Berth Capacity (TEU/yr)</div>
+            <div id="r-berth-cap" style="font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--white);">—</div>
+          </div>
+          <div style="padding:.7rem;border-radius:4px;text-align:center;background:rgba(0,0,0,.2);border:1px solid var(--steel);">
+            <div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.2rem;">Terminal Throughput (binding constraint)</div>
+            <div id="r-terminal-cap" style="font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--green);">—</div>
+            <div id="r-bn-msg" style="font-size:.68rem;color:var(--amber);margin-top:.2rem;">—</div>
+          </div>
+        </div>
+
+        <div class="panel" style="padding:1rem;">
+          <div class="sh" style="font-size:.82rem;margin-bottom:.6rem;">Formula Comparison</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.68rem;">
+            <thead><tr style="border-bottom:1px solid var(--steel);">
+              <th style="text-align:left;padding:.3rem;color:var(--muted);font-weight:400;font-size:.56rem;text-transform:uppercase;">Formula</th>
+              <th style="text-align:right;padding:.3rem;color:var(--muted);font-weight:400;font-size:.56rem;text-transform:uppercase;">TEU/yr</th>
+              <th style="text-align:right;padding:.3rem;color:var(--muted);font-weight:400;font-size:.56rem;text-transform:uppercase;">vs C&amp;H T<sub>max</sub></th>
+            </tr></thead>
+            <tbody id="r-compare-body"></tbody>
+          </table>
+        </div>
+
+        <button onclick="tdExport()" style="padding:.6rem;background:var(--steel);border:1px solid var(--cyan);color:var(--white);border-radius:2px;font-family:'Space Mono',monospace;font-size:.6rem;cursor:pointer;letter-spacing:1px;text-transform:uppercase;width:100%;">&#128203; Copy Results Summary</button>
+      </div>
+
+    </div><!-- end 3-col grid -->
+  </div><!-- end dim-designer -->
+
 </section>
 
 <!-- ===== GLOSSARY ===== -->
@@ -4241,6 +4526,399 @@ setTimeout(()=>{
 // ==========================================================
 // END BIRD'S EYE VIEW
 // ==========================================================
+
+// ==========================================================
+// TAB 8 + TAB 9: CAPACITY TABLES & TERMINAL DESIGNER
+// ==========================================================
+
+// ── Equipment parameter presets (Chu & Huang 2005) ──────────
+const EQUIP = {
+  sc2:  {wc:3,   wt:1.6, wa:0, wr_1:5,  wr_2:5,  wp_1:20, wp_2:60,  n:1,  h:3.0, iar_1:60,  iar_2:120, label:'SC 1-over-2'},
+  sc3:  {wc:3,   wt:1.6, wa:0, wr_1:5,  wr_2:5,  wp_1:20, wp_2:60,  n:1,  h:3.5, iar_1:60,  iar_2:120, label:'SC 1-over-3'},
+  rtg5: {wc:20,  wt:2.0, wa:0, wr_1:22, wr_2:22, wp_1:44, wp_2:96,  n:5,  h:4.0, iar_1:0,   iar_2:0,   label:'RTG 5+1'},
+  rtg6: {wc:23.5,wt:2.0, wa:0, wr_1:22, wr_2:22, wp_1:44, wp_2:96,  n:6,  h:4.0, iar_1:0,   iar_2:0,   label:'RTG 6+1'},
+  rmg11:{wc:54,  wt:0,   wa:1, wr_1:22, wr_2:22, wp_1:30, wp_2:60,  n:11, h:4.5, iar_1:0,   iar_2:0,   label:'RMG 11+2+2'},
+  rmg12:{wc:57,  wt:0,   wa:1, wr_1:22, wr_2:22, wp_1:30, wp_2:60,  n:12, h:4.5, iar_1:0,   iar_2:0,   label:'RMG 12+2+2'}
+};
+const LC=6.1, CR_SPACING=0.4, WS=0;
+
+// ── Core formulas ────────────────────────────────────────────
+function calcCH(wy, dy, eq, berths) {
+  const b = berths > 1 ? 2 : 1;
+  const wr  = b===1 ? eq.wr_1 : eq.wr_2;
+  const wp  = b===1 ? eq.wp_1 : eq.wp_2;
+  const iar = b===1 ? eq.iar_1 : eq.iar_2;
+  const nc  = Math.floor((wy - wr - wp - WS) / (LC + CR_SPACING));
+  const ncr = Math.floor(dy / (eq.wc + 2*eq.wt + eq.wa));
+  const cr  = Math.floor(ncr / (eq.n + 1));      // blocks (or rows for SC N=1)
+  const tgs = Math.max(0, nc * eq.n * cr - iar); // expand blocks → rows
+  const teucap = tgs * eq.h;
+  return {nc, ncr, cr, tgs, teucap, wr, wp, iar};
+}
+
+function tmax(teucap, dbar, P) {
+  if (dbar <= 0 || P <= 0) return 0;
+  return Math.round((teucap * 365) / (dbar * P));
+}
+
+function cmax(tgs, m, dt, ht, de, he, di, hi) {
+  const denom = m*(dt/ht) + (1-m)*(de/he) + (1-m)*(di/hi);
+  if (denom <= 0) return 0;
+  return Math.round((365 * 2 * tgs) / denom);
+}
+
+function unctadCap(teucap, dbar, P, util) {
+  if (dbar <= 0 || P <= 0 || util <= 0) return 0;
+  return Math.round((teucap * 365 * util) / (dbar * P));
+}
+
+function frankelArea(C, A, T, t, H, h_sd, Z, U) {
+  const denom = 365 * Z * 10000 * (H + 2*h_sd) + U;
+  if (denom <= 0) return 0;
+  return Math.round((C * A * (T + 2*t)) / denom);
+}
+
+function berthCap(cranes, gcr, u, callSize, opDays, occ, berths) {
+  const netCR = gcr * u;
+  const vesselRate = cranes * netCR;
+  if (vesselRate <= 0) return {netCR:0, vesselRate:0, berthTime:0, callsYr:0, teuYr:0};
+  const berthTime = callSize / vesselRate;
+  const callsYr = Math.floor((opDays * 24 * occ * berths) / berthTime);
+  const teuYr = Math.round(callsYr * callSize / 2);
+  return {netCR:+netCR.toFixed(1), vesselRate:+vesselRate.toFixed(1), berthTime:+berthTime.toFixed(1), callsYr, teuYr};
+}
+
+// Max vessel from Abramowski LBP regression (inverted: berth=350m → TEU)
+function maxVessel(berthLen) {
+  // LBP ≈ 1.50 + 0.413·ln³(TEU); berth ≥ 1.1×LBP → LBP_max = berthLen/1.1
+  const lbp = berthLen / 1.1;
+  // Solve ln³(TEU) = (lbp-1.50)/0.413
+  const val = (lbp - 1.50) / 0.413;
+  if (val <= 0) return 0;
+  const lnTEU = Math.cbrt(val);
+  return Math.round(Math.exp(lnTEU) / 500) * 500;
+}
+
+// ── Number formatter ─────────────────────────────────────────
+function fmt(n) { return n >= 1000 ? (n/1000).toFixed(0)+'k' : String(n); }
+function fmtFull(n) { return n.toLocaleString(); }
+function capColor(v) {
+  if (v >= 1000000) return 'rgba(0,230,118,.25)';
+  if (v >= 500000)  return 'rgba(255,179,0,.25)';
+  return 'rgba(255,82,82,.2)';
+}
+function capTextColor(v) {
+  if (v >= 1000000) return 'var(--green)';
+  if (v >= 500000)  return 'var(--amber)';
+  return 'var(--red)';
+}
+
+// ── TABLE 8A: Yard capacity lookup table ─────────────────────
+const YARD_LAYOUTS = [
+  {wy:320, dy:400, berths:1, tag:'1berth', label:'320×400m 1-berth'},
+  {wy:350, dy:400, berths:1, tag:'1berth', label:'350×400m 1-berth'},
+  {wy:350, dy:500, berths:1, tag:'1berth', label:'350×500m 1-berth'},
+  {wy:600, dy:400, berths:2, tag:'2berth', label:'600×400m 2-berth'},
+  {wy:600, dy:500, berths:2, tag:'2berth', label:'600×500m 2-berth'},
+  {wy:700, dy:500, berths:2, tag:'2berth', label:'700×500m 2-berth'},
+  {wy:700, dy:600, berths:2, tag:'2berth', label:'700×600m 2-berth'},
+];
+const EQUIP_KEYS = ['sc2','sc3','rtg5','rtg6','rmg11','rmg12'];
+const DWELLS = [3.1, 5, 7];
+const P_DEFAULT = 1.3;
+
+function buildYardTable() {
+  const tbody = document.getElementById('cap-table-yard-body');
+  if (!tbody) return;
+  let rows = '';
+  YARD_LAYOUTS.forEach(layout => {
+    EQUIP_KEYS.forEach((ek, ei) => {
+      const eq = EQUIP[ek];
+      const {tgs, teucap} = calcCH(layout.wy, layout.dy, eq, layout.berths);
+      if (tgs <= 0) {
+        rows += `<tr data-tag="${layout.tag}"><td style="text-align:left">${ei===0?layout.label:''}</td><td style="text-align:left">${eq.label}</td><td colspan="6" style="color:var(--red);text-align:center;">Geometry too small for this system</td></tr>`;
+        return;
+      }
+      const tmaxVals = DWELLS.map(d => tmax(teucap, d, P_DEFAULT));
+      const designTarget = Math.round(tmaxVals[0] * 0.75);
+      rows += `<tr data-tag="${layout.tag}">
+        <td style="text-align:left;color:var(--white);font-weight:${ei===0?'600':'400'}">${ei===0?layout.label:''}</td>
+        <td style="text-align:left">${eq.label}</td>
+        <td>${fmtFull(tgs)}</td>
+        <td>${fmtFull(teucap)}</td>
+        ${tmaxVals.map((v,i) => `<td style="background:${capColor(v)};color:${capTextColor(v)}">${fmtFull(v)}</td>`).join('')}
+        <td style="color:var(--amber);font-weight:600">${fmtFull(designTarget)}</td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = rows;
+}
+
+function filterCapTable(tag, btn) {
+  document.querySelectorAll('#dim-tables .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#cap-table-yard-body tr').forEach(row => {
+    row.style.display = (tag === 'all' || row.dataset.tag === tag) ? '' : 'none';
+  });
+}
+
+// ── TABLE 8B: Berth capacity lookup table ───────────────────
+const BERTH_CONFIGS = [
+  {berths:1, cranes:2}, {berths:1, cranes:3}, {berths:1, cranes:4},
+  {berths:2, cranes:2}, {berths:2, cranes:3}, {berths:2, cranes:4}, {berths:2, cranes:5},
+  {berths:3, cranes:2}, {berths:3, cranes:3}, {berths:3, cranes:4}, {berths:3, cranes:5},
+  {berths:4, cranes:3}, {berths:4, cranes:4}, {berths:4, cranes:5},
+];
+const CALL_SIZES = [500, 1000, 1500, 2000, 3000];
+const GCR_SCENARIOS = {med:18.1, good:25, wc:35};
+let currentGCR = 'med';
+
+function buildBerthTable(gcr_key) {
+  currentGCR = gcr_key;
+  const tbody = document.getElementById('cap-table-berth-body');
+  if (!tbody) return;
+  const gcr = GCR_SCENARIOS[gcr_key];
+  const maxV = maxVessel(350);
+  let rows = '';
+  BERTH_CONFIGS.forEach(cfg => {
+    CALL_SIZES.forEach((cs, ci) => {
+      const r = berthCap(cfg.cranes, gcr, 0.65, cs, 350, 0.70, cfg.berths);
+      const v = r.teuYr;
+      rows += `<tr>
+        <td>${ci===0?cfg.berths:''}</td>
+        <td>${ci===0?cfg.cranes:''}</td>
+        <td>${cs.toLocaleString()}</td>
+        <td>${r.berthTime}</td>
+        <td>${r.callsYr.toLocaleString()}</td>
+        <td style="background:${capColor(v)};color:${capTextColor(v)};font-weight:600">${fmtFull(v)}</td>
+        <td style="color:var(--muted);">${ci===0?'≤'+fmtFull(maxVessel(350)):''}</td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = rows;
+}
+
+function filterBerthTable(key, btn) {
+  document.querySelectorAll('#dim-tables .tab-btn[onclick*="filterBerthTable"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildBerthTable(key);
+}
+
+// ── SECTION C: Bottleneck identifier ─────────────────────────
+function updateBottleneck() {
+  const y = parseFloat(document.getElementById('bn-yard').value) || 0;
+  const b = parseFloat(document.getElementById('bn-berth').value) || 0;
+  const v = Math.min(y, b);
+  document.getElementById('bn-value').textContent = fmtFull(v) + ' TEU/yr';
+  document.getElementById('bn-value').style.color = capTextColor(v);
+  if (y < b) {
+    document.getElementById('bn-label').textContent = '⚠️ Yard is the binding constraint — reduce dwell, increase TGS, or raise stack height';
+  } else if (b < y) {
+    document.getElementById('bn-label').textContent = '⚠️ Berth is the binding constraint — add cranes, improve GCR, or add berths';
+  } else {
+    document.getElementById('bn-label').innerHTML = '✅ Yard and berth are balanced';
+  }
+}
+
+// ── TAB 9: TERMINAL DESIGNER ─────────────────────────────────
+let tdBerths = 1;
+
+function tdBerthBtn(btn) {
+  document.querySelectorAll('#td-berth-btns button').forEach(b => {
+    b.style.background = 'transparent'; b.style.color = 'var(--muted)'; b.style.borderColor = 'var(--steel)';
+  });
+  btn.style.background = 'var(--ocean)'; btn.style.color = 'var(--white)'; btn.style.borderColor = 'var(--cyan)';
+  tdBerths = parseInt(btn.dataset.v);
+  tdUpdate();
+}
+
+function tdEquipFill() {
+  const eq = EQUIP[document.getElementById('d-equip').value];
+  if (!eq) return;
+  const b = tdBerths > 1 ? 2 : 1;
+  document.getElementById('d-wc').value  = eq.wc;
+  document.getElementById('d-wt').value  = eq.wt;
+  document.getElementById('d-wa').value  = eq.wa;
+  document.getElementById('d-wr').value  = b===1 ? eq.wr_1 : eq.wr_2;
+  document.getElementById('d-wp').value  = b===1 ? eq.wp_1 : eq.wp_2;
+  document.getElementById('d-n').value   = eq.n;
+  document.getElementById('d-h').value   = eq.h;
+  document.getElementById('d-iar').value = b===1 ? eq.iar_1 : eq.iar_2;
+  tdUpdate();
+}
+
+function tdToggleFrankel() {
+  const show = document.getElementById('f-frankel').checked;
+  document.getElementById('frankel-extra').style.display = show ? 'block' : 'none';
+  document.getElementById('yard-frankel').style.display  = show ? 'block' : 'none';
+  tdUpdate();
+}
+
+function tdUpdate() {
+  const g = id => document.getElementById(id);
+  const gv = id => parseFloat(g(id).value) || 0;
+
+  // Sync slider labels
+  g('d-wy-v').textContent = gv('d-wy');
+  g('d-dy-v').textContent = gv('d-dy');
+  g('d-m-v').textContent  = gv('d-m') + '%';
+
+  // Inputs
+  const wy = gv('d-wy'), dy = gv('d-dy');
+  const wc = gv('d-wc'), wt = gv('d-wt'), wa = gv('d-wa');
+  const wr = gv('d-wr'), wp = gv('d-wp');
+  const n  = gv('d-n'),  h  = gv('d-h'), iar = gv('d-iar');
+  const m  = gv('d-m')/100;
+  const di = gv('d-di'), de = gv('d-de'), dt = gv('d-dt');
+  const P  = gv('d-p'),  util = gv('d-util');
+
+  // Cargo shares — simple equal split of (1-m) between import and export
+  const Hi = (1-m)/2, He = (1-m)/2, Ht = m;
+  const dbar = Hi*di + He*de + Ht*dt;
+  g('d-dbar').textContent = dbar.toFixed(2) + ' days';
+
+  // Chu & Huang intermediates
+  const nc  = Math.floor((wy - wr - wp - WS) / (LC + CR_SPACING));
+  const ncr = Math.floor(dy / (wc + 2*wt + wa));
+  const cr  = Math.floor(ncr / (n + 1));
+  const tgs = Math.max(0, nc * n * cr - iar);
+  const teucap = tgs * h;
+
+  g('r-nc').textContent     = nc > 0 ? nc : '—';
+  g('r-ncr').textContent    = ncr > 0 ? ncr : '—';
+  g('r-cr').textContent     = cr > 0 ? cr : '—';
+  g('r-tgs').textContent    = tgs > 0 ? fmtFull(tgs) : '—';
+  g('r-teucap').textContent = teucap > 0 ? fmtFull(teucap)+' TEU' : '—';
+
+  let chTmax = 0, cmaxV = 0, unctadV = 0;
+
+  // Chu & Huang Tmax
+  const showCH = g('f-ch').checked;
+  g('yard-ch').style.display = showCH ? '' : 'none';
+  if (showCH && teucap > 0 && dbar > 0) {
+    chTmax = tmax(teucap, dbar, P);
+    const design = Math.round(chTmax * 0.75);
+    const weekly = Math.round(design / 52);
+    g('r-ch-tmax').textContent   = fmtFull(chTmax);
+    g('r-ch-tmax').style.color   = capTextColor(chTmax);
+    g('r-ch-design').textContent = fmtFull(design);
+    g('r-ch-weekly').textContent = fmtFull(weekly);
+  }
+
+  // Cmax (Itsuro full)
+  const showCmax = g('f-cmax').checked;
+  g('yard-cmax').style.display = showCmax ? '' : 'none';
+  if (showCmax && tgs > 0) {
+    const htI = h > 0 ? h : 1, htE = h > 0 ? h : 1, htT = h > 0 ? h : 1;
+    cmaxV = cmax(tgs, m, dt, htT, de, htE, di, htI);
+    const cmaxDesign = Math.round(cmaxV * 0.75);
+    const diff = chTmax > 0 ? ((cmaxV - chTmax)/chTmax*100).toFixed(1)+'%' : '—';
+    g('r-cmax-v').textContent      = fmtFull(cmaxV);
+    g('r-cmax-v').style.color      = capTextColor(cmaxV);
+    g('r-cmax-design').textContent = fmtFull(cmaxDesign);
+    g('r-cmax-diff').textContent   = diff;
+    g('r-cmax-diff').style.color   = cmaxV >= chTmax ? 'var(--green)' : 'var(--red)';
+  }
+
+  // UNCTAD
+  const showU = g('f-unctad').checked;
+  g('yard-unctad').style.display = showU ? '' : 'none';
+  if (showU && teucap > 0 && dbar > 0) {
+    unctadV = unctadCap(teucap, dbar, P, util);
+    const diff = chTmax > 0 ? ((unctadV - chTmax)/chTmax*100).toFixed(1)+'%' : '—';
+    g('r-unctad-v').textContent    = fmtFull(unctadV);
+    g('r-unctad-v').style.color    = capTextColor(unctadV);
+    g('r-unctad-diff').textContent = diff;
+    g('r-unctad-diff').style.color = unctadV >= chTmax ? 'var(--green)' : 'var(--red)';
+  }
+
+  // Frankel
+  const showF = g('f-frankel').checked;
+  if (showF) {
+    const C = chTmax, A = 14.4, T = dbar, t = gv('d-sd');
+    const H = h, h_sd = gv('d-sh'), Z = gv('d-z'), U = gv('d-uf');
+    const fa = frankelArea(C, A, T, t, H, h_sd, Z, U);
+    const diff = teucap > 0 ? ((fa - teucap*14.4)/Math.max(1,teucap*14.4)*100).toFixed(1)+'%' : '—';
+    g('r-frankel-v').textContent    = fmtFull(fa)+' m²';
+    g('r-frankel-diff').textContent = diff + ' vs C&H area';
+  }
+
+  // Berth side
+  const cranes = gv('d-cranes'), gcr = gv('d-gcr'), u = gv('d-u');
+  const cs = gv('d-call'), days = gv('d-days'), occ = gv('d-occ');
+  const bRes = berthCap(cranes, gcr, u, cs, days, occ, tdBerths);
+  g('r-netcr').textContent    = bRes.netCR;
+  g('r-vrate').textContent    = bRes.vesselRate;
+  g('r-btime').textContent    = bRes.berthTime + ' hr';
+  g('r-calls').textContent    = bRes.callsYr.toLocaleString();
+  g('r-berth-cap').textContent = fmtFull(bRes.teuYr);
+  g('r-berth-cap').style.color = capTextColor(bRes.teuYr);
+
+  const termCap = Math.min(chTmax || Infinity, bRes.teuYr);
+  if (termCap === Infinity || termCap <= 0) {
+    g('r-terminal-cap').textContent = '—';
+    g('r-bn-msg').textContent = '—';
+  } else {
+    g('r-terminal-cap').textContent = fmtFull(termCap) + ' TEU/yr';
+    g('r-terminal-cap').style.color = capTextColor(termCap);
+    if ((chTmax || 0) < bRes.teuYr) {
+      g('r-bn-msg').textContent = '⚠️ Yard is binding — reduce dwell or increase TGS';
+    } else if (bRes.teuYr < (chTmax || 0)) {
+      g('r-bn-msg').textContent = '⚠️ Berth is binding — add cranes or improve GCR';
+    } else {
+      g('r-bn-msg').textContent = '✅ Yard and berth are balanced';
+    }
+  }
+
+  // Comparison strip
+  const rows = [];
+  if (showCH && chTmax) rows.push({label:'C&H T<sub>max</sub>', val:chTmax, diff:'—', baseline:true});
+  if (showCmax && cmaxV) rows.push({label:'C&H C<sub>max</sub> (Itsuro)', val:cmaxV, diff: chTmax?((cmaxV-chTmax)/chTmax*100).toFixed(1)+'%':'—'});
+  if (showU && unctadV) rows.push({label:'UNCTAD', val:unctadV, diff: chTmax?((unctadV-chTmax)/chTmax*100).toFixed(1)+'%':'—'});
+  rows.push({label:'Berth capacity', val:bRes.teuYr, diff:'—'});
+  g('r-compare-body').innerHTML = rows.map(r =>
+    `<tr><td style="padding:.3rem">${r.label}</td>
+     <td style="text-align:right;padding:.3rem;font-family:'Space Mono',monospace;color:${capTextColor(r.val)}">${fmtFull(r.val)}</td>
+     <td style="text-align:right;padding:.3rem;color:var(--muted)">${r.diff}</td></tr>`
+  ).join('');
+}
+
+function tdExport() {
+  const g = id => document.getElementById(id);
+  const lines = [
+    '=== TERMINAL DESIGNER RESULTS ===',
+    `Geometry: WY=${g('d-wy').value}m, DY=${g('d-dy').value}m, ${tdBerths} berth(s)`,
+    `System: ${g('d-equip').options[g('d-equip').selectedIndex].text}`,
+    `TGS: ${g('r-tgs').textContent}   TEU Capacity: ${g('r-teucap').textContent}`,
+    `Weighted dwell D̄: ${g('d-dbar').textContent}   Peak factor P: ${g('d-p').value}`,
+    '--- Yard ---',
+    `C&H Tmax (theoretical): ${g('r-ch-tmax').textContent} TEU/yr`,
+    `C&H Tmax (design ×0.75): ${g('r-ch-design').textContent} TEU/yr`,
+    `C&H Cmax (Itsuro): ${g('r-cmax-v').textContent} TEU/yr`,
+    `UNCTAD: ${g('r-unctad-v').textContent} TEU/yr`,
+    '--- Berth ---',
+    `Cranes: ${g('d-cranes').value}   GCR: ${g('d-gcr').value}   u: ${g('d-u').value}`,
+    `Vessel rate: ${g('r-vrate').textContent} moves/hr   Berth time: ${g('r-btime').textContent}`,
+    `Berth capacity: ${g('r-berth-cap').textContent} TEU/yr`,
+    '--- Terminal ---',
+    `Binding constraint: ${g('r-bn-msg').textContent}`,
+    `Terminal throughput: ${g('r-terminal-cap').textContent}`,
+    '==============================='
+  ];
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.querySelector('[onclick="tdExport()"]');
+    if (btn) { btn.textContent = '✅ Copied!'; setTimeout(()=>btn.textContent='📋 Copy Results Summary',2000); }
+  });
+}
+
+// ── Initialise on page load ──────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  buildYardTable();
+  buildBerthTable('med');
+  updateBottleneck();
+  tdEquipFill();
+  tdUpdate();
+});
 
 </script>
 </body>
