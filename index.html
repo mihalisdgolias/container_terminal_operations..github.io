@@ -416,6 +416,9 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <button onclick="showSection('kpis',this)">KPIs</button>
     <button onclick="showSection('dimensioning',this)">Dimensioning</button>
     <button onclick="showSection('pricing',this)">⚓ Pricing</button>
+    <button onclick="showSection('masterplan',this)">🗺 Master Plan</button>
+    <button onclick="showSection('governance',this)">🏛 Governance</button>
+    <button onclick="showSection('gametheory',this)">♟ Game Theory</button>
     <button onclick="showSection('glossary',this)">Glossary</button>
   </nav>
 </header>
@@ -5558,6 +5561,641 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
       <p style="font-size:.75rem;color:var(--muted);">The Piraeus strategic pricing parallels the BAP research vs practice gap — both show how theoretical optimality gives way to operational pragmatism. <span class="xlink" onclick="showSectionTab('operations','ss-integration')">→ Operations: Integrated Planning ↗</span> &nbsp;·&nbsp; The Terminal Designer lets you build Mars, then price it. <span class="xlink" onclick="showSectionTab('dimensioning','dim-designer')">→ Terminal Designer ↗</span></p>
     </div>
   </div><!-- end pr-piraeus -->
+
+</section>
+
+
+<!-- ===== PORT MASTER PLAN (UNDER CONSTRUCTION) ===== -->
+<section id="masterplan">
+
+  <!-- Under-construction banner -->
+  <div style="display:flex;align-items:center;gap:1rem;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.35);border-left:4px solid #8b5cf6;border-radius:4px;padding:1rem 1.4rem;margin-bottom:1.5rem;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:#8b5cf6;margin-bottom:2px;">UNDER CONSTRUCTION</div>
+      <div style="font-size:.72rem;color:var(--muted);">This section is being developed. The outline below describes what it will contain when complete.</div>
+    </div>
+    <div style="margin-left:auto;font-family:'Space Mono',monospace;font-size:.65rem;color:rgba(139,92,246,.6);white-space:nowrap;">SHI 513 — Week 5</div>
+  </div>
+
+  <h2>Port Master Planning</h2>
+  <p class="subtitle">Long-horizon strategic planning for port development — spatial allocation, demand forecasting, phased investment, and governance frameworks. Source: UNCTAD Port Master Planning Guidelines; Notteboom, Pallis &amp; Rodrigue (2026) Ch. 9.</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('mp-overview',this)">🗺️ What is a Master Plan?</button>
+    <button class="tab-btn" onclick="showTab('mp-demand',this)">📈 Demand Forecasting</button>
+    <button class="tab-btn" onclick="showTab('mp-spatial',this)">🏗️ Spatial &amp; Land Use</button>
+    <button class="tab-btn" onclick="showTab('mp-phasing',this)">📅 Phased Investment</button>
+    <button class="tab-btn" onclick="showTab('mp-governance',this)">⚖️ Governance &amp; Regulation</button>
+    <button class="tab-btn" onclick="showTab('mp-cases',this)">🌐 Case Studies</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div id="mp-overview" class="tab-content active">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 1</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Definition and purpose of a port master plan — the authoritative long-range blueprint for port development (typically 20–30 year horizon) that integrates land use, infrastructure phasing, environmental constraints, and commercial strategy into a single coherent document.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;opacity:.75;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">What a Master Plan Covers</div>
+        <ul class="var-list">
+          <li><span class="vname">Horizon</span><span class="vdesc">Typically 20–30 years with 5-year rolling review cycles. Distinguishes short-term (actionable), medium-term (planned), and long-term (reserved) phases.</span></li>
+          <li><span class="vname">Scope</span><span class="vdesc">Waterside (channels, berths, breakwaters), landside (yards, gates, rail), utilities, environmental buffers, and community interface zones.</span></li>
+          <li><span class="vname">Authority</span><span class="vdesc">Produced by the port authority, endorsed by national/regional government, and subject to public consultation and environmental impact assessment.</span></li>
+          <li><span class="vname">Flexibility</span><span class="vdesc">Must balance long-term land reservation with short-term commercial responsiveness. "Option value" of keeping land undeveloped until demand crystallises.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;opacity:.75;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Why Master Plans Fail</div>
+        <ul class="var-list">
+          <li><span class="vname">Over-optimism</span><span class="vdesc">Demand forecasts systematically overestimate growth, leading to stranded overcapacity (common finding: actual throughput 30–50% below forecast at horizon year).</span></li>
+          <li><span class="vname">Rigidity</span><span class="vdesc">Plans that cannot adapt to modal shift (e.g., rail-heavy to truck-heavy) or cargo type change (break-bulk to container) become obstacles rather than guides.</span></li>
+          <li><span class="vname">Political interference</span><span class="vdesc">Masterplan land reservations often eroded by competing municipal, industrial, or residential development interests over time.</span></li>
+          <li><span class="vname">No financing link</span><span class="vdesc">Spatial plans without credible capital expenditure programmes remain aspirational documents. Investment phasing must be tied to demand triggers.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:1.2rem;border-left:4px solid #8b5cf6;opacity:.75;">
+      <div style="font-size:.65rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Cross-references planned</div>
+      <p style="font-size:.75rem;color:var(--muted);">Terminal Designer (capacity sizing) feeds master plan demand scenarios. <span class="xlink" onclick="showSectionTab('dimensioning','dim-designer')">→ Terminal Designer ↗</span> &nbsp;·&nbsp; Governance models determine which authority owns the plan. <span class="xlink" onclick="showSection('governance',document.querySelector('[onclick*=governance]'))">→ Governance Models ↗</span></p>
+    </div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div id="mp-demand" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 2</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Demand forecasting methodologies used in port master planning — from simple trend extrapolation to econometric models linking GDP, trade flows, and modal competition. The section will include a comparison of top-down (macro-economic) vs bottom-up (commodity-level) approaches, common biases, and scenario-based planning.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Forecasting Approaches</div>
+        <ul class="var-list">
+          <li><span class="vname">Trend extrapolation</span><span class="vdesc">Historical throughput growth extended forward. Simple but ignores structural breaks (2008 crisis, COVID-19, nearshoring). Used as a baseline only.</span></li>
+          <li><span class="vname">GDP elasticity</span><span class="vdesc">Port throughput modelled as a function of GDP growth. Typical container throughput elasticity with respect to GDP: 1.5–2.5× (i.e., 3–5% throughput growth for 2% GDP growth).</span></li>
+          <li><span class="vname">Commodity-level models</span><span class="vdesc">Bottom-up: project each commodity flow (grain, energy, manufactured goods) separately then aggregate. More accurate but requires extensive data.</span></li>
+          <li><span class="vname">Scenario planning</span><span class="vdesc">Three scenarios (high/base/low) bracket the uncertainty range. Infrastructure decisions calibrated to the point where even the low scenario justifies investment.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Demand Drivers &amp; Hinterland Analysis</div>
+        <ul class="var-list">
+          <li><span class="vname">Hinterland GDP</span><span class="vdesc">Size and growth rate of the economic area served. Population density, manufacturing intensity, and export orientation all affect container demand per capita.</span></li>
+          <li><span class="vname">Competition</span><span class="vdesc">Market share modelling across competing ports. Price elasticity and service quality determine how demand shifts when a competitor lowers THC or adds berth capacity.</span></li>
+          <li><span class="vname">Vessel size trends</span><span class="vdesc">Increasing containership sizes (24,000+ TEU ultra-large vessels) constrain which ports can receive mainline calls — affects both capacity requirements and dredging investment.</span></li>
+          <li><span class="vname">Modal shift</span><span class="vdesc">Shift from road to rail hinterland connections affects gate throughput, yard dwell time, and land use requirements. Key input for the spatial plan.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div id="mp-spatial" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 3</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Spatial planning principles for port land allocation — berth zoning, cargo-type separation, intermodal connectivity nodes, buffer zones, and reclamation. Will include annotated layout diagrams showing how a container terminal master plan section differs from a bulk or multi-purpose plan.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Spatial Allocation Principles</div>
+        <ul class="var-list">
+          <li><span class="vname">Berth zoning</span><span class="vdesc">Container, bulk, liquid bulk, RoRo, and cruise terminals must be separated to avoid operational conflicts and allow specialised infrastructure. Minimum safe distances between incompatible operations (e.g., liquid bulk and open flame).</span></li>
+          <li><span class="vname">Yard depth</span><span class="vdesc">Container terminal requires minimum 400–600m depth from quay wall to back of yard to allow proper stack configuration and ITT (inter-terminal transport) routing. Chu &amp; Huang formulas determine yard area from throughput.</span></li>
+          <li><span class="vname">Rail connectivity</span><span class="vdesc">On-dock rail requires a minimum run of 600–750m for unit trains. Spatial plan must reserve this corridor from day one — retrofitting is extremely difficult.</span></li>
+          <li><span class="vname">Reclamation</span><span class="vdesc">Many modern container terminals are built on reclaimed land (e.g., Singapore Tuas, Maasvlakte 2, Colombo South). Reclamation allows greenfield design but requires 5–10 year lead time and significant environmental assessment.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Land Use Conflicts &amp; Buffer Zones</div>
+        <ul class="var-list">
+          <li><span class="vname">Port-city interface</span><span class="vdesc">Noise, dust, visual intrusion, and traffic generation create friction with adjacent residential and commercial areas. Buffer zones (typically 200–500m) reduce community impact but consume valuable land.</span></li>
+          <li><span class="vname">Environmental reserves</span><span class="vdesc">Coastal ecology protection zones, wetland buffers, and air quality management areas constrain the buildable footprint. Must be identified and mapped before spatial planning begins.</span></li>
+          <li><span class="vname">Phased land reservation</span><span class="vdesc">Best practice: reserve land for all phases from the start but only develop it when a demand trigger threshold is reached (e.g., sustained utilisation &gt;75% for 2 consecutive years).</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div id="mp-phasing" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 4</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Investment phasing — aligning capital expenditure with demand triggers, financing instruments, and risk allocation. Will cover demand-triggered investment gates, DCF and NPV analysis for phase decisions, concession agreement phasing clauses, and the trade-off between over-building (strategic flexibility) and under-building (financial discipline).</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Phasing Logic</div>
+        <ul class="var-list">
+          <li><span class="vname">Demand triggers</span><span class="vdesc">Phase 2 is unlocked when Phase 1 reaches a defined utilisation threshold (typically 70–80%). Avoids premature capital commitment while preserving expansion optionality.</span></li>
+          <li><span class="vname">Lead time allowance</span><span class="vdesc">Container berth construction typically requires 3–5 years from decision to commissioning (design, permits, civil works, equipment delivery). Trigger must fire early enough.</span></li>
+          <li><span class="vname">Modular increments</span><span class="vdesc">Best practice: plan in modules of 500,000–1M TEU capacity increments, each requiring one or two berths. Allows calibrated response to demand without all-or-nothing commitment.</span></li>
+          <li><span class="vname">Financing instruments</span><span class="vdesc">Phase-gated concession agreements, green bonds, MDB (multilateral development bank) loans, and government grants each have different requirements for demand evidence and risk allocation.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Strategic Overcapacity — Mars Terminal Context</div>
+        <ul class="var-list">
+          <li><span class="vname">Deliberate overbuilding</span><span class="vdesc">Mars Terminal was designed for 2M TEU with only 600k TEU initial local traffic — deliberately over-built to attract mainliner vessel calls requiring large berths and deep water.</span></li>
+          <li><span class="vname">Cost of early SRAC</span><span class="vdesc">SRAC = $175/TEU at 600k is the financial cost of strategic overcapacity. This subsidy is justified if T/S traffic materialises and the terminal reaches its efficient scale.</span></li>
+          <li><span class="vname">Option value</span><span class="vdesc">The "real option" to attract T/S traffic is worth the carrying cost of overcapacity if the probability of capture × NPV of T/S revenue exceeds the annual fixed cost burden.</span></li>
+          <li><span class="vname">Risk if T/S fails</span><span class="vdesc">If T/S traffic never arrives, local traffic alone must service $75M/yr in fixed costs. At $175/TEU this is viable but leaves no surplus for investment. The masterplan must price this downside scenario.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div id="mp-governance" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 5</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Governance and regulatory frameworks for plan implementation — who approves, who enforces, how concession agreements embed masterplan obligations, and how disputes between port authority and terminal operators are resolved. Will cover the landlord PA's planning powers, national port policy alignment, and EIA requirements.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Approvals and Legal Framework</div>
+        <ul class="var-list">
+          <li><span class="vname">National port policy</span><span class="vdesc">Master plans must align with national transport strategy and designated port hierarchies (gateway / feeder / regional). Conflict between commercial logic and policy designation is common.</span></li>
+          <li><span class="vname">EIA / SEA</span><span class="vdesc">Environmental Impact Assessment (project level) and Strategic Environmental Assessment (plan level) are legally required in EU and most jurisdictions. Typically 18–36 months to complete.</span></li>
+          <li><span class="vname">Public consultation</span><span class="vdesc">Stakeholder engagement requirements vary by jurisdiction but typically include formal consultation periods, public hearings, and documented responses to objections.</span></li>
+          <li><span class="vname">Concession embedding</span><span class="vdesc">Masterplan obligations are made binding by embedding them in concession agreements — e.g., terminal operators must develop Phase 2 capacity by year 10 if throughput exceeds defined threshold.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Monitoring and Adaptive Management</div>
+        <ul class="var-list">
+          <li><span class="vname">KPI tracking</span><span class="vdesc">Masterplan implementation monitored through throughput KPIs, utilisation rates, congestion indicators, and environmental performance metrics reviewed annually against plan targets.</span></li>
+          <li><span class="vname">Trigger review</span><span class="vdesc">5-year formal reviews assess whether demand triggers need recalibration (e.g., if growth is faster or slower than baseline scenario).</span></li>
+          <li><span class="vname">Dispute resolution</span><span class="vdesc">Port authority vs. terminal operator disputes over phasing obligations resolved through agreed arbitration mechanisms specified in the concession agreement.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6 -->
+  <div id="mp-cases" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 6</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Three case studies in port master planning — one successful phased expansion (Singapore Tuas), one plan that overestimated demand (a Mediterranean example), and the Cyprus Ports Authority masterplan process post-2016 concession. Will include lessons for the Mars Terminal project assignment.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div class="sh" style="color:var(--green);margin-bottom:.6rem;">Singapore Tuas — Phased Reclamation Masterplan</div>
+        <p class="body">The world's largest single container terminal (65M TEU/yr at full build-out) being developed in 5 phases over 30 years on reclaimed land. Each phase unlocked by utilisation of the previous phase. Demonstrates demand-triggered investment at mega-scale with full spatial reservation from day one.</p>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.6rem;">Maasvlakte 2 — Long-horizon Land Reservation</div>
+        <p class="body">Rotterdam's 1,000-hectare sea-reclamation extension, planned from the 1960s, permitted in 2008, first berths operational 2014. Shows how a 40-year land reservation withstood political pressure. Also a cautionary tale: initial throughput projections were not met due to the 2008–2009 recession.</p>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div class="sh" style="color:var(--cyan);margin-bottom:.6rem;">Cyprus (CPA) — Post-Concession Masterplan Realignment</div>
+        <p class="body">After the 2016 triple concession (Eurogate container, DP World multi-purpose, P&amp;O Marine Services), CPA needed to rewrite its masterplan to reflect the transition from public service to landlord port. Key challenge: embedding investment obligations and expansion triggers into three separate concession agreements while maintaining plan coherence.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ===== GOVERNANCE & STAKEHOLDERS (UNDER CONSTRUCTION) ===== -->
+<section id="governance">
+
+  <div style="display:flex;align-items:center;gap:1rem;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.35);border-left:4px solid #8b5cf6;border-radius:4px;padding:1rem 1.4rem;margin-bottom:1.5rem;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:#8b5cf6;margin-bottom:2px;">UNDER CONSTRUCTION</div>
+      <div style="font-size:.72rem;color:var(--muted);">This section is being developed. The outline below describes what it will contain when complete.</div>
+    </div>
+    <div style="margin-left:auto;font-family:'Space Mono',monospace;font-size:.65rem;color:rgba(139,92,246,.6);white-space:nowrap;">SHI 513 — Week 2</div>
+  </div>
+
+  <h2>Port Governance &amp; Stakeholders</h2>
+  <p class="subtitle">Who owns ports, who operates them, who governs them — and who has a stake in the outcome. Source: Notteboom, Pallis &amp; Rodrigue (2026) Ch. 8.1–8.5; Panayides et al. (2017).</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('gov-industry',this)">🌊 Port Industry</button>
+    <button class="tab-btn" onclick="showTab('gov-terms',this)">📖 Terminology</button>
+    <button class="tab-btn" onclick="showTab('gov-models',this)">🏛️ Governance Models</button>
+    <button class="tab-btn" onclick="showTab('gov-priv',this)">🔑 Privatisation</button>
+    <button class="tab-btn" onclick="showTab('gov-pa',this)">⚓ Port Authorities</button>
+    <button class="tab-btn" onclick="showTab('gov-stakeholders',this)">👥 Stakeholders</button>
+    <button class="tab-btn" onclick="showTab('gov-finance',this)">💰 Finance &amp; Cyprus</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div id="gov-industry" class="tab-content active">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 1</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">The maritime industry at scale — 90% of international trade by sea, 8,000+ ports in 200 countries, ~80% of liner fleet owned by top 7 carriers. Comparative mode economics (1 gallon of diesel: vessel 616 miles vs truck 150 miles). CO₂ comparison: vessel = 10% of truck emissions per tonne-mile. Regional transportation patterns (NA coast-to-coast, Europe inland-to-coast, Asia along-coastal). Port identity dimensions (waterway capability, road/rail capacity, intermodal connectivity, terminal flexibility, cargo diversity).</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.2rem;opacity:.75;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">90%</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">of international trade by sea</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">8,000+</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">ports in 200 countries</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">2.5–3%</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">of global CO₂ from shipping</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">~80%</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">of liner fleet — top 7 carriers</div>
+      </div>
+    </div>
+    <div class="panel" style="opacity:.75;border-top:3px solid #8b5cf6;">
+      <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">What will be covered — Port Industry &amp; Intermodal Connectivity</div>
+      <ul class="var-list">
+        <li><span class="vname">Maritime scale</span><span class="vdesc">IMO governance, top 5 carriers (MSC, Maersk, CMA CGM, COSCO, Hapag-Lloyd), fleet concentration trends</span></li>
+        <li><span class="vname">Modal comparison</span><span class="vdesc">Cost per tonne-mile, energy efficiency, emissions — why maritime dominates bulk and long-distance trade</span></li>
+        <li><span class="vname">Port identity</span><span class="vdesc">5 dimensions: waterway capability, road/rail capacity, intermodal connectivity &amp; geography, property flexibility, cargo diversity</span></li>
+        <li><span class="vname">Terminal functions</span><span class="vdesc">Intermodal exchange point, national border, security checkpoint, staging/storage/processing, inventory and tracking</span></li>
+        <li><span class="vname">Port types</span><span class="vdesc">Full-service, niche cargo, developing; Blue Water / Coastal / Brownwater / Great Lakes; by cargo: container, bulk, liquid bulk, neo-bulk, RoRo, cruise</span></li>
+        <li><span class="vname">Success vs stagnant</span><span class="vdesc">Committed officials, professional management, realistic planning, diversified finance vs management-by-committee, lack of vision, local politics</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div id="gov-terms" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 2</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Port terminology reference — precise definitions for harbor vs port, all five waterside terms (dock / wharf / berth / pier / apron), pier structure types, tonnage definitions (short ton / long ton / metric ton / GT / DWT / displacement), six cargo types with full definitions, operating personnel hierarchy (stevedore / longshoreman / carrier agent / ship's agent), the longshore gang structure, and ILA/ILWU labor unions.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Key Definitions — Preview</div>
+        <ul class="var-list">
+          <li><span class="vname">Harbor vs Port</span><span class="vdesc">Harbor: area of water affording a natural or artificial haven for vessels. Port: a harbor used for cargo transfer or other business between ship and shore. Commercial activity is the distinguishing criterion.</span></li>
+          <li><span class="vname">Berth</span><span class="vdesc">The water area a ship is tied up when alongside a pier. Distinct from the pier (structure projecting into water), wharf (berthing structure), dock (collective handling area), and apron (cargo lifting area at waterfront edge).</span></li>
+          <li><span class="vname">DWT vs GT</span><span class="vdesc">DWT (Deadweight Tonnage) = maximum cargo + fuel + stores + crew + ballast the vessel can carry. GT (Gross Tonnage) = official registered measurement assigned by a classification society. Used as the charging base for pilotage and port dues.</span></li>
+          <li><span class="vname">Stevedore vs Longshoreman</span><span class="vdesc">Stevedore: management company for labor; hired by the vessel. Longshoreman: skilled labor under direction of the stevedore (may be union or non-union). Often confused but legally distinct in contracts.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Cargo Type Definitions — Preview</div>
+        <ul class="var-list">
+          <li><span class="vname">Break-bulk</span><span class="vdesc">Heterogeneous items of general cargo, packaged and moved as single parcels or assembled on pallets</span></li>
+          <li><span class="vname">Dry Bulk</span><span class="vdesc">Loose, granular, free-flowing or solid, not shipped in package form (grain, coal, ore, stone)</span></li>
+          <li><span class="vname">Liquid Bulk</span><span class="vdesc">Any liquid cargo (petroleum products, chemicals, water, slurry) in tank vessels</span></li>
+          <li><span class="vname">Neo-bulk</span><span class="vdesc">Specialised vessels, not containerised/bulk/break-bulk (autos, steel, logs, lumber, scrap)</span></li>
+          <li><span class="vname">Containerised</span><span class="vdesc">Commodities in standard-size protective boxes (TEU/FEU)</span></li>
+          <li><span class="vname">Ad Valorem</span><span class="vdesc">High-value cargo; charged at special rate based on % of declared value</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div id="gov-models" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 3</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Port governance definition and objectives, six core governance tasks, two waves of port reform (1990s efficiency-driven vs 2010s sustainability/resilience-driven), four reform types (privatisation/commercialisation/decentralisation/corporatisation), the full 5-model comparison table (Public Service → Tool → Landlord → Corporatised → Private Service), public-private risk spectrum, and governance variation by port size with path dependence.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;margin-bottom:1.2rem;opacity:.75;">
+      <div style="background:rgba(0,0,0,.3);border:1px solid var(--steel);border-top:3px solid var(--red);padding:.7rem;border-radius:2px;text-align:center;font-size:.7rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--red);margin-bottom:.2rem;">Public Service</div>
+        <div style="color:var(--muted);">PA owns all, operates all, civil servants</div>
+      </div>
+      <div style="background:rgba(0,0,0,.3);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:.7rem;border-radius:2px;text-align:center;font-size:.7rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--amber);margin-bottom:.2rem;">Tool Port</div>
+        <div style="color:var(--muted);">PA owns equipment, private cargo handling</div>
+      </div>
+      <div style="background:rgba(0,0,0,.3);border:1px solid var(--cyan);border-top:3px solid var(--cyan);padding:.7rem;border-radius:2px;text-align:center;font-size:.7rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--cyan);margin-bottom:.2rem;">Landlord ★</div>
+        <div style="color:var(--muted);">PA owns land; private operators lease &amp; run</div>
+      </div>
+      <div style="background:rgba(0,0,0,.3);border:1px solid var(--steel);border-top:3px solid var(--sky);padding:.7rem;border-radius:2px;text-align:center;font-size:.7rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--sky);margin-bottom:.2rem;">Corporatised</div>
+        <div style="color:var(--muted);">Separate legal entity; govt as shareholder</div>
+      </div>
+      <div style="background:rgba(0,0,0,.3);border:1px solid var(--steel);border-top:3px solid var(--green);padding:.7rem;border-radius:2px;text-align:center;font-size:.7rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--green);margin-bottom:.2rem;">Private Service</div>
+        <div style="color:var(--muted);">Complete privatisation incl. land (UK model)</div>
+      </div>
+    </div>
+    <div class="panel" style="opacity:.75;border-top:3px solid #8b5cf6;">
+      <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Also planned in this tab</div>
+      <ul class="var-list">
+        <li><span class="vname">6 governance tasks</span><span class="vdesc">Policy formation · Public authority functions (ISPS) · Technical management · Market &amp; price regulation · Concession management · Emerging issues (sustainability, digitalisation)</span></li>
+        <li><span class="vname">2 reform waves</span><span class="vdesc">1990s: devolution, commercialisation, global terminal operators. 2010s–present: sustainability, resilience, mergers (Belgium/France/China), heterogeneous approaches.</span></li>
+        <li><span class="vname">Public-private risk spectrum</span><span class="vdesc">As governance moves toward private: private risk increases, importance of regulation increases. Trade-off: efficiency gains vs need for oversight.</span></li>
+        <li><span class="vname">Governance by port size</span><span class="vdesc">Large/gateway (often corporatised or landlord) · Medium regional (mixed) · Small/peripheral (often publicly operated). Path dependence shapes options.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div id="gov-priv" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 4</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Full privatisation definition and rationale, UK experience (Felixstowe 1886, 7 trust ports 1992–98, no sales since 1997), concerns and outcomes (undervalued assets, loss of oversight), alternative approaches (Greece master concessions 2016/2018, Australia 99-year leaseholds), efficiency evidence (Tongzon &amp; Heng 2005; Tetteh et al. 2024; Balliauw et al. 2020), Thessaloniki post-privatisation performance data, PPP framework and institutional success factors, and global patterns.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--red);">
+        <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Full Privatisation — The UK Model</div>
+        <ul class="var-list">
+          <li><span class="vname">Felixstowe 1886</span><span class="vdesc">First privately owned port; UK was the first country to adopt port privatisation movement</span></li>
+          <li><span class="vname">1992–1998</span><span class="vdesc">Seven trust ports privatised including Tees, Hartlepool, Tilbury. Land included — unique globally.</span></li>
+          <li><span class="vname">No sales since 1997</span><span class="vdesc">Port of Dover privatisation application rejected by Secretary of State in 2012</span></li>
+          <li><span class="vname">Concerns</span><span class="vdesc">Assets sold at undervalued prices · less investment than expected · loss of public oversight created discontent</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Alternative Approaches</div>
+        <ul class="var-list">
+          <li><span class="vname">Greece (2016/2018)</span><span class="vdesc">Master concession: COSCO acquires 67% stake in Piraeus PA; consortium acquires 67% of Thessaloniki PA. Not a land transfer — a share acquisition.</span></li>
+          <li><span class="vname">Australia</span><span class="vdesc">99-year leaseholds over port assets sold to private sector. Approaches full privatisation without complete asset transfer.</span></li>
+          <li><span class="vname">Evidence</span><span class="vdesc">Ownership alone does not determine efficiency. Institutional context, regulatory quality, and management practices matter as much as ownership structure. (Tongzon &amp; Heng 2005; Tetteh et al. 2024)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div id="gov-pa" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 5</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Port Authority definition and 5 historical roles, 9 strategic goals, port clusters (definition, 4 formation factors, 5 major global clusters: Yangtze Delta / Pearl River Delta / Strait of Malacca / Rhine-Scheldt / San Pedro Bay), 4 cluster governance issues, and Green Port governance (license to operate, 9 environmental impact dimensions, 3 pollution sources, 3 groups of green tools, MARPOL/ECA/0.5% sulfur/cold ironing regulations).</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Port Authority — Definition &amp; Strategic Goals</div>
+        <ul class="var-list">
+          <li><span class="vname">Definition</span><span class="vdesc">A public or private entity empowered by law or mandate to administer, develop, manage and/or operate port land and infrastructure, and coordinate and control port operations. (Notteboom, Pallis &amp; Rodrigue 2026)</span></li>
+          <li><span class="vname">9 strategic goals</span><span class="vdesc">Competitiveness · Economic growth · Employment creation · Trade facilitation · Throughput maximisation · Added value · Income and profits · Foreland/hinterland integration · Sustainability</span></li>
+          <li><span class="vname">Port clusters</span><span class="vdesc">Geographically concentrated, mutually related business units centred around transport, logistics, trade, and industrial production (increasingly called "ecosystems"). Two scales: clustering of ports around a range + clustering of activities around a port.</span></li>
+          <li><span class="vname">Green governance</span><span class="vdesc">Safeguarding the port's "licence to operate" by increasing environmental and economic competitiveness. Three tool groups: penalty/incentive pricing (ESI) · monitoring/measuring (GRI) · market access control (Clean Truck Program).</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Major Port Clusters Worldwide</div>
+        <ul class="var-list">
+          <li><span class="vname">Yangtze Delta</span><span class="vdesc">Shanghai, Ningbo — world's highest throughput concentration</span></li>
+          <li><span class="vname">Pearl River Delta</span><span class="vdesc">Hong Kong, Shenzhen — gateway for Chinese manufacturing exports</span></li>
+          <li><span class="vname">Malacca Strait</span><span class="vdesc">Singapore, Tanjung Pelepas — dominant Asia–Europe T/S hub</span></li>
+          <li><span class="vname">Rhine/Scheldt Delta</span><span class="vdesc">Antwerp, Rotterdam — largest European gateway and hinterland cluster</span></li>
+          <li><span class="vname">San Pedro Bay</span><span class="vdesc">Los Angeles, Long Beach — largest US container gateway</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6 -->
+  <div id="gov-stakeholders" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 6</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Port board composition and director profile, the 10 PA stakeholder categories with full descriptions, 4-step stakeholder relationship management, port community primary/secondary players, maritime industry asset-side stakeholders (ship owner / operator / management company), cargo-side (charterer / chartering broker / S&amp;P broker), support services (classification societies / banks / shipyards / demolition yards), and seaport alliances (Seattle-Tacoma, Malacca six-port hub).</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">10 Port Authority Stakeholder Categories — Preview</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;">
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">1.</span> <span style="color:var(--white);">Shareholders</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">2.</span> <span style="color:var(--white);">Port service providers</span> <span style="color:var(--muted);">(pilots, towage, customs)</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">3.</span> <span style="color:var(--white);">Concessionaires</span> <span style="color:var(--muted);">(APM, PSA, DP World)</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">4.</span> <span style="color:var(--white);">Carriers</span> <span style="color:var(--muted);">(liner + tramp)</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">5.</span> <span style="color:var(--white);">Employees &amp; unions</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">6.</span> <span style="color:var(--white);">Port users</span> <span style="color:var(--muted);">(forwarders, truckers, rail)</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">7.</span> <span style="color:var(--white);">Passengers</span> <span style="color:var(--muted);">(ferry, cruise, yachts)</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">8.</span> <span style="color:var(--white);">Financial community</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">9.</span> <span style="color:var(--white);">Local community &amp; NGOs</span></div>
+          <div style="background:rgba(0,0,0,.2);padding:.4rem .6rem;border-radius:4px;font-size:.72rem;"><span style="color:var(--cyan);">10.</span> <span style="color:var(--white);">Regulators</span> <span style="color:var(--muted);">(IMO, ILO, national)</span></div>
+        </div>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Maritime Industry Stakeholders — Asset &amp; Cargo Side</div>
+        <ul class="var-list">
+          <li><span class="vname">Ship Owner</span><span class="vdesc">Owns vessel asset; arranges financing; decides when/what to buy. Leading countries: Greece, China, Japan, Germany, Norway. Profit from charter rates and ship S&amp;P.</span></li>
+          <li><span class="vname">Ship Operator</span><span class="vdesc">Responsible for chartering, cargo orders, freight rates, bunkering, routing, port expenses.</span></li>
+          <li><span class="vname">Ship Manager</span><span class="vdesc">Crewing, technical maintenance, spare parts. ~1,500 companies globally managing 10+ ships each.</span></li>
+          <li><span class="vname">Charterer</span><span class="vdesc">Acts on behalf of cargo owner; transports goods at lowest cost. Largest in Switzerland, UK, Germany, USA, Singapore.</span></li>
+          <li><span class="vname">Brokers</span><span class="vdesc">Chartering broker (matches ships to cargo orders, earns % commission) and S&amp;P broker (facilitates ship buying/selling).</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7 -->
+  <div id="gov-finance" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 7</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Terminal cost structure (fixed infrastructure / variable annual), terminal efficiency factors, full revenue source list (dockage / wharfage / THC / storage / gate fees / equipment hire / ground leases / non-maritime development), value-added services, financing instruments (tax-exempt debt / bonds / PPPs / federal grants), PPP agreement types (fixed lease / minimum guarantee / % gross revenue), best practices — all anchored by the Cyprus Ports Authority 2016 concession reform as a worked case (€10M upfront, €1.16B NPV, 25-year term, triple concession structure, lessons for the Mars Terminal project).</p>
+    </div>
+    <div class="panel" style="opacity:.75;border-top:3px solid var(--cyan);">
+      <div class="sh sh-cyan" style="margin-bottom:.7rem;">Cyprus Case Study — Preview (Panayides, Lambertides &amp; Andreou 2017)</div>
+      <div class="g2" style="gap:1rem;">
+        <div>
+          <p class="body" style="margin-bottom:.6rem;"><strong>Background:</strong> CPA (est. 1973), semi-government. Limassol = 80% passenger traffic + 70% commercial activity. Lost T/S competitiveness to Piraeus, Malta, Haifa. 2013 EU/IMF bailout required privatisation of state assets.</p>
+          <p class="body"><strong>Three concessions (2016):</strong> Container (Eurogate 60% + Interorient 20% + East Med 20%, 25yr, 62.71% royalty) · Multi-purpose/Passenger (DP World 75% + GAP 25%, 25yr, 52.1% royalty) · Marine Services (P&amp;O Maritime 75%, 10yr, 10.1% royalty).</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;">
+          <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);padding:.6rem;border-radius:4px;font-size:.75rem;"><strong style="color:var(--green);">€10M</strong> <span style="color:var(--muted);">upfront concession fee</span></div>
+          <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);padding:.6rem;border-radius:4px;font-size:.75rem;"><strong style="color:var(--green);">€1.16B</strong> <span style="color:var(--muted);">estimated NPV over 25 years</span></div>
+          <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);padding:.6rem;border-radius:4px;font-size:.75rem;"><strong style="color:var(--green);">€9.15M</strong> <span style="color:var(--muted);">guaranteed minimum annual income</span></div>
+          <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);padding:.6rem;border-radius:4px;font-size:.75rem;"><strong style="color:var(--green);">€40–45M/yr</strong> <span style="color:var(--muted);">expected profit (up from €25–30M)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ===== GAME THEORY APPLICATIONS (UNDER CONSTRUCTION) ===== -->
+<section id="gametheory">
+
+  <div style="display:flex;align-items:center;gap:1rem;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.35);border-left:4px solid #8b5cf6;border-radius:4px;padding:1rem 1.4rem;margin-bottom:1.5rem;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:#8b5cf6;margin-bottom:2px;">UNDER CONSTRUCTION</div>
+      <div style="font-size:.72rem;color:var(--muted);">This section is being developed. The outline below describes what it will contain when complete.</div>
+    </div>
+    <div style="margin-left:auto;font-family:'Space Mono',monospace;font-size:.65rem;color:rgba(139,92,246,.6);white-space:nowrap;">SHI 513 — Advanced Topics</div>
+  </div>
+
+  <h2>Game Theory Applications in Port Economics</h2>
+  <p class="subtitle">Strategic interaction between ports, terminal operators, and shipping lines — from Nash equilibria in port competition to auction mechanisms for berth slots and concession design. Source: Lam &amp; Yap (2011); Wang et al. (2019); Matsushima &amp; Takauchi (2014); Ishii et al. (2013).</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('gt-foundations',this)">🎯 Foundations</button>
+    <button class="tab-btn" onclick="showTab('gt-competition',this)">⚔️ Port Competition</button>
+    <button class="tab-btn" onclick="showTab('gt-berth',this)">⚓ Berth Slot Auctions</button>
+    <button class="tab-btn" onclick="showTab('gt-concession',this)">📋 Concession Design</button>
+    <button class="tab-btn" onclick="showTab('gt-alliance',this)">🤝 Carrier Alliances</button>
+    <button class="tab-btn" onclick="showTab('gt-pricing',this)">💱 Strategic Pricing</button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div id="gt-foundations" class="tab-content active">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 1</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Game theory foundations for port economists — players, strategies, payoffs, normal form vs extensive form games, dominant strategies, Nash equilibrium (pure and mixed), Pareto optimality vs Nash, prisoner's dilemma as a canonical port competition analogy, and the concept of backward induction in sequential port investment decisions.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Core Concepts</div>
+        <ul class="var-list">
+          <li><span class="vname">Players</span><span class="vdesc">Any entity making strategic decisions: ports, terminal operators, shipping lines, port authorities, governments. Players are assumed rational and self-interested.</span></li>
+          <li><span class="vname">Strategy</span><span class="vdesc">A complete plan of action for every possible situation. Ports choose prices, investment levels, service quality; shipping lines choose port calls, volume commitments.</span></li>
+          <li><span class="vname">Nash equilibrium</span><span class="vdesc">A profile of strategies where no player can unilaterally improve their payoff by changing strategy — given what all other players are doing. The "stable" outcome of strategic interaction. Named for John Nash (1950).</span></li>
+          <li><span class="vname">Dominant strategy</span><span class="vdesc">A strategy that is best regardless of what opponents do. Rare in port competition — outcomes are typically interdependent.</span></li>
+          <li><span class="vname">Prisoner's dilemma</span><span class="vdesc">Classic analogy: two ports individually have incentive to lower prices (defect), but both would be better off keeping prices high (cooperate). Nash = both defect; Pareto optimum = both cooperate. Explains why price wars emerge in port competition.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid #8b5cf6;">
+        <div class="sh" style="color:#8b5cf6;margin-bottom:.7rem;">Why Game Theory Matters for Ports</div>
+        <ul class="var-list">
+          <li><span class="vname">Interdependence</span><span class="vdesc">A port's optimal pricing strategy depends on what competing ports charge. A port's investment decision depends on what capacity competitors are adding. This interdependence is the hallmark of strategic interaction.</span></li>
+          <li><span class="vname">Small number of players</span><span class="vdesc">Most port ranges are served by 2–5 competing ports — oligopoly, not perfect competition. Each player's decision noticeably affects others. Game theory tools (not supply/demand curves) are the right framework.</span></li>
+          <li><span class="vname">Asymmetric information</span><span class="vdesc">Port authorities do not know terminal operators' true costs or profit expectations. Concession bidders do not know the PA's reserve price. Information asymmetry is central to auction and contract design problems.</span></li>
+          <li><span class="vname">Repeated games</span><span class="vdesc">Port competition and PA–operator relationships are not one-shot: they repeat over years and decades. Cooperation (implicit collusion on prices, joint marketing) can be sustained in repeated games through reputation effects.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div id="gt-competition" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 2</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Spatial (Hotelling-style) competition between ports for hinterland cargo — how geographic position, hinterland access cost, and THC jointly determine market boundaries and equilibrium prices. Bertrand (price) vs Cournot (quantity/capacity) competition models. The seaport competition model of Lam &amp; Yap (2011). Numerical worked examples: two-port Nash equilibrium in THC-setting and how a new entrant changes the equilibrium.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div class="sh" style="color:var(--cyan);margin-bottom:.7rem;">Spatial Competition — Hotelling Model</div>
+        <ul class="var-list">
+          <li><span class="vname">Setup</span><span class="vdesc">Two ports A and B at opposite ends of a linear hinterland. Shippers located along the line choose based on: freight rate + port THC + inland transport cost to port. The shipper at the market boundary is indifferent between A and B.</span></li>
+          <li><span class="vname">Market boundary</span><span class="vdesc">x* = (THC_B − THC_A + t×L) / (2t) where t = inland transport cost per km, L = distance between ports. A price cut by A shifts x* toward B — captures more hinterland.</span></li>
+          <li><span class="vname">Nash equilibrium</span><span class="vdesc">Each port sets THC to maximise own profit taking the other's THC as given. Result: equilibrium THC > MC (ports earn positive margins) but price competition constrains markups.</span></li>
+          <li><span class="vname">Gateway vs feeder</span><span class="vdesc">A dominant gateway port with shorter inland distances to major economic centres can sustain higher THC. A peripheral port must undercut to attract traffic despite higher inland transport burden.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Bertrand vs Cournot Competition</div>
+        <ul class="var-list">
+          <li><span class="vname">Bertrand (price)</span><span class="vdesc">Ports simultaneously choose prices; shippers choose the cheapest option. Equilibrium drives prices toward marginal cost — "Bertrand paradox." Applies in the short run when capacity is abundant.</span></li>
+          <li><span class="vname">Cournot (capacity)</span><span class="vdesc">Ports simultaneously choose capacity; prices adjust to clear the market. Higher equilibrium prices than Bertrand — relevant when capacity decisions are long-run commitments (cannot easily reverse). Typical for new berth investment.</span></li>
+          <li><span class="vname">Stackelberg</span><span class="vdesc">One port (leader) moves first (e.g., announces major expansion); the follower responds. First-mover advantage: leader can preempt capacity and deter follower from building. Relevant in hub port strategy.</span></li>
+          <li><span class="vname">Mars implication</span><span class="vdesc">Mars Terminal's strategic over-capacity (2M TEU design) is a Stackelberg pre-commitment — it signals to potential competing Martian ports that entry would be unprofitable.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div id="gt-berth" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 3</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Berth slot allocation as an auction mechanism — why first-come-first-served is inefficient, how auctions extract willingness-to-pay from shipping lines, Vickrey (second-price) vs pay-as-bid (first-price) auction properties, and the connection between berth slot auctions and peak-load pricing. Revenue management applied to port infrastructure: dynamic slot pricing based on demand forecasts.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Why FCFS is Inefficient</div>
+        <ul class="var-list">
+          <li><span class="vname">FCFS problem</span><span class="vdesc">First-come-first-served allocates scarce berth time to whoever arrives first — not to whoever values it most. A high-value mainliner may wait while a low-value feeder occupies the berth.</span></li>
+          <li><span class="vname">Deadweight loss</span><span class="vdesc">FCFS creates a queue whose total waiting cost (ships×hours×$/hr) is a pure social loss. Auction mechanisms can eliminate or reduce this deadweight loss by allocating slots to high-value users.</span></li>
+          <li><span class="vname">Priority pricing alternative</span><span class="vdesc">A simpler market mechanism: charge a slot reservation premium for guaranteed windows. Connects directly to the two-part tariff — the fixed fee (F) is essentially a slot reservation price.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div class="sh" style="color:var(--cyan);margin-bottom:.7rem;">Auction Mechanisms for Berth Slots</div>
+        <ul class="var-list">
+          <li><span class="vname">Vickrey (2nd price)</span><span class="vdesc">Winner pays the second-highest bid. Dominant strategy: bid your true value. Efficient (slot goes to highest-value user); revenue may be lower than pay-as-bid.</span></li>
+          <li><span class="vname">Pay-as-bid (1st price)</span><span class="vdesc">Winner pays their own bid. Strategic underbidding reduces efficiency but increases competitive tension. More common in practice despite theoretical inferiority.</span></li>
+          <li><span class="vname">Combinatorial auctions</span><span class="vdesc">Bidders can bid on combinations of slots (e.g., "I want Berth 3 on Monday AND Tuesday or nothing"). Captures complementarities in shipping schedules. Complex to implement but used in some port experiments.</span></li>
+          <li><span class="vname">Dynamic pricing</span><span class="vdesc">Berth slot prices adjusted in real time based on demand — similar to airline yield management. High-utilisation periods priced up; off-peak discounted. Connects to peak-load pricing in the Pricing section.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div id="gt-concession" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 4</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Concession design as a principal–agent problem — the port authority (principal) contracts with a terminal operator (agent) who has private information about their costs and effort. Adverse selection (which operator type to select) and moral hazard (ensuring the operator performs after winning the concession). Concession auction formats: royalty bids, throughput commitments, minimum guarantees. Renegotiation risk and hold-up problem.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Principal–Agent Framework</div>
+        <ul class="var-list">
+          <li><span class="vname">Adverse selection</span><span class="vdesc">Before the contract is signed: the PA cannot distinguish between efficient and inefficient operators at the bidding stage. Auction mechanisms are designed to screen — e.g., throughput commitments separate high-capability from low-capability bidders.</span></li>
+          <li><span class="vname">Moral hazard</span><span class="vdesc">After the contract is signed: the operator may reduce effort (maintenance, investment) because the PA cannot perfectly monitor. Solution: performance-based royalties, minimum throughput clauses, and extraction clauses for non-performance.</span></li>
+          <li><span class="vname">Hold-up problem</span><span class="vdesc">Once the operator invests in port-specific assets (cranes, TOS), the PA gains bargaining power — it can threaten non-renewal to extract rent. Solution: longer concession terms, pre-agreed renewal options, and binding arbitration.</span></li>
+          <li><span class="vname">Cyprus example</span><span class="vdesc">The 62.71% royalty on gross revenues (container terminal concession) is a risk-sharing mechanism: PA gets a large share of upside; operator retains incentive to grow volume since they keep ~37% of every extra euro of revenue.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--red);">
+        <div class="sh" style="color:var(--red);margin-bottom:.7rem;">Concession Auction Design</div>
+        <ul class="var-list">
+          <li><span class="vname">Royalty bidding</span><span class="vdesc">Bidders compete on royalty rate (% of gross revenue paid to PA). Highest royalty wins. Risk: if operator bids too high, the concession is financially unviable — incentive for aggressive but infeasible bids.</span></li>
+          <li><span class="vname">Throughput commitments</span><span class="vdesc">Operator commits to minimum annual throughput. Failure triggers penalty or concession forfeiture. Screens for operators with high demand-attraction capability. Mars Terminal application: minimum 400k T/S TEU for years 3–5.</span></li>
+          <li><span class="vname">Minimum annual guarantee</span><span class="vdesc">Operator pays a floor payment regardless of throughput (protects PA's revenue floor). Cyprus: €9.15M minimum annual income. Creates a "put option" for the PA.</span></li>
+          <li><span class="vname">Renegotiation risk</span><span class="vdesc">Long-term concessions almost always face renegotiation requests from operators (demand shortfall, cost overrun, force majeure). PA should anticipate and pre-specify renegotiation triggers and processes.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div id="gt-alliance" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 5</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Carrier alliances as cooperative games — how MSC/Maersk (2M Alliance), THE Alliance (Hapag-Lloyd/ONE/Yang Ming), and Ocean Alliance (CMA CGM/COSCO/Evergreen) coordinate vessel deployment to reduce costs while competing on service. The impact of alliance consolidation on port bargaining power: when a single alliance controls 40%+ of a port's throughput, the balance of power shifts. Port responses: seaport alliances (Seattle-Tacoma), volume commitments, loyalty pricing.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--sky);">
+        <div class="sh" style="color:var(--sky);margin-bottom:.7rem;">Carrier Alliances as Cooperative Games</div>
+        <ul class="var-list">
+          <li><span class="vname">Alliance rationale</span><span class="vdesc">Slot-sharing agreements allow carriers to fill vessels without owning sufficient cargo — reduces idle capacity. Vessel sharing reduces capital costs. Network coverage expands without new ships.</span></li>
+          <li><span class="vname">Stability conditions</span><span class="vdesc">A cooperative alliance is stable if no subset of carriers (coalition) would be better off leaving and forming their own arrangement. Stability requires equitable slot-sharing formulas and clear defection deterrents.</span></li>
+          <li><span class="vname">Port impact</span><span class="vdesc">When three carriers in an alliance represent 45% of a port's volume, the alliance negotiates jointly — transforming a port-carrier relationship from bilateral (PA vs one line) to multilateral (PA vs coordinated bloc).</span></li>
+          <li><span class="vname">Counter-strategy</span><span class="vdesc">Ports respond with seaport alliances (Seattle-Tacoma Northwest Seaport Alliance) and volume commitment contracts that lock in revenue floors and prevent abrupt traffic diversion.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div class="sh" style="color:var(--cyan);margin-bottom:.7rem;">Three Major Alliances (2025)</div>
+        <ul class="var-list">
+          <li><span class="vname">Gemini (2025)</span><span class="vdesc">Maersk + Hapag-Lloyd. Focus on schedule reliability (&gt;90% target). Reorganised from 2M + THE Alliance structures. Smaller combined capacity but high-reliability positioning.</span></li>
+          <li><span class="vname">Ocean Alliance</span><span class="vdesc">CMA CGM + COSCO + Evergreen. Largest by capacity on Asia–Europe and Transpacific. COSCO's state backing gives this alliance strategic geopolitical dimensions beyond pure commercial logic.</span></li>
+          <li><span class="vname">Premier Alliance</span><span class="vdesc">ONE (Japan lines) + HMM + Yang Ming. Mid-tier alliance primarily serving Asia–Europe and Transpacific with capacity focus rather than reliability differentiation.</span></li>
+          <li><span class="vname">MSC standalone</span><span class="vdesc">Since MSC left 2M (2025), the world's largest carrier operates independently — an unusual strategic choice that signals confidence in its own network density and slot-filling ability.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6 -->
+  <div id="gt-pricing" class="tab-content">
+    <div style="background:rgba(139,92,246,.06);border:1px dashed rgba(139,92,246,.3);border-radius:4px;padding:1.2rem;margin-bottom:1.2rem;">
+      <div style="font-size:.6rem;color:#8b5cf6;text-transform:uppercase;letter-spacing:2px;margin-bottom:.4rem;">Planned content — Tab 6</div>
+      <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Strategic pricing games between ports — how Ramsey pricing connects to Nash equilibrium in the Pricing Principle 4 (strategic pricing); port privatisation as a game (Matsushima &amp; Takauchi 2014: private ports set higher prices in Bertrand competition than public ports, because public ports internalise consumer welfare); congestion pricing as a mechanism design problem; and the multi-port Stackelberg game where a dominant hub deters entry by capacity pre-commitment.</p>
+    </div>
+    <div class="g2" style="gap:1.2rem;opacity:.75;">
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Port Privatisation as a Pricing Game</div>
+        <ul class="var-list">
+          <li><span class="vname">Matsushima &amp; Takauchi (2014)</span><span class="vdesc">Key finding: in a Bertrand duopoly between two ports, a private port sets a higher price than a public port. The public port internalises shipper welfare (consumer surplus) in its objective function; the private port does not.</span></li>
+          <li><span class="vname">Mixed duopoly</span><span class="vdesc">When one port is public and one is private, the public port's price is lower than in a pure private duopoly — acting as a price anchor that constrains the private port's markup.</span></li>
+          <li><span class="vname">Welfare implications</span><span class="vdesc">Full privatisation of both ports increases port revenues but reduces total social welfare (higher prices reduce trade volumes and increase deadweight loss). This is the game-theoretic case for retaining public port ownership or strong price regulation.</span></li>
+          <li><span class="vname">Mars application</span><span class="vdesc">If Mars Terminal is publicly operated, it internalises the broader Martian economy's welfare in setting THC. If privatised to a global terminal operator, the operator maximises profit → higher local THC → lower hinterland trade. Classic mixed duopoly outcome.</span></li>
+        </ul>
+      </div>
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div class="sh" style="color:var(--green);margin-bottom:.7rem;">Stackelberg Hub Strategy &amp; Entry Deterrence</div>
+        <ul class="var-list">
+          <li><span class="vname">Capacity pre-commitment</span><span class="vdesc">A hub port that builds excess capacity early signals to potential entrants that the market will be flooded if they enter. Rational potential entrants stay out. This is the "strategic overcapacity" rationale — Mars Terminal's 2M TEU design is a real-world example.</span></li>
+          <li><span class="vname">Credibility condition</span><span class="vdesc">The pre-commitment only deters entry if it is credible — i.e., the incumbent will actually use the capacity if an entrant appears. Sunk cost of construction makes the threat credible (the fixed costs are paid; variable costs of operating are low).</span></li>
+          <li><span class="vname">Congestion pricing game</span><span class="vdesc">Without congestion pricing, ports with excess capacity have an incentive to attract T/S traffic at low prices — but as utilisation rises, all users suffer congestion delays. The uncoordinated outcome is over-congestion. A regulator (or Pigouvian tax) corrects the externality.</span></li>
+          <li><span class="vname">Cross-reference</span><span class="vdesc">Connects directly to Ramsey pricing (Pricing → Pricing Methods) and the congestion pricing worked example (Pricing → Price Differentiation). <span class="xlink" onclick="showSectionTab('pricing','pr-methods')">→ Pricing Methods ↗</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
 </section>
 
