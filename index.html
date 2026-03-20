@@ -1727,110 +1727,666 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 </section>
 
 <!-- ===== KPIs ===== -->
+<!-- ===== KPIs ===== -->
 <section id="kpis">
   <h2>Performance Measures</h2>
-  <p class="subtitle">Key performance indicators and benchmarks for container terminal operations — from quay to gate</p>
+  <p class="subtitle">Key performance indicators, benchmarks, and causal relationships — from quay to gate. Source: UNCTAD PPS 2024, IAPH (2016), Hinkka et al. (2018).</p>
 
-  <div class="kpi-dashboard">
-    <div class="big-kpi cyan"><div class="bk-val">18.1</div><div class="bk-unit">lifts/ship-hr at berth (median, 2024)</div><div class="bk-lbl">Container Crane Rate — UNCTAD PPS</div></div>
-    <div class="big-kpi amber"><div class="bk-val">0.8d</div><div class="bk-unit">median port stay, end-2024</div><div class="bk-lbl">Container Ship Turnaround — UNCTAD/Clarksons</div></div>
-    <div class="big-kpi green"><div class="bk-val">3.1</div><div class="bk-unit">days median, 2024</div><div class="bk-lbl">Container Dwell Time — UNCTAD PPS</div></div>
-    <div class="big-kpi red"><div class="bk-val">10.9h</div><div class="bk-unit">developing / 6.4h developed (Dec 2024)</div><div class="bk-lbl">Avg Vessel Waiting Time — UNCTAD/Clarksons</div></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('kpi-dashboard',this)">📊 Dashboard</button>
+    <button class="tab-btn" onclick="showTab('kpi-reference',this)">📋 KPI Reference</button>
+    <button class="tab-btn" onclick="showTab('kpi-hierarchy',this)">🔗 KPI Hierarchy</button>
+    <button class="tab-btn" onclick="showTab('kpi-iaph',this)">🌍 IAPH Benchmarks</button>
+    <button class="tab-btn" onclick="showTab('kpi-financial',this)">💰 Financial KPIs</button>
   </div>
 
-  <div class="charts-row">
-    <div class="chart-panel">
-      <h3>Container Lifts per Ship-Hour at Berth — UNCTAD PPS Median</h3>
-      <div class="bar-chart">
-        <div class="bar-wrap"><div class="bar-val">26.4</div><div class="bar" style="height:99%;background:linear-gradient(180deg,var(--cyan),#006688);"></div><div class="bar-label">2017</div></div>
-        <div class="bar-wrap"><div class="bar-val">18.3</div><div class="bar" style="height:69%;background:linear-gradient(180deg,var(--sky),#0044aa);"></div><div class="bar-label">2018</div></div>
-        <div class="bar-wrap"><div class="bar-val">20.4</div><div class="bar" style="height:77%;background:linear-gradient(180deg,var(--sky),#0044aa);"></div><div class="bar-label">2019</div></div>
-        <div class="bar-wrap"><div class="bar-val">19.2</div><div class="bar" style="height:72%;background:linear-gradient(180deg,#5577bb,#334488);"></div><div class="bar-label">2020</div></div>
-        <div class="bar-wrap"><div class="bar-val">20.0</div><div class="bar" style="height:76%;background:linear-gradient(180deg,#5577bb,#334488);"></div><div class="bar-label">2021</div></div>
-        <div class="bar-wrap"><div class="bar-val">14.7</div><div class="bar" style="height:55%;background:linear-gradient(180deg,var(--amber),#885500);"></div><div class="bar-label">2022</div></div>
-        <div class="bar-wrap"><div class="bar-val">15.1</div><div class="bar" style="height:57%;background:linear-gradient(180deg,var(--amber),#885500);"></div><div class="bar-label">2023</div></div>
-        <div class="bar-wrap"><div class="bar-val">18.1</div><div class="bar" style="height:68%;background:linear-gradient(180deg,var(--green),#005522);"></div><div class="bar-label">2024</div></div>
+  <!-- ══ TAB 1: DASHBOARD ══ -->
+  <div id="kpi-dashboard" class="tab-content active">
+
+    <!-- 8 big KPI cards in 4+4 grid -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div class="big-kpi cyan">
+        <div class="bk-val">18.1</div>
+        <div class="bk-unit">lifts/ship-hr at berth (median)</div>
+        <div class="bk-lbl">GCR — UNCTAD PPS 2024</div>
       </div>
-      <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: UNCTAD Port Performance Scorecard (PPS), June 2025. Median across reporting ports.</p>
+      <div class="big-kpi amber">
+        <div class="bk-val">3.1</div>
+        <div class="bk-unit">days median dwell time, 2024</div>
+        <div class="bk-lbl">Container Dwell — UNCTAD PPS</div>
+      </div>
+      <div class="big-kpi green">
+        <div class="bk-val">0.8d</div>
+        <div class="bk-unit">median container ship port stay</div>
+        <div class="bk-lbl">Vessel Turnaround — UNCTAD/Clarksons 2024</div>
+      </div>
+      <div class="big-kpi red">
+        <div class="bk-val">10.9h</div>
+        <div class="bk-unit">developing / 6.4h developed (Dec 2024)</div>
+        <div class="bk-lbl">Avg Vessel Waiting — UNCTAD/Clarksons</div>
+      </div>
     </div>
-    <div class="chart-panel">
-      <h3>Yard Utilisation by Container Type</h3>
-      <div class="donut-wrap">
-        <div class="donut">
-          <svg width="90" height="90" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#0a1628" stroke-width="16"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#1976d2" stroke-width="16" stroke-dasharray="143 96" stroke-dashoffset="0"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#00bcd4" stroke-width="16" stroke-dasharray="29 210" stroke-dashoffset="-143"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#ff8800" stroke-width="16" stroke-dasharray="19 220" stroke-dashoffset="-172"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#aa44ff" stroke-width="16" stroke-dasharray="9 230" stroke-dashoffset="-191"/>
-          </svg>
-          <div class="donut-center"><div class="dv">68%</div><div class="dl">Occupied</div></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div class="big-kpi cyan">
+        <div class="bk-val">65</div>
+        <div class="bk-unit">avg BMPH · range 40–140 (IAPH 2016)</div>
+        <div class="bk-lbl">Berth Moves Per Hour</div>
+      </div>
+      <div class="big-kpi amber">
+        <div class="bk-val">27</div>
+        <div class="bk-unit">avg CMPH · range 10–43 (IAPH 2016)</div>
+        <div class="bk-lbl">Crane Moves Per Hour</div>
+      </div>
+      <div class="big-kpi green">
+        <div class="bk-val">47.9%</div>
+        <div class="bk-unit">EBITDA/revenue median (2024)</div>
+        <div class="bk-lbl">Operating Margin — UNCTAD PPS 2024</div>
+      </div>
+      <div class="big-kpi red">
+        <div class="bk-val">$184k</div>
+        <div class="bk-unit">revenue per employee per year (2024)</div>
+        <div class="bk-lbl">Labour Productivity — UNCTAD PPS 2024</div>
+      </div>
+    </div>
+
+    <!-- Charts row -->
+    <div class="charts-row" style="margin-bottom:1.5rem;">
+      <div class="chart-panel">
+        <h3>GCR — Container Lifts per Ship-Hour at Berth (UNCTAD PPS Median)</h3>
+        <div class="bar-chart">
+          <div class="bar-wrap"><div class="bar-val">26.4</div><div class="bar" style="height:99%;background:linear-gradient(180deg,var(--cyan),#006688);"></div><div class="bar-label">2017</div></div>
+          <div class="bar-wrap"><div class="bar-val">18.3</div><div class="bar" style="height:69%;background:linear-gradient(180deg,var(--sky),#0044aa);"></div><div class="bar-label">2018</div></div>
+          <div class="bar-wrap"><div class="bar-val">20.4</div><div class="bar" style="height:77%;background:linear-gradient(180deg,var(--sky),#0044aa);"></div><div class="bar-label">2019</div></div>
+          <div class="bar-wrap"><div class="bar-val">19.2</div><div class="bar" style="height:72%;background:linear-gradient(180deg,#5577bb,#334488);"></div><div class="bar-label">2020</div></div>
+          <div class="bar-wrap"><div class="bar-val">20.0</div><div class="bar" style="height:76%;background:linear-gradient(180deg,#5577bb,#334488);"></div><div class="bar-label">2021</div></div>
+          <div class="bar-wrap"><div class="bar-val">14.7</div><div class="bar" style="height:55%;background:linear-gradient(180deg,var(--amber),#885500);"></div><div class="bar-label">2022</div></div>
+          <div class="bar-wrap"><div class="bar-val">15.1</div><div class="bar" style="height:57%;background:linear-gradient(180deg,var(--amber),#885500);"></div><div class="bar-label">2023</div></div>
+          <div class="bar-wrap"><div class="bar-val">18.1</div><div class="bar" style="height:68%;background:linear-gradient(180deg,var(--green),#005522);"></div><div class="bar-label">2024</div></div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: UNCTAD Port Performance Scorecard (PPS), June 2025. Median across 76 reporting ports. Drop in 2022–23 attributed to post-pandemic yard congestion; 2024 recovery driven by reduced dwell times.</p>
+      </div>
+      <div class="chart-panel">
+        <h3>Dwell Time Impact on Annual Throughput Capacity (same yard)</h3>
+        <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.5rem;">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:.2rem;"><span>D̄ = 7 days (high dwell — developing country)</span><span style="color:var(--red);">563k TEU/yr</span></div>
+            <div style="background:rgba(255,82,82,.35);height:22px;border-radius:2px;width:44%;display:flex;align-items:center;padding-left:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;color:#fff;">563k</div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:.2rem;"><span>D̄ = 5 days (typical)</span><span style="color:var(--amber);">788k TEU/yr</span></div>
+            <div style="background:rgba(255,179,0,.35);height:22px;border-radius:2px;width:62%;display:flex;align-items:center;padding-left:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;color:#fff;">788k</div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-bottom:.2rem;"><span>D̄ = 3.1 days (UNCTAD 2024 median)</span><span style="color:var(--green);">1,271k TEU/yr</span></div>
+            <div style="background:rgba(0,230,118,.35);height:22px;border-radius:2px;width:100%;display:flex;align-items:center;padding-left:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;color:#fff;">1,271k (+126% vs 7d)</div>
+          </div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.8rem;">RTG 5+1 terminal, W<sub>Y</sub>=320m, D<sub>Y</sub>=400m, TGS=3,510, h=4.0, P=1.3. Same yard, same cranes — dwell reduction alone more than doubles throughput. Source: Chu &amp; Huang (2005) Tmax formula, UNCTAD PPS 2024 benchmark.</p>
+      </div>
+    </div>
+
+    <!-- BMPH vs CMPH range chart -->
+    <div class="charts-row">
+      <div class="chart-panel">
+        <h3>BMPH vs CMPH — Average and Range (IAPH 2016, 34 terminals)</h3>
+        <div style="display:flex;gap:2rem;align-items:flex-end;height:130px;margin-top:.5rem;">
+          <!-- BMPH -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="font-size:.62rem;color:var(--muted);">Max 140</div>
+            <div style="width:60%;background:rgba(0,188,212,.15);border:1px solid var(--steel);border-radius:2px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;">
+              <div style="position:absolute;top:10%;width:100%;height:2px;background:var(--muted);opacity:.4;"></div>
+              <div style="position:absolute;bottom:20%;width:100%;height:2px;background:var(--muted);opacity:.4;"></div>
+              <div style="background:var(--cyan);padding:.3rem .8rem;border-radius:2px;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--navy);">65</div>
+              <div style="font-size:.55rem;color:var(--muted);">avg</div>
+            </div>
+            <div style="font-size:.62rem;color:var(--muted);">Min 40</div>
+            <div style="font-size:.65rem;color:var(--cyan);font-weight:600;margin-top:4px;">BMPH</div>
+            <div style="font-size:.55rem;color:var(--muted);text-align:center;">Berth Moves/hr<br>(all cranes on vessel)</div>
+          </div>
+          <!-- Separator -->
+          <div style="display:flex;align-items:center;color:var(--steel);font-size:1.2rem;">vs</div>
+          <!-- CMPH -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="font-size:.62rem;color:var(--muted);">Max 43</div>
+            <div style="width:60%;background:rgba(255,179,0,.15);border:1px solid var(--steel);border-radius:2px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;">
+              <div style="position:absolute;top:5%;width:100%;height:2px;background:var(--muted);opacity:.4;"></div>
+              <div style="position:absolute;bottom:25%;width:100%;height:2px;background:var(--muted);opacity:.4;"></div>
+              <div style="background:var(--amber);padding:.3rem .8rem;border-radius:2px;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--navy);">27</div>
+              <div style="font-size:.55rem;color:var(--muted);">avg</div>
+            </div>
+            <div style="font-size:.62rem;color:var(--muted);">Min 10</div>
+            <div style="font-size:.65rem;color:var(--amber);font-weight:600;margin-top:4px;">CMPH</div>
+            <div style="font-size:.55rem;color:var(--muted);text-align:center;">Crane Moves/hr<br>(per individual crane)</div>
+          </div>
+          <!-- Explanation -->
+          <div style="flex:2;padding:.8rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Key relationship</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.7;">BMPH = CMPH × number of cranes on vessel. A vessel served by 3 cranes each at 27 CMPH has a BMPH of 81. The wide ranges reflect equipment age, yard congestion, and gate efficiency. <strong style="color:var(--white);">Truck TAT is the strongest predictor of CMPH (R²=0.42)</strong> — not vessel size (R²=0.03).</p>
+          </div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: IAPH (2016), 34 conventional terminals. No automated terminals responded — benchmarks understate the frontier.</p>
+      </div>
+      <div class="chart-panel">
+        <h3>Yard Utilisation by Container Type</h3>
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg width="90" height="90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#0a1628" stroke-width="16"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#1976d2" stroke-width="16" stroke-dasharray="143 96" stroke-dashoffset="0"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#00bcd4" stroke-width="16" stroke-dasharray="29 210" stroke-dashoffset="-143"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#ff8800" stroke-width="16" stroke-dasharray="19 220" stroke-dashoffset="-172"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#aa44ff" stroke-width="16" stroke-dasharray="9 230" stroke-dashoffset="-191"/>
+            </svg>
+            <div class="donut-center"><div class="dv">68%</div><div class="dl">Occupied</div></div>
+          </div>
+          <div>
+            <div class="dl-item"><div class="dl-dot" style="background:#1976d2;"></div>Dry General — 60%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:#00bcd4;"></div>Reefer — 12%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:#ff8800;"></div>Hazmat — 8%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:#aa44ff;"></div>OOG / Special — 4%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:#1a3a5c;border:1px solid #444;"></div>Empty — 16%</div>
+          </div>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.8rem;">Planning target: 65–75% utilisation. Above 85% causes excessive reshuffles that degrade crane productivity. Reefer and hazmat require dedicated yard areas regardless of occupancy level.</p>
+      </div>
+    </div>
+  </div><!-- end kpi-dashboard -->
+
+  <!-- ══ TAB 2: KPI REFERENCE ══ -->
+  <div id="kpi-reference" class="tab-content">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;">
+      <span style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Filter by zone:</span>
+      <button class="tab-btn active" onclick="filterKPI('all',this)">All</button>
+      <button class="tab-btn" onclick="filterKPI('seaside',this)">🌊 Seaside</button>
+      <button class="tab-btn" onclick="filterKPI('yardside',this)">📦 Yardside</button>
+      <button class="tab-btn" onclick="filterKPI('landside',this)">🚛 Landside</button>
+      <button class="tab-btn" onclick="filterKPI('financial',this)">💰 Financial</button>
+    </div>
+
+    <div class="panel" style="padding:0;overflow:hidden;">
+      <div style="overflow-x:auto;">
+      <table class="kpi-table" id="kpi-ref-table">
+        <thead>
+          <tr>
+            <th>KPI</th>
+            <th>Full Name</th>
+            <th>Formula / Definition</th>
+            <th>Benchmark</th>
+            <th>What Drives It</th>
+            <th>Zone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- SEASIDE -->
+          <tr data-zone="seaside">
+            <td><span class="popup-trigger" onclick="openPopup('gcr')">GCR<span class="pip">ⓘ</span></span></td>
+            <td>Gross Crane Rate</td>
+            <td>Total moves ÷ total crane hours at vessel (incl. all idle time)</td>
+            <td><strong>18.1 lifts/ship-hr median (UNCTAD PPS 2024)</strong></td>
+            <td>Truck TAT (R²=0.42), yard crane rate, stowage quality</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>BMPH</td>
+            <td>Berth Moves Per Hour</td>
+            <td>Total moves ÷ ship-hours at berth (all cranes combined)</td>
+            <td><strong>~65 avg, range 40–140 (IAPH 2016)</strong></td>
+            <td>Number of cranes assigned × CMPH. BMPH = cranes × CMPH.</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>CMPH</td>
+            <td>Crane Moves Per Hour</td>
+            <td>Moves ÷ crane hours (per individual crane)</td>
+            <td><strong>~27 avg, range 10–43 (IAPH 2016)</strong></td>
+            <td>Truck TAT R²=0.42. Vessel size R²=0.03. Transship ratio R²=0.005.</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>NCR</td>
+            <td>Net Crane Rate</td>
+            <td>Moves ÷ productive (working) crane hours only</td>
+            <td><strong>Always higher than GCR. Gap = idle/waiting fraction.</strong></td>
+            <td>Stowage planning, ITV availability, hatch sequencing</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>BSH</td>
+            <td>Berth-Ship Hours</td>
+            <td>Total hours vessel occupies berth</td>
+            <td><strong>0.8 days median port stay (UNCTAD/Clarksons 2024)</strong></td>
+            <td>Call size, GCR, number of cranes assigned</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>BERTHOCC</td>
+            <td>Berth Occupancy Rate</td>
+            <td>Occupied berth time ÷ available berth time</td>
+            <td><strong>Target 60–70%. Above 80% causes vessel queuing.</strong></td>
+            <td>Call frequency, BSH, number of berths</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>WAIT</td>
+            <td>Vessel Waiting Time</td>
+            <td>Hours from anchorage arrival to berth start</td>
+            <td><strong>6.4h developed / 10.9h developing (Dec 2024, UNCTAD)</strong></td>
+            <td>Berth occupancy, call bunching, weather, port authority efficiency</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <tr data-zone="seaside">
+            <td>VSC</td>
+            <td>Vessel-Size Coefficient</td>
+            <td>1·%(&lt;4k TEU) + 2·%(4–8k TEU) + 3·%(&gt;8k TEU)</td>
+            <td><strong>R²=0.03 vs CMPH — does NOT drive crane productivity</strong></td>
+            <td>Fleet mix. Near 3 = ultra-large; near 1 = feeder port.</td>
+            <td><span style="color:var(--sky);">Seaside</span></td>
+          </tr>
+          <!-- YARDSIDE -->
+          <tr data-zone="yardside">
+            <td><span class="popup-trigger" onclick="openPopup('dwell')">DWELL<span class="pip">ⓘ</span></span></td>
+            <td>Container Dwell Time</td>
+            <td>Average days container remains in yard</td>
+            <td><strong>3.1 days median (UNCTAD PPS 2024). Range 2016–23: 4.2–5.0d.</strong></td>
+            <td>Customs clearance speed, consignee behaviour, PCS availability</td>
+            <td><span style="color:var(--amber);">Yardside</span></td>
+          </tr>
+          <tr data-zone="yardside">
+            <td>YUTIL</td>
+            <td>Yard Utilisation</td>
+            <td>TEUs stored ÷ total TEU capacity at one point in time</td>
+            <td><strong>65–75% target. Above 85%: excessive reshuffles begin.</strong></td>
+            <td>Dwell time, throughput volume, yard capacity (TGS × h)</td>
+            <td><span style="color:var(--amber);">Yardside</span></td>
+          </tr>
+          <tr data-zone="yardside">
+            <td>RESHFP</td>
+            <td>Reshuffle Factor</td>
+            <td>Non-productive reshuffles ÷ productive moves</td>
+            <td><strong>&lt;0.2. Rises sharply above 85% yard utilisation.</strong></td>
+            <td>Stacking height, yard utilisation, pre-positioning accuracy</td>
+            <td><span style="color:var(--amber);">Yardside</span></td>
+          </tr>
+          <tr data-zone="yardside">
+            <td>YCR</td>
+            <td>Yard Crane Rate</td>
+            <td>Moves per yard crane per hour</td>
+            <td><strong>15–20 (RTG). 25–30 automated (RMG/ASC).</strong></td>
+            <td>Block length (optimal 56–72 slots), YC deployment rule, dwell</td>
+            <td><span style="color:var(--amber);">Yardside</span></td>
+          </tr>
+          <tr data-zone="yardside">
+            <td>TYM</td>
+            <td>Total Yard Moves</td>
+            <td>TEU(imp+exp) × 3 + TEU(transship) × 1</td>
+            <td><strong>Avg 57,635 TYM/ha · avg 89,839 TYM/RTG (IAPH 2016)</strong></td>
+            <td>Cargo mix (transship ratio m). Better equipment sizing metric than TEU alone.</td>
+            <td><span style="color:var(--amber);">Yardside</span></td>
+          </tr>
+          <!-- LANDSIDE -->
+          <tr data-zone="landside">
+            <td>GTT</td>
+            <td>Gate Turn Time</td>
+            <td>Truck arrival at gate to departure (minutes)</td>
+            <td><strong>Target minimize. Strongly correlated with CMPH (R²=0.42).</strong></td>
+            <td>OCR/ANPR automation, TAS (appointment system), document accuracy</td>
+            <td><span style="color:var(--green);">Landside</span></td>
+          </tr>
+          <tr data-zone="landside">
+            <td>GVOL</td>
+            <td>Gate Volume</td>
+            <td>Trucks processed per hour per gate lane</td>
+            <td><strong>Varies by terminal size, TAS adoption, automation level</strong></td>
+            <td>Gate automation, TAS, staffing, OCR accuracy</td>
+            <td><span style="color:var(--green);">Landside</span></td>
+          </tr>
+          <tr data-zone="landside">
+            <td>REJRATE</td>
+            <td>Gate Rejection Rate</td>
+            <td>% of trucks turned away at gate entry</td>
+            <td><strong>Minimize. High rate indicates pre-arrival data quality issues.</strong></td>
+            <td>EDI quality, VGM compliance, appointment system accuracy</td>
+            <td><span style="color:var(--green);">Landside</span></td>
+          </tr>
+          <!-- FINANCIAL -->
+          <tr data-zone="financial">
+            <td>EBITDA/Rev</td>
+            <td>Operating Margin</td>
+            <td>Earnings Before Interest, Tax, Depreciation &amp; Amortisation ÷ Revenue</td>
+            <td><strong>47.9% median (UNCTAD PPS 2024). Peak: 57.7% (2022).</strong></td>
+            <td>Throughput volume, concession income (25.6% of revenue), OPEX control</td>
+            <td><span style="color:var(--orange);">Financial</span></td>
+          </tr>
+          <tr data-zone="financial">
+            <td>Rev/Emp</td>
+            <td>Revenue per Employee</td>
+            <td>Total annual revenue ÷ number of employees</td>
+            <td><strong>USD 184,300/yr median (UNCTAD PPS 2024)</strong></td>
+            <td>Automation level, throughput per employee, tariff structures</td>
+            <td><span style="color:var(--orange);">Financial</span></td>
+          </tr>
+          <tr data-zone="financial">
+            <td>OPEX</td>
+            <td>Operational Expenditure</td>
+            <td>Day-to-day operating costs (labour, energy, maintenance)</td>
+            <td><strong>No universal benchmark. Automation shifts ratio: less OPEX, more CAPEX.</strong></td>
+            <td>Labour cost, energy prices, equipment age, automation level</td>
+            <td><span style="color:var(--orange);">Financial</span></td>
+          </tr>
+          <tr data-zone="financial">
+            <td>ROI</td>
+            <td>Return on Investment</td>
+            <td>Net profit ÷ invested capital</td>
+            <td><strong>Varies widely. Hardest KPI to model — requires real TOS cost data.</strong></td>
+            <td>Throughput volume, tariff levels, capital structure, concession terms</td>
+            <td><span style="color:var(--orange);">Financial</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:.6rem;">Sources: UNCTAD PPS 2024 (UNCTAD Review of Maritime Transport 2025); IAPH (2016) Container Terminal Productivity Study; Hinkka et al. (2018); Petering &amp; Murty (2009).</p>
+  </div><!-- end kpi-reference -->
+
+  <!-- ══ TAB 3: KPI HIERARCHY ══ -->
+  <div id="kpi-hierarchy" class="tab-content">
+    <div class="g2" style="gap:1.5rem;align-items:start;">
+      <div>
+        <div class="sh sh-cyan" style="margin-bottom:.5rem;">The Container Terminal KPI Hierarchy</div>
+        <p class="body" style="margin-bottom:1rem;">All secondary KPIs ultimately express themselves through GCR. Click any node for details. Arrows denote causal influence — this is an editorial synthesis, not a single-source hierarchy. Source: Petering &amp; Murty (2009), IAPH (2016), Week 8 lecture.</p>
+
+        <svg viewBox="0 0 520 320" style="width:100%;background:var(--panel);border-radius:4px;border:1px solid var(--steel);display:block;cursor:pointer;" onclick="kpiNodeClick(evt)" id="kpi-svg">
+          <!-- Arrows first (behind nodes) -->
+          <!-- YC → GCR -->
+          <line x1="120" y1="108" x2="215" y2="68" stroke="#1976d2" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- YT → GCR -->
+          <line x1="260" y1="108" x2="260" y2="72" stroke="#1976d2" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- BERTH → GCR -->
+          <line x1="400" y1="108" x2="310" y2="68" stroke="#1976d2" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- DWELL → YC -->
+          <line x1="80" y1="198" x2="100" y2="128" stroke="#0d4f8b" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- BLOCK → YC -->
+          <line x1="220" y1="198" x2="145" y2="128" stroke="#0d4f8b" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- BLOCK → YT -->
+          <line x1="240" y1="198" x2="255" y2="128" stroke="#0d4f8b" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- WAIT → BERTH -->
+          <line x1="400" y1="198" x2="400" y2="128" stroke="#0d4f8b" stroke-width="1.5" marker-end="url(#arrowh)"/>
+          <!-- GTT → YT (gate congestion drives YT/CMPH) -->
+          <line x1="120" y1="280" x2="230" y2="130" stroke="#1a3a5c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowh)"/>
+          <!-- RESHFP → YC -->
+          <line x1="400" y1="280" x2="165" y2="130" stroke="#1a3a5c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowh)"/>
+
+          <defs>
+            <marker id="arrowh" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <polygon points="0 0, 7 3.5, 0 7" fill="#1976d2"/>
+            </marker>
+          </defs>
+
+          <!-- Master node: GCR -->
+          <rect x="180" y="20" width="160" height="42" rx="4" fill="#0a4080" stroke="#00bcd4" stroke-width="2"/>
+          <text x="260" y="37" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="14" fill="white" letter-spacing="2">GROSS CRANE RATE</text>
+          <text x="260" y="53" text-anchor="middle" font-family="monospace" font-size="9" fill="#00bcd4">(GCR) — master KPI</text>
+          <rect x="180" y="20" width="160" height="42" rx="4" fill="transparent" stroke="transparent" data-node="gcr" style="cursor:pointer;"/>
+
+          <!-- Secondary: YC Productivity -->
+          <rect x="30" y="80" width="130" height="38" rx="3" fill="#0a1628" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="95" y="96" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00bcd4" letter-spacing="1">YARD CRANE</text>
+          <text x="95" y="110" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a99b8">Productivity (YCR)</text>
+          <rect x="30" y="80" width="130" height="38" rx="3" fill="transparent" stroke="transparent" data-node="yc" style="cursor:pointer;"/>
+
+          <!-- Secondary: YT Productivity -->
+          <rect x="195" y="80" width="130" height="38" rx="3" fill="#0a1628" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="260" y="96" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00bcd4" letter-spacing="1">YARD TRUCK</text>
+          <text x="260" y="110" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a99b8">Productivity (ITV/YT)</text>
+          <rect x="195" y="80" width="130" height="38" rx="3" fill="transparent" stroke="transparent" data-node="yt" style="cursor:pointer;"/>
+
+          <!-- Secondary: Berth Utilisation -->
+          <rect x="355" y="80" width="130" height="38" rx="3" fill="#0a1628" stroke="#00bcd4" stroke-width="1.5"/>
+          <text x="420" y="96" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="11" fill="#00bcd4" letter-spacing="1">BERTH</text>
+          <text x="420" y="110" text-anchor="middle" font-family="monospace" font-size="8" fill="#7a99b8">Utilisation (BERTHOCC)</text>
+          <rect x="355" y="80" width="130" height="38" rx="3" fill="transparent" stroke="transparent" data-node="berthocc" style="cursor:pointer;"/>
+
+          <!-- Tertiary: Dwell -->
+          <rect x="20" y="168" width="120" height="34" rx="3" fill="#050e1a" stroke="#1a3a5c" stroke-width="1"/>
+          <text x="80" y="183" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="10" fill="#7a99b8" letter-spacing="1">CONTAINER DWELL</text>
+          <text x="80" y="196" text-anchor="middle" font-family="monospace" font-size="8" fill="#4a6a8a">DWELL (days)</text>
+          <rect x="20" y="168" width="120" height="34" rx="3" fill="transparent" stroke="transparent" data-node="dwell" style="cursor:pointer;"/>
+
+          <!-- Tertiary: Block Length -->
+          <rect x="165" y="168" width="130" height="34" rx="3" fill="#050e1a" stroke="#1a3a5c" stroke-width="1"/>
+          <text x="230" y="183" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="10" fill="#7a99b8" letter-spacing="1">BLOCK LENGTH /</text>
+          <text x="230" y="196" text-anchor="middle" font-family="monospace" font-size="8" fill="#4a6a8a">Yard Layout</text>
+          <rect x="165" y="168" width="130" height="34" rx="3" fill="transparent" stroke="transparent" data-node="block" style="cursor:pointer;"/>
+
+          <!-- Tertiary: Wait -->
+          <rect x="340" y="168" width="130" height="34" rx="3" fill="#050e1a" stroke="#1a3a5c" stroke-width="1"/>
+          <text x="405" y="183" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="10" fill="#7a99b8" letter-spacing="1">VESSEL WAITING</text>
+          <text x="405" y="196" text-anchor="middle" font-family="monospace" font-size="8" fill="#4a6a8a">WAIT (hours)</text>
+          <rect x="340" y="168" width="130" height="34" rx="3" fill="transparent" stroke="transparent" data-node="wait" style="cursor:pointer;"/>
+
+          <!-- Quaternary: GTT -->
+          <rect x="20" y="252" width="120" height="34" rx="3" fill="#050e1a" stroke="#1a3a5c" stroke-width="1" stroke-dasharray="4,2"/>
+          <text x="80" y="267" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="10" fill="#4a6a8a" letter-spacing="1">GATE TURN TIME</text>
+          <text x="80" y="280" text-anchor="middle" font-family="monospace" font-size="8" fill="#3a5a7a">GTT (R²=0.42)</text>
+          <rect x="20" y="252" width="120" height="34" rx="3" fill="transparent" stroke="transparent" data-node="gtt" style="cursor:pointer;"/>
+
+          <!-- Quaternary: RESHFP -->
+          <rect x="340" y="252" width="130" height="34" rx="3" fill="#050e1a" stroke="#1a3a5c" stroke-width="1" stroke-dasharray="4,2"/>
+          <text x="405" y="267" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="10" fill="#4a6a8a" letter-spacing="1">RESHUFFLE FACTOR</text>
+          <text x="405" y="280" text-anchor="middle" font-family="monospace" font-size="8" fill="#3a5a7a">RESHFP → affects YCR</text>
+          <rect x="340" y="252" width="130" height="34" rx="3" fill="transparent" stroke="transparent" data-node="reshfp" style="cursor:pointer;"/>
+
+          <!-- Legend -->
+          <text x="10" y="315" font-family="monospace" font-size="7" fill="#4a6a8a">— solid = direct causal link</text>
+          <text x="200" y="315" font-family="monospace" font-size="7" fill="#4a6a8a">- - dashed = indirect / feedback</text>
+        </svg>
+      </div>
+
+      <!-- Node detail panel -->
+      <div>
+        <div class="sh" style="margin-bottom:.5rem;">Node Detail</div>
+        <div id="kpi-node-detail" style="background:var(--panel);border:1px solid var(--steel);border-radius:4px;padding:1.2rem;min-height:200px;">
+          <div style="font-size:.75rem;color:var(--muted);text-align:center;padding:2rem 0;">← Click any node in the diagram to see its definition, drivers, and benchmark</div>
+        </div>
+
+        <div style="margin-top:1rem;padding:.8rem;background:rgba(0,0,0,.2);border-radius:4px;border-left:3px solid var(--amber);">
+          <div style="font-size:.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Key finding from IAPH (2016)</div>
+          <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">Vessel size (VSC) and transshipment ratio have <strong style="color:var(--white);">essentially zero</strong> correlation with crane productivity (R²&lt;0.05). <strong style="color:var(--white);">Truck TAT explains 42% of CMPH variation</strong>. Gate congestion propagates directly to quay crane performance. Chasing mega-vessel contracts does not improve productivity — gate automation does.</p>
+        </div>
+
+        <div style="margin-top:1rem;padding:.8rem;background:rgba(0,188,212,.06);border-radius:4px;border-left:3px solid var(--cyan);">
+          <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem;">Integrated design insight — Petering &amp; Murty (2009)</div>
+          <p style="font-size:.78rem;color:var(--muted);line-height:1.7;">GCR varies ~25% with equipment quantity (+25% YCs/YTs), ~15% with block length (optimal vs poor), and only ~1–5% with YC deployment rule. But <strong style="color:var(--white);">dwell time can double annual throughput</strong> — the yard-side dominates the long run. Design the yard first; optimise operations second.</p>
+        </div>
+      </div>
+    </div>
+  </div><!-- end kpi-hierarchy -->
+
+  <!-- ══ TAB 4: IAPH BENCHMARKS ══ -->
+  <div id="kpi-iaph" class="tab-content">
+    <p class="body" style="margin-bottom:1.5rem;">Data from the <strong>IAPH (2016) Container Terminal Productivity Study</strong> — 34 conventional terminals across 23 ports in 9 regions. All 34 were conventional; no automated terminals participated, so values likely understate the frontier.</p>
+
+    <!-- Regional table -->
+    <div class="panel" style="margin-bottom:1.5rem;">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">Panel A — Regional KPI Benchmarks (2014 data, Drewry = industry benchmark)</div>
+      <div style="overflow-x:auto;">
+      <table class="equipment-comparison">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Region</th>
+            <th>TEU/m quay</th>
+            <th>TEU/ha</th>
+            <th>TEU/QC (000s)</th>
+            <th>vs Drewry</th>
+            <th>Assessment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="text-align:left;color:var(--white);">Africa</td><td>568</td><td>19,807</td><td>107k</td><td class="bad">0.75</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Underperforms all metrics</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">N. America</td><td>1,132</td><td>6,890</td><td>112k</td><td class="good">1.12</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Above benchmark</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">C. America</td><td>501</td><td>16,067</td><td>80k</td><td class="bad">0.70</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Underperforms all metrics</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Middle East</td><td>639</td><td>17,471</td><td>78k</td><td class="bad">0.60</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Cranes under-utilised relative to size</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">South Asia</td><td>1,640</td><td>35,552</td><td>133k</td><td class="good">1.21</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Cranes over-stretched relative to terminal size</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">SE Asia</td><td>960</td><td>26,139</td><td>153k</td><td class="good">1.09</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Above benchmark on TEU/QC</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Far East Asia</td><td>1,142</td><td>23,236</td><td>133k</td><td class="mid">0.97</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Near benchmark (47% of respondents)</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Oceania</td><td>1,358</td><td>24,742</td><td>176k</td><td class="good">1.55</td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Highest TEU/QC — cranes over-stretched</td></tr>
+          <tr style="border-top:2px solid var(--steel);"><td style="text-align:left;color:var(--white);font-weight:600;">Overall</td><td><strong>1,012</strong></td><td><strong>22,589</strong></td><td><strong>126k</strong></td><td class="mid"><strong>1.02</strong></td><td style="text-align:left;font-size:.7rem;color:var(--muted);">Near Drewry benchmark overall</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: IAPH (2016), Figure 4.3.1. TEU/QC in thousands. Drewry benchmark varies by region. Data year: 2014.</p>
+    </div>
+
+    <!-- Correlation panel -->
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-red">
+        <div class="sh" style="color:var(--red);margin-bottom:.8rem;">Panel B — What Actually Drives Crane Productivity?</div>
+        <p class="body">IAPH (2016) Sections 4.4.2–4.4.4. R² correlations against BMPH and CMPH across 34 terminals.</p>
+        <table class="equipment-comparison" style="margin-top:.8rem;">
+          <thead>
+            <tr><th style="text-align:left;">Driver</th><th>R² vs BMPH</th><th>R² vs CMPH</th><th>Verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="text-align:left;">Vessel-size coefficient (VSC)</td><td class="bad">0.05</td><td class="bad">0.03</td><td style="text-align:left;font-size:.7rem;color:var(--red);">Does NOT drive productivity</td></tr>
+            <tr><td style="text-align:left;">Transshipment ratio</td><td class="bad">0.08</td><td class="bad">0.005</td><td style="text-align:left;font-size:.7rem;color:var(--red);">Essentially zero on CMPH</td></tr>
+            <tr style="background:rgba(0,230,118,.08);"><td style="text-align:left;font-weight:600;color:var(--white);">Truck TAT</td><td>—</td><td class="good">0.42</td><td style="text-align:left;font-size:.7rem;color:var(--green);font-weight:600;">The real driver ✓</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.78rem;color:var(--muted);">
+          <strong style="color:var(--white);">Policy implication:</strong> Gate automation and truck appointment systems have a measurable quayside impact. Chasing large-vessel contracts does not. A terminal with a 45-minute TAT will outperform one with a 90-minute TAT even with identical cranes.
+        </div>
+      </div>
+
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Panel C — TYM-Based Equipment Benchmarks</div>
+        <p class="body">TYM = TEU<sub>imp+exp</sub>×3 + TEU<sub>transship</sub>×1. RTG count scales with TYM at R²=0.91 vs R²=0.80 with TEU alone.</p>
+        <table class="equipment-comparison" style="margin-top:.8rem;">
+          <thead>
+            <tr><th style="text-align:left;">TYM-based KPI</th><th>Average</th><th>Maximum</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="text-align:left;">TYM / m of quay</td><td>2,519</td><td>8,363</td></tr>
+            <tr><td style="text-align:left;">TYM / ha</td><td>57,635</td><td>148,386</td></tr>
+            <tr><td style="text-align:left;">TYM / stevedore</td><td>6,010</td><td>21,752</td></tr>
+            <tr><td style="text-align:left;font-weight:600;color:var(--white);">TYM / RTG crane</td><td class="good"><strong>89,839</strong></td><td>152,891</td></tr>
+            <tr><td style="text-align:left;">TYM / SC unit</td><td>58,027</td><td>94,614</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,188,212,.06);border-radius:4px;font-size:.78rem;color:var(--muted);">
+          <strong style="color:var(--white);">Sizing rule:</strong> Divide annual TYM by 89,839 to estimate RTG fleet size. A 1M TEU gateway terminal (m=0) needs ≈33 RTGs; the same volume with 60% transship needs only ≈20 RTGs. TEU alone cannot reveal this difference.
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: IAPH (2016) Figure 4.3.10. 34 conventional terminals.</p>
+      </div>
+    </div>
+
+    <!-- Benchmarks strip -->
+    <div class="panel panel-green">
+      <div class="sh" style="margin-bottom:.8rem;">Panel D — UNCTAD PPS 2024 Benchmarks Summary</div>
+      <div class="g3" style="gap:1.2rem;">
+        <div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:.6rem;">Handling Time (min/move)</div>
+          <ul style="list-style:none;">
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">~0.4</span> Best performers (Viet Nam, China, HK, SG, &gt;6k moves)</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--amber);font-family:'Space Mono',monospace;">4.4</span> Top-25 average (&lt;500 moves, 2024)</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--muted);font-family:'Space Mono',monospace;">18.1</span> PPS median lifts/ship-hr (2024)</li>
+          </ul>
         </div>
         <div>
-          <div class="dl-item"><div class="dl-dot" style="background:#1976d2;"></div>Dry General — 60%</div>
-          <div class="dl-item"><div class="dl-dot" style="background:#00bcd4;"></div>Reefer — 12%</div>
-          <div class="dl-item"><div class="dl-dot" style="background:#ff8800;"></div>Hazmat — 8%</div>
-          <div class="dl-item"><div class="dl-dot" style="background:#aa44ff;"></div>OOG / Special — 4%</div>
-          <div class="dl-item"><div class="dl-dot" style="background:#1a3a5c;border:1px solid #444;"></div>Empty — 16%</div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:.6rem;">Dwell Time Trend</div>
+          <ul style="list-style:none;">
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">3.1 days</span> Median 2024 — best on record</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--amber);font-family:'Space Mono',monospace;">4.2–5.0 days</span> Median range 2016–2023</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--muted);font-family:'Space Mono',monospace;">Source:</span> UNCTAD PPS, 76 ports, June 2025</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:.6rem;">Vessel Waiting Time</div>
+          <ul style="list-style:none;">
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">6.4 hr</span> Developed countries avg (Dec 2024)</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--red);font-family:'Space Mono',monospace;">10.9 hr</span> Developing countries avg (Dec 2024)</li>
+            <li style="font-size:.78rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--amber);font-family:'Space Mono',monospace;">↑ Rising</span> Up from 5.2h / 10.2h in Dec 2023</li>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- end kpi-iaph -->
 
-  <div class="panel" style="margin-bottom:1.5rem;">
-    <div class="sh">KPI Reference Table</div>
-    <table class="kpi-table">
-      <thead><tr><th>KPI Code</th><th>Full Name</th><th>Formula / Definition</th><th>Typical Benchmark</th><th>Zone</th></tr></thead>
-      <tbody>
-        <tr><td><span class="popup-trigger" onclick="openPopup('gcr')">GCR<span class="pip">ⓘ</span></span></td><td>Gross Crane Rate</td><td>Total moves ÷ crane hours at vessel</td><td><strong>18.1 lifts/ship-hr median (UNCTAD PPS 2024)</strong></td><td>Seaside</td></tr>
-        <tr><td>NCR</td><td>Net Crane Rate</td><td>Moves ÷ productive (working) crane hours</td><td><strong>Higher than GCR; varies by port</strong></td><td>Seaside</td></tr>
-        <tr><td>BSH</td><td>Berth-Ship Hours</td><td>Total time vessel occupies berth (hours)</td><td><strong>Minimize; container ships 0.8d median (2024)</strong></td><td>Seaside</td></tr>
-        <tr><td>BERTHOCC</td><td>Berth Occupancy Rate</td><td>Booked berth time ÷ available berth time</td><td><strong>No universal benchmark — varies by port strategy</strong></td><td>Seaside</td></tr>
-        <tr><td>WAIT</td><td>Vessel Waiting Time</td><td>Anchorage arrival to berth start (hours)</td><td><strong>6.4h developed / 10.9h developing (Dec 2024, UNCTAD)</strong></td><td>Seaside</td></tr>
-        <tr><td><span class="popup-trigger" onclick="openPopup('dwell')">DWELL<span class="pip">ⓘ</span></span></td><td>Container Dwell Time</td><td>Average days container remains in yard</td><td><strong>3.1 days median (UNCTAD PPS 2024)</strong></td><td>Yardside</td></tr>
-        <tr><td>YUTIL</td><td>Yard Utilisation</td><td>TEUs stored ÷ total TEU capacity</td><td><strong>65–75% planning guideline (operational rule of thumb)</strong></td><td>Yardside</td></tr>
-        <tr><td>RESHFP</td><td>Reshuffle Factor</td><td>Reshuffles ÷ productive moves</td><td><strong>&lt;0.2</strong></td><td>Yardside</td></tr>
-        <tr><td>YCR</td><td>Yard Crane Rate</td><td>Moves per yard crane per hour</td><td><strong>15–20 (RTG)</strong></td><td>Yardside</td></tr>
-        <tr><td>GTT</td><td>Gate Turn Time</td><td>Truck arrival to departure (minutes)</td><td><strong>Minimize — no universal benchmark</strong></td><td>Landside</td></tr>
-        <tr><td>GVOL</td><td>Gate Volume</td><td>Trucks processed per hour per lane</td><td><strong>Varies by terminal size and configuration</strong></td><td>Landside</td></tr>
-        <tr><td>REJRATE</td><td>Gate Rejection Rate</td><td>% of trucks turned away at entry</td><td><strong>Minimize — no universal benchmark</strong></td><td>Landside</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- ══ TAB 5: FINANCIAL KPIs ══ -->
+  <div id="kpi-financial" class="tab-content">
 
-  <div class="panel panel-green">
-    <div class="sh">Some Benchmarks — <span class="popup-trigger" onclick="openPopup('unctad-pps')">UNCTAD PPS<span class="pip">ⓘ</span></span> & UNCTAD/Clarksons 2024</div>
-    <div class="g3">
-      <div>
-        <div style="font-size:.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;">Container Handling Time (min/move) — UNCTAD/S&P 2024</div>
-        <ul style="list-style:none;">
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">~0.4 min/move</span> — Best performers: Viet Nam, China, HK, Singapore (&gt;6,000 moves)</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--amber);font-family:'Space Mono',monospace;">4.4 min/move</span> — Top-25 average (&lt;500 moves, 2024)</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--muted);font-family:'Space Mono',monospace;">18.1 lifts/ship-hr</span> — PPS median across reporting ports (2024)</li>
-        </ul>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div class="big-kpi green"><div class="bk-val">47.9%</div><div class="bk-unit">EBITDA/revenue median, 2024</div><div class="bk-lbl">Operating Margin — UNCTAD PPS 2024</div></div>
+      <div class="big-kpi cyan"><div class="bk-val">$184k</div><div class="bk-unit">revenue per employee per year</div><div class="bk-lbl">Labour Productivity — UNCTAD PPS 2024</div></div>
+      <div class="big-kpi amber"><div class="bk-val">25.6%</div><div class="bk-unit">of total revenue from concessions</div><div class="bk-lbl">Concession Income Share — UNCTAD PPS 2024</div></div>
+      <div class="big-kpi red"><div class="bk-val">57.7%</div><div class="bk-unit">peak EBITDA margin (2022)</div><div class="bk-lbl">Historical Peak — UNCTAD PPS</div></div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.8rem;">Financial KPI Definitions &amp; Benchmarks</div>
+        <table class="kpi-table">
+          <thead><tr><th>KPI</th><th>Definition</th><th>2024 Benchmark</th></tr></thead>
+          <tbody>
+            <tr><td>EBITDA/Revenue</td><td>Operating profitability before financing &amp; accounting choices</td><td><strong>47.9% median</strong></td></tr>
+            <tr><td>Revenue/Employee</td><td>Annual revenue per full-time equivalent employee</td><td><strong>USD 184,300/yr</strong></td></tr>
+            <tr><td>Concession Income %</td><td>Revenue from terminal concession fees as % of total</td><td><strong>25.6% (growing)</strong></td></tr>
+            <tr><td>OPEX/TEU</td><td>Operating cost per TEU handled</td><td><strong>No universal benchmark — varies by automation level</strong></td></tr>
+            <tr><td>CAPEX/TEU</td><td>Annual capital expenditure ÷ annual throughput</td><td><strong>Increases with automation investment</strong></td></tr>
+            <tr><td>ROI</td><td>Net profit ÷ invested capital</td><td><strong>Terminal-specific; multi-year horizon required</strong></td></tr>
+          </tbody>
+        </table>
       </div>
+
       <div>
-        <div style="font-size:.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;">Container Dwell Time — UNCTAD PPS Median</div>
-        <ul style="list-style:none;">
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">3.1 days</span> — Median 2024 (best recent year)</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--amber);font-family:'Space Mono',monospace;">4.2–5.0 days</span> — Median range 2016–2023</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--muted);font-family:'Space Mono',monospace;">Source:</span> UNCTAD PPS, 76 reporting ports, June 2025</li>
-        </ul>
-      </div>
-      <div>
-        <div style="font-size:.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;">Berth Productivity Benchmarks</div>
-        <ul style="list-style:none;">
-        <div style="font-size:.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;">Vessel Waiting Time — UNCTAD/Clarksons 2024</div>
-        <ul style="list-style:none;">
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);font-family:'Space Mono',monospace;">6.4 hours</span> — Developed countries avg (Dec 2024)</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--red);font-family:'Space Mono',monospace;">10.9 hours</span> — Developing countries avg (Dec 2024)</li>
-          <li style="font-size:.8rem;color:var(--muted);padding:.3rem 0;"><span style="color:var(--muted);font-family:'Space Mono',monospace;">↑ Rising</span> — Up from 5.2h / 10.2h in Dec 2023</li>
-        </ul>
-        </ul>
+        <div class="panel panel-red" style="margin-bottom:1rem;">
+          <div class="sh" style="color:var(--red);margin-bottom:.6rem;">Why Financial KPIs are Hard to Model</div>
+          <p class="body">Hinkka et al. (2018) surveyed terminal managers and researchers and found a fundamental mismatch: practitioners rate <strong>financial KPIs as most important</strong>, but simulation handles them <strong>worst</strong>. Three reasons:</p>
+          <ul style="list-style:none;margin-top:.5rem;">
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--red);flex-shrink:0;">①</span> Revenue depends on tariff structures not captured in operational simulation</li>
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--red);flex-shrink:0;">②</span> OPEX requires real TOS cost data unavailable to researchers</li>
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;"><span style="color:var(--red);flex-shrink:0;">③</span> ROI requires multi-year capital depreciation models beyond simulation scope</li>
+          </ul>
+          <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">Source: Hinkka et al. (2018). Workshop participants rated financial KPIs most important yet simulability is lowest.</p>
+        </div>
+
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.6rem;">Landlord Model: Why EBITDA Can Rise While Ships Wait Longer</div>
+          <p class="body">From SHP 513 Problem 1: vessel waiting time rose 54% from 2023 to 2024 while EBITDA margins <em>improved</em>. This is not contradictory in the landlord port model:</p>
+          <ul style="list-style:none;margin-top:.5rem;">
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);flex-shrink:0;">✓</span> The port <em>authority</em> collects vessel dues and concession fees regardless of queuing time</li>
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);"><span style="color:var(--green);flex-shrink:0;">✓</span> Congestion can increase dues revenue (fees accruing from vessel arrival)</li>
+            <li style="display:flex;gap:.6rem;font-size:.78rem;color:var(--muted);padding:.4rem 0;"><span style="color:var(--green);flex-shrink:0;">✓</span> The terminal <em>operator</em> bears reputational consequences — but these don't reduce the landlord authority's short-run EBITDA</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- Revenue breakdown -->
+    <div class="panel">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">Revenue Source Breakdown — Port Authority Typical Structure</div>
+      <div class="g3" style="gap:1.2rem;">
+        <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:1rem;border-top:3px solid var(--cyan);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--cyan);">~60%</div>
+          <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">Handling Fees</div>
+          <p style="font-size:.75rem;color:var(--muted);">Container lift charges, storage fees, reefer plugging. Volume-dependent — directly tied to throughput and dwell time.</p>
+        </div>
+        <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:1rem;border-top:3px solid var(--amber);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--amber);">25.6%</div>
+          <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">Concession Income</div>
+          <p style="font-size:.75rem;color:var(--muted);">Fixed or minimum-guarantee fees from terminal operators under concession agreements. Buffer against throughput volatility — growing share of revenue.</p>
+        </div>
+        <div style="background:rgba(0,0,0,.2);border-radius:4px;padding:1rem;border-top:3px solid var(--green);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green);">~15%</div>
+          <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;">Other</div>
+          <p style="font-size:.75rem;color:var(--muted);">Vessel dues, pilotage, towage, port services, real estate income. Relatively stable regardless of container throughput levels.</p>
+        </div>
+      </div>
+      <p style="font-size:.62rem;color:var(--muted);margin-top:.8rem;">Approximate structure based on UNCTAD PPS 2024 reporting. Actual split varies significantly by port governance model (landlord vs tool vs service port) and concession contract terms.</p>
+    </div>
+  </div><!-- end kpi-financial -->
+
 </section>
+
 
 <!-- ===== DIMENSIONING ===== -->
 <section id="dimensioning">
@@ -4598,8 +5154,119 @@ setTimeout(()=>{
 // ==========================================================
 
 // ==========================================================
-// TAB 8 + TAB 9: CAPACITY TABLES & TERMINAL DESIGNER
+// KPI TAB FUNCTIONS
 // ==========================================================
+
+function filterKPI(zone, btn) {
+  document.querySelectorAll('#kpi-reference .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#kpi-ref-table tbody tr').forEach(row => {
+    row.style.display = (zone === 'all' || row.dataset.zone === zone) ? '' : 'none';
+  });
+}
+
+const KPI_NODE_DATA = {
+  gcr: {
+    title: 'Gross Crane Rate (GCR)',
+    sub: 'Master KPI — Seaside',
+    benchmark: '18.1 lifts/ship-hr median (UNCTAD PPS 2024). Range varies widely by port.',
+    drives: 'Annual throughput capacity. Every other KPI in this diagram ultimately expresses itself through GCR.',
+    driven_by: 'Yard crane productivity (YCR), yard truck/ITV performance, berth utilisation, stowage quality.',
+    insight: 'GCR ≠ CMPH × cranes during inter-crane interference. Adding a 6th crane at 58% utilisation vs 5 at 65% saves only 3.1hr per call — marginal gain at high opportunity cost. Source: Petering & Murty (2009).'
+  },
+  yc: {
+    title: 'Yard Crane Productivity (YCR)',
+    sub: 'Secondary KPI — Yardside',
+    benchmark: '15–20 moves/hr (RTG). 25–30 auto moves/hr (RMG/ASC).',
+    drives: 'GCR — if yard cranes cannot keep up with quay cranes, ITVs queue at the stack and quay crane productivity falls.',
+    driven_by: 'Container dwell time (long dwell → high yard density → reshuffles). Block length (optimal 56–72 slots). Restrictive vs free YC deployment rule (Petering & Murty 2009).',
+    insight: 'Restrictive YC deployment (min/max per block) outperforms free deployment in all 34 tested configurations. Advantage grows with terminal size and when equipment is scarce. Coordination beats adding cranes.'
+  },
+  yt: {
+    title: 'Yard Truck / ITV Productivity',
+    sub: 'Secondary KPI — Transport',
+    benchmark: 'No universal benchmark. Acts as the coupling between quay and yard.',
+    drives: 'GCR — ITV cycle time determines how fast containers can be cleared from under the quay crane.',
+    driven_by: 'Block length (longer blocks = longer ITV travel). Gate Turn Time (GTT) — truck congestion at gate spills into yard lanes. YC availability at stack. ALV vs AGV system (ALV decoupled, AGV must synchronise).',
+    insight: 'Truck TAT is the strongest predictor of CMPH (R²=0.42, IAPH 2016). Gate congestion propagates directly to crane performance — a non-intuitive but empirically confirmed causal chain.'
+  },
+  berthocc: {
+    title: 'Berth Utilisation (BERTHOCC)',
+    sub: 'Secondary KPI — Seaside',
+    benchmark: 'Target 60–70%. Above 80% generates vessel queuing. No universal benchmark — depends on port strategy.',
+    drives: 'GCR indirectly — high occupancy means vessels wait, which shifts arrivals and compresses scheduling windows.',
+    driven_by: 'Vessel waiting time, call frequency, BSH (berth service hours), number of berths.',
+    insight: 'In the landlord port model, high occupancy can increase dues revenue. The authority bears no direct cost of vessel waiting — creating a misaligned incentive. Terminal operators bear the reputational and contractual cost.'
+  },
+  dwell: {
+    title: 'Container Dwell Time',
+    sub: 'Tertiary KPI — Yardside',
+    benchmark: '3.1 days median (UNCTAD PPS 2024). Range 2016–2023: 4.2–5.0 days.',
+    drives: 'Yard crane productivity — long dwell fills the yard, forces reshuffles, and degrades YCR. Halving dwell approximately doubles annual throughput capacity (Chu & Huang 2005).',
+    driven_by: 'Customs clearance speed, Port Community System (PCS) adoption, consignee behaviour, storage tariff policy.',
+    insight: 'Dwell time is the single most powerful lever on annual throughput capacity. A PCS enabling pre-arrival clearance can reduce dwell from 7 to 3 days — more than doubling Tmax with zero capital investment.'
+  },
+  block: {
+    title: 'Block Length / Yard Layout',
+    sub: 'Tertiary KPI — Yardside',
+    benchmark: 'Optimal: 56–72 (20-ft) slots. Source: Petering & Murty (2009), 432 simulation scenarios.',
+    drives: 'Both yard crane productivity AND yard truck/ITV productivity.',
+    driven_by: 'Terminal design decision made at construction. Hard to change post-build.',
+    insight: 'Too short (<28 slots): only 1 YC can operate per block effectively. Too long (>84 slots): multiple YCs interfere. Optimal range consistent across all four terminal sizes tested. Also: maintain 170-ft (8-slot) minimum YC–YC separation to prevent truck traffic jams that halve YC productivity.'
+  },
+  wait: {
+    title: 'Vessel Waiting Time (WAIT)',
+    sub: 'Tertiary KPI — Seaside',
+    benchmark: '6.4h developed / 10.9h developing countries (Dec 2024, UNCTAD/Clarksons). Rising from 5.2h/10.2h in Dec 2023.',
+    drives: 'Berth utilisation — waiting vessels represent demand that cannot be served, degrading effective berth throughput.',
+    driven_by: 'Berth occupancy rate, call bunching, weather, port authority scheduling, ITS/VTMIS capability.',
+    insight: 'The 10.9 vs 6.4hr developed/developing gap reflects systemic disadvantages: fewer berths, lower GCR, longer dwell, and absence of PCS/MSW creating information asymmetry that prevents proactive planning.'
+  },
+  gtt: {
+    title: 'Gate Turn Time (GTT)',
+    sub: 'Quaternary KPI — Landside (indirect effect)',
+    benchmark: 'No universal benchmark. GTT is the strongest predictor of CMPH across terminals (R²=0.42, IAPH 2016).',
+    drives: 'Yard truck / ITV productivity via gate congestion spilling into yard vehicle lanes — and consequently GCR.',
+    driven_by: 'OCR/ANPR automation, Truck Appointment System (TAS), document pre-filing quality, gate staffing.',
+    insight: 'The causal chain from gate → CMPH is non-intuitive but empirically the strongest finding in IAPH (2016). Gate automation and TAS have a measurable quayside impact. This is why the dashed line goes all the way to yard truck productivity.'
+  },
+  reshfp: {
+    title: 'Reshuffle Factor (RESHFP)',
+    sub: 'Quaternary KPI — Yardside (indirect effect)',
+    benchmark: 'Target <0.2. Rises sharply when yard utilisation exceeds 85%.',
+    drives: 'Yard crane productivity — each reshuffle is a non-productive move that consumes YC capacity without advancing throughput.',
+    driven_by: 'Yard utilisation, stacking height (higher stacks → lower accessibility index S), pre-positioning accuracy, cargo sorting at gate-in.',
+    insight: 'Itsuro accessibility index: S=1 means container always accessible without reshuffling; S=0 means never. Practical minimum: S≥0.6 for import containers, S≥0.5 for export/transship. Stacking above these limits causes exponential reshuffle growth.'
+  }
+};
+
+function kpiNodeClick(evt) {
+  const target = evt.target;
+  const node = target.dataset.node;
+  if (!node || !KPI_NODE_DATA[node]) return;
+  const d = KPI_NODE_DATA[node];
+  const panel = document.getElementById('kpi-node-detail');
+  panel.innerHTML = `
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--amber);margin-bottom:.2rem;">${d.title}</div>
+    <div style="font-size:.6rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--steel);">${d.sub}</div>
+    <div style="margin-bottom:.6rem;">
+      <div style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">Benchmark</div>
+      <div style="font-size:.78rem;color:var(--white);">${d.benchmark}</div>
+    </div>
+    <div style="margin-bottom:.6rem;">
+      <div style="font-size:.58rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">What it drives ↑</div>
+      <div style="font-size:.78rem;color:var(--muted);">${d.drives}</div>
+    </div>
+    <div style="margin-bottom:.8rem;">
+      <div style="font-size:.58rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem;">What drives it ↓</div>
+      <div style="font-size:.78rem;color:var(--muted);">${d.driven_by}</div>
+    </div>
+    <div style="padding:.6rem .8rem;background:rgba(0,0,0,.25);border-radius:4px;border-left:3px solid var(--cyan);font-size:.75rem;color:var(--muted);line-height:1.6;">${d.insight}</div>
+  `;
+}
+
+// Expose kpiNodeClick via window for SVG onclick
+window.kpiNodeClick = function(evt) { kpiNodeClick(evt); };
 
 // ── Equipment parameter presets (Chu & Huang 2005) ──────────
 const EQUIP = {
