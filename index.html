@@ -376,6 +376,29 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 </head>
 <body>
 
+<!-- ═══ INSTITUTIONAL BANNER ═══ -->
+<div style="background:linear-gradient(90deg,#000d1a 0%,#001a33 50%,#000d1a 100%);border-bottom:1px solid rgba(0,188,212,.25);padding:.45rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <!-- CUT logo mark -->
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:4px;color:var(--amber);line-height:1;border:2px solid var(--amber);padding:.15rem .45rem;border-radius:2px;flex-shrink:0;">CUT</div>
+    <div style="display:flex;flex-direction:column;line-height:1.3;">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:2px;color:var(--white);">Cyprus University of Technology</span>
+      <span style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:1px;">Department of Shipping, Trade &amp; Transport</span>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div style="text-align:right;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:2px;color:var(--cyan);">SHP 513 · Container Terminal Operations</div>
+      <div style="font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:1px;">Prof. Mihalis Golias · Spring 2026 · Interactive Learning Resource</div>
+    </div>
+    <div style="width:1px;height:28px;background:rgba(0,188,212,.2);flex-shrink:0;"></div>
+    <div style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:1px;text-align:right;line-height:1.6;">
+      Limassol, Cyprus<br>
+      <span style="color:rgba(0,188,212,.5);">cut.ac.cy</span>
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="logo">⚓ <span>SHP 513</span> <span style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:1px;">Container Terminal Operations</span></div>
   <nav>
@@ -395,7 +418,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 <!-- ===== OVERVIEW ===== -->
 <section id="overview" class="active">
   <h2>Terminal Overview</h2>
-  <p class="subtitle">SHP 513 · Week 6 · Mihalis Golias — Animated terminal simulation with vessel arrival, crane operations, yard management, and gate exit</p>
+  <p class="subtitle">SHP 513 · Week 8 · Mihalis Golias — Interactive reference covering terminal operations, KPIs, dimensioning, and scheduling</p>
 
   <div id="terminal-canvas">
     <div class="stars"></div>
@@ -4951,6 +4974,10 @@ function showSection(id, btn) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(btn) btn.classList.add('active');
+  // persist section to hash (preserve sub-tab if present)
+  const cur = location.hash.replace('#','');
+  const subPart = cur.includes('/') ? cur.split('/').slice(1).join('/') : '';
+  history.replaceState(null,'', '#' + id + (subPart ? '/' + subPart : ''));
 }
 
 function showZone(id, el) {
@@ -4958,9 +4985,11 @@ function showZone(id, el) {
   document.querySelectorAll('.zone-tab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
-  // close any open prob-details
   document.querySelectorAll('.prob-detail').forEach(d => { d.classList.remove('open'); });
   document.querySelectorAll('.prob-card').forEach(c => c.classList.remove('open'));
+  // persist zone to hash
+  const section = el.closest('section');
+  if (section) history.replaceState(null,'', '#' + section.id + '/' + id);
 }
 
 function toggleProblem(id, card) {
@@ -4982,6 +5011,8 @@ function showTab(id, btn) {
   section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  // persist section + tab to hash
+  if (section) history.replaceState(null,'', '#' + section.id + '/' + id);
 }
 
 function showGateStep(idx) {
@@ -6097,6 +6128,57 @@ document.addEventListener('DOMContentLoaded', function() {
   updateBottleneck();
   tdEquipFill();
   tdUpdate();
+
+  // ── Restore position from URL hash ─────────────────────────
+  // Format: #sectionId  OR  #sectionId/tabOrZoneId
+  const hash = location.hash.replace('#','');
+  if (!hash) return;
+
+  const parts = hash.split('/');
+  const sectionId = parts[0];
+  const subId     = parts[1] || null;
+
+  // Activate section
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  section.classList.add('active');
+  // Activate the matching nav button
+  document.querySelectorAll('nav button').forEach(b => {
+    const fn = b.getAttribute('onclick') || '';
+    if (fn.includes("'" + sectionId + "'") || fn.includes('"' + sectionId + '"')) {
+      document.querySelectorAll('nav button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    }
+  });
+
+  if (!subId) return;
+
+  // Try as a tab-content inside the section
+  const tabEl = document.getElementById(subId);
+  if (tabEl && tabEl.classList.contains('tab-content')) {
+    section.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabEl.classList.add('active');
+    // Find and activate the matching tab button
+    section.querySelectorAll('.tab-btn').forEach(b => {
+      const fn = b.getAttribute('onclick') || '';
+      if (fn.includes("'" + subId + "'") || fn.includes('"' + subId + '"')) b.classList.add('active');
+    });
+    return;
+  }
+
+  // Try as a zone-content inside the section
+  const zoneEl = document.getElementById(subId);
+  if (zoneEl && zoneEl.classList.contains('zone-content')) {
+    section.querySelectorAll('.zone-content').forEach(z => z.classList.remove('active'));
+    section.querySelectorAll('.zone-tab').forEach(t => t.classList.remove('active'));
+    zoneEl.classList.add('active');
+    section.querySelectorAll('.zone-tab').forEach(t => {
+      const fn = t.getAttribute('onclick') || '';
+      if (fn.includes("'" + subId + "'") || fn.includes('"' + subId + '"')) t.classList.add('active');
+    });
+  }
 });
 
 </script>
