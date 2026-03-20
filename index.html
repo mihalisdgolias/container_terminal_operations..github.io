@@ -2730,7 +2730,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
   <!-- ===== TAB 9: TERMINAL DESIGNER ===== -->
   <div id="dim-designer" class="tab-content">
     <div class="sh" style="margin-bottom:.3rem;">&#128295; Terminal Designer</div>
-    <p class="subtitle">Set your parameters — all capacity outputs update live. Select which formulas to apply and compare results side by side.</p>
+    <p class="subtitle">Set your parameters — all capacity outputs update live. Select which formulas to apply and compare results side by side. <span style="color:var(--amber);">Hover any label for an explanation.</span></p>
 
     <div style="display:grid;grid-template-columns:300px 1fr 1fr;gap:1rem;align-items:start;">
 
@@ -2739,11 +2739,11 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 
         <div class="panel panel-cyan" style="padding:.9rem;">
           <div class="sh sh-cyan" style="font-size:.82rem;margin-bottom:.6rem;">Yard Geometry</div>
-          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">W<sub>Y</sub> (m): <span id="d-wy-v" style="color:var(--cyan);">320</span></label>
+          <label class="tip" data-tip="Quay width WY — the length of the berth line (parallel to water). Equals the total yard width. 1-berth: 300–350m typical. 2-berth: 600–700m. Used in Formula 1 to compute how many container rows fit end-to-end." style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;cursor:help;">W<sub>Y</sub> (m) ⓘ: <span id="d-wy-v" style="color:var(--cyan);">320</span></label>
           <input type="range" id="d-wy" min="200" max="800" step="50" value="320" oninput="tdUpdate()" style="width:100%;accent-color:var(--cyan);margin-bottom:.5rem;">
-          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">D<sub>Y</sub> (m): <span id="d-dy-v" style="color:var(--cyan);">400</span></label>
+          <label class="tip" data-tip="Yard depth DY — distance from quay wall to the landside boundary (perpendicular to water). Typical range 300–600m. Controls how many crane passes fit across the yard. Deeper yard = more crane rows = more TGS." style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;cursor:help;">D<sub>Y</sub> (m) ⓘ: <span id="d-dy-v" style="color:var(--cyan);">400</span></label>
           <input type="range" id="d-dy" min="200" max="700" step="50" value="400" oninput="tdUpdate()" style="width:100%;accent-color:var(--cyan);margin-bottom:.5rem;">
-          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:.3rem;">Berth Config</label>
+          <label class="tip" data-tip="Number of berths in the terminal. Affects two things: (1) passageway width WP auto-fills to the correct multi-berth value, and (2) berth capacity (TEU/yr) scales proportionally on the seaside. 1-berth terminals use narrower passageways." style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:.3rem;cursor:help;">Number of Berths ⓘ</label>
           <div style="display:flex;gap:.3rem;" id="td-berth-btns">
             <button onclick="tdBerthBtn(this)" data-v="1" style="flex:1;padding:.3rem;font-family:'Space Mono',monospace;font-size:.58rem;border:1px solid var(--cyan);background:var(--ocean);color:var(--white);border-radius:2px;cursor:pointer;">1</button>
             <button onclick="tdBerthBtn(this)" data-v="2" style="flex:1;padding:.3rem;font-family:'Space Mono',monospace;font-size:.58rem;border:1px solid var(--steel);background:transparent;color:var(--muted);border-radius:2px;cursor:pointer;">2</button>
@@ -2753,6 +2753,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 
         <div class="panel panel-amber" style="padding:.9rem;">
           <div class="sh" style="font-size:.82rem;color:var(--amber);margin-bottom:.6rem;">Yard Equipment</div>
+          <label class="tip" data-tip="Handling system type. Selecting a system auto-fills all width parameters below with standard Chu &amp; Huang (2005) values. You can then override any field manually. SC = Straddle Carrier, RTG = Rubber Tyred Gantry, RMG = Rail Mounted Gantry. The number (5+1, 6+1, etc.) indicates container rows + truck lanes spanned." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:.3rem;cursor:help;">System ⓘ</label>
           <select id="d-equip" onchange="tdEquipFill()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.35rem;border-radius:2px;font-size:.72rem;margin-bottom:.6rem;">
             <option value="sc2">SC — 1-over-2 (h=3.0)</option>
             <option value="sc3">SC — 1-over-3 (h=3.5)</option>
@@ -2762,57 +2763,126 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
             <option value="rmg12">RMG 12+2+2 (h=4.5)</option>
           </select>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>C</sub>(m)</label><input id="d-wc" type="number" value="20" min="1" max="80" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>T</sub>(m)</label><input id="d-wt" type="number" value="2.0" min="0" max="5" step="0.1" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>R</sub>(m)</label><input id="d-wr" type="number" value="22" min="0" max="40" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>P</sub>(m)</label><input id="d-wp" type="number" value="44" min="0" max="120" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">W<sub>A</sub>(m)</label><input id="d-wa" type="number" value="0" min="0" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">N rows/crane</label><input id="d-n" type="number" value="5" min="1" max="12" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">h stack ht</label><input id="d-h" type="number" value="4.0" min="1" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">IAR (TEU)</label><input id="d-iar" type="number" value="0" min="0" max="200" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div>
+              <label class="tip" data-tip="WC — Total width of the handling equipment including crane span and outreach. SC: 3m. RTG 5+1: 20m. RTG 6+1: 23.5m. RMG 11+2+2: 54m. RMG 12+2+2: 57m. Used in Formula 2 (NCR) — wider equipment = fewer crane rows fit in the yard depth." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">W<sub>C</sub> (m) ⓘ</label>
+              <input id="d-wc" type="number" value="20" min="1" max="80" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="WT — Travel clearance width on each side of the crane for rubber wheels or rail. SC: 1.6m. RTG: 2.0m. RMG: 0m (fixed rails need no clearance). Applied twice (both sides) in Formula 2: NCR = DY ÷ (WC + 2·WT + WA)." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">W<sub>T</sub> (m) ⓘ</label>
+              <input id="d-wt" type="number" value="2.0" min="0" max="5" step="0.1" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="WR — Width of the perimeter road running around the outside of the yard. SC: 5m. RTG/RMG: 22m. Subtracted from WY in Formula 1 since roads are not usable yard area." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">W<sub>R</sub> (m) ⓘ</label>
+              <input id="d-wr" type="number" value="22" min="0" max="40" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="WP — Total width of operational passageways between berth and yard (apron, turning areas, vehicle lanes). SC 1-berth: 20m. RTG 1-berth: 44m. RMG 1-berth: 30m. Larger for 2-berth configs. Subtracted from WY in Formula 1." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">W<sub>P</sub> (m) ⓘ</label>
+              <input id="d-wp" type="number" value="44" min="0" max="120" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="WA — Aisle width between adjacent crane rows. RMG: 1m (needed for maintenance access between rail rows). SC and RTG: 0m (no fixed gap required between blocks). Used in Formula 2." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">W<sub>A</sub> (m) ⓘ</label>
+              <input id="d-wa" type="number" value="0" min="0" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="N — Number of container rows spanned by one crane unit. SC: 1 row (straddles a single stack). RTG 5+1: 5 rows. RTG 6+1: 6 rows. RMG 11+2+2: 11 rows. RMG 12+2+2: 12 rows. Used in Formula 3: CR = floor(NCR ÷ (N+1))." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">N rows/crane ⓘ</label>
+              <input id="d-n" type="number" value="5" min="1" max="12" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="h — Average stacking height in tiers (containers high). Higher h increases TEU capacity but worsens the reshuffle factor. SC 1-over-2: h=3.0. SC 1-over-3: h=3.5. RTG 1-over-5: h=4.0 (export/transship). RMG 1-over-6: h=4.5. Import containers stack lower than export/transship (accessibility index S ≥ 0.6)." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">h stack height ⓘ</label>
+              <input id="d-h" type="number" value="4.0" min="1" max="5" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="IAR — Interchange Area Requirement. The yard area reserved for vehicle/crane handoff that cannot be used for stacking. SC 1-berth: 60 TEU. SC 2-berth: 120 TEU. RTG/RMG: 0 TEU (truck lanes alongside blocks serve this function). Subtracted from TGS in Formula 4." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">IAR (TEU) ⓘ</label>
+              <input id="d-iar" type="number" value="0" min="0" max="200" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--cyan);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
           </div>
         </div>
 
         <div class="panel" style="padding:.9rem;border-top:3px solid var(--green);">
           <div class="sh" style="font-size:.82rem;color:var(--green);margin-bottom:.6rem;">Cargo Mix &amp; Dwell</div>
-          <label style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Transship ratio m: <span id="d-m-v" style="color:var(--green);">30%</span></label>
+          <label class="tip" data-tip="m — Transhipment ratio. The fraction of throughput that is transshipment (0% = pure gateway, 100% = pure hub). Transshipment containers generate only 1 yard move per TEU vs 3 for import/export. High m → lower TYM per TEU → less yard equipment needed. UNCTAD PPS 2024 median: 30–50% for major hubs." style="font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;cursor:help;">Transship ratio m ⓘ: <span id="d-m-v" style="color:var(--green);">30%</span></label>
           <input type="range" id="d-m" min="0" max="100" step="5" value="30" oninput="tdUpdate()" style="width:100%;accent-color:var(--green);margin-bottom:.5rem;">
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.35rem;margin-bottom:.5rem;">
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>i</sub> import</label><input id="d-di" type="number" value="5" min="1" max="30" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>e</sub> export</label><input id="d-de" type="number" value="3" min="1" max="14" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">D<sub>t</sub> transship</label><input id="d-dt" type="number" value="2" min="1" max="10" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div>
+              <label class="tip" data-tip="Di — Average dwell time for import containers (days from vessel discharge to truck gate-out). Typically 4–7 days. Heavily influenced by customs clearance speed. UNCTAD PPS 2024 median (all types combined): 3.1 days. The single biggest lever on yard capacity." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">D<sub>i</sub> import ⓘ</label>
+              <input id="d-di" type="number" value="5" min="1" max="30" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="De — Average dwell time for export containers (days from gate-in to vessel loading). Typically 2–4 days. Shorter than import dwell because shippers bring cargo closer to vessel departure. Used in the Cmax denominator." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">D<sub>e</sub> export ⓘ</label>
+              <input id="d-de" type="number" value="3" min="1" max="14" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="Dt — Average dwell time for transshipment containers (days from inbound vessel to outbound vessel). Typically 1–4 days for efficient hubs. Tranship containers never leave the terminal so dwell is purely a scheduling function." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">D<sub>t</sub> transship ⓘ</label>
+              <input id="d-dt" type="number" value="2" min="1" max="10" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
           </div>
           <div style="padding:.4rem .6rem;background:rgba(0,0,0,.25);border-radius:4px;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;">Weighted D&#x0304; = <strong id="d-dbar" style="color:var(--white);">—</strong></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Peak factor P</label><input id="d-p" type="number" value="1.3" min="1.0" max="2.0" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Yard util.</label><input id="d-util" type="number" value="0.70" min="0.50" max="0.85" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div>
+              <label class="tip" data-tip="P — Peak factor. Ratio of peak-period throughput to annual average. The terminal must be sized to handle peaks, not just averages. Typical range: 1.2 (stable trades) to 1.5 (seasonal or volatile trades). A P=1.3 means the busiest period runs 30% above average." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Peak factor P ⓘ</label>
+              <input id="d-p" type="number" value="1.3" min="1.0" max="2.0" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="Yard utilisation target — the fraction of TEU capacity that can be occupied at any time while still operating efficiently. Above 85% causes excessive reshuffles and slows cranes. Planning guideline: 65–75%. Used in the UNCTAD formula to adjust for practical capacity." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Yard util. ⓘ</label>
+              <input id="d-util" type="number" value="0.70" min="0.50" max="0.85" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
           </div>
         </div>
 
         <div class="panel" style="padding:.9rem;border-top:3px solid var(--sky);">
           <div class="sh" style="font-size:.82rem;color:var(--sky);margin-bottom:.6rem;">Seaside Parameters</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">STS Cranes</label><input id="d-cranes" type="number" value="3" min="1" max="20" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">GCR (lift/hr)</label><input id="d-gcr" type="number" value="18.1" min="8" max="50" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Utilisation u</label><input id="d-u" type="number" value="0.65" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Call (moves)</label><input id="d-call" type="number" value="1200" min="100" max="6000" step="100" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Op days/yr</label><input id="d-days" type="number" value="350" min="300" max="365" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-            <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Berth occ.</label><input id="d-occ" type="number" value="0.70" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+            <div>
+              <label class="tip" data-tip="Total number of STS (Ship-to-Shore) quay cranes assigned across all berths. More cranes = higher vessel rate = shorter berth time per call = more calls per year. Note: adding cranes also increases inter-crane interference, which reduces individual crane utilisation." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">STS Cranes ⓘ</label>
+              <input id="d-cranes" type="number" value="3" min="1" max="20" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="GCR — Gross Crane Rate. Total crane moves per crane per hour including all waiting and idle time at berth. UNCTAD PPS 2024 median: 18.1 lifts/ship-hr. Good terminal: 25–30. World-class: 35+. The strongest predictor is truck TAT (R²=0.42) — not vessel size or cargo type." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">GCR (lifts/hr) ⓘ</label>
+              <input id="d-gcr" type="number" value="18.1" min="8" max="50" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="u — Crane utilisation. The fraction of berth time that cranes are actually productive (moving containers). Net crane rate = GCR × u. Typical value: 0.65 (35% of time lost to hatch changes, ITV waiting, delays). World-class: up to 0.75." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Utilisation u ⓘ</label>
+              <input id="d-u" type="number" value="0.65" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="Average call size in total crane moves (load + discharge combined). Each move = 1 container. A 1,200-move call ≈ 600 TEU exchanged (net). Large calls (3,000+) occur at mega-hub terminals. Call size determines berth time: Berth time = call size ÷ (cranes × GCR × u)." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Call size (moves) ⓘ</label>
+              <input id="d-call" type="number" value="1200" min="100" max="6000" step="100" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="Operating days per year — the number of days the terminal is open for vessel operations. Typical: 350 days (accounting for severe weather and maintenance). Some terminals operate 365 days. Directly multiplies annual call capacity." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Op days/yr ⓘ</label>
+              <input id="d-days" type="number" value="350" min="300" max="365" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
+            <div>
+              <label class="tip" data-tip="Berth occupancy — target fraction of available berth time that is in use. Too high (&gt;80%) causes vessel queuing. Too low wastes expensive infrastructure. Industry guideline: 60–70%. Calls/yr = (op days × 24h × occupancy × berths) ÷ berth time per call." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Berth occupancy ⓘ</label>
+              <input id="d-occ" type="number" value="0.70" min="0.40" max="0.90" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+            </div>
           </div>
         </div>
 
         <div class="panel" style="padding:.9rem;border-top:3px solid var(--orange);">
           <div class="sh" style="font-size:.82rem;color:var(--orange);margin-bottom:.6rem;">Formulas to Apply</div>
-          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-ch" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> Chu &amp; Huang T<sub>max</sub></label>
-          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-cmax" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> C&amp;H C<sub>max</sub> (Itsuro full)</label>
-          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem;cursor:pointer;"><input type="checkbox" id="f-unctad" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> UNCTAD Handbook</label>
-          <label style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;cursor:pointer;"><input type="checkbox" id="f-frankel" onchange="tdToggleFrankel()" style="accent-color:var(--cyan);"> Frankel (adds &#963; inputs)</label>
+          <label class="tip" data-tip="Chu &amp; Huang (2005) Tmax — simplified capacity formula using weighted average dwell D̄ and peak factor P. Formula: Tmax = TEU capacity × 365 ÷ (D̄ × P). Straightforward to compute, widely used in planning. Apply ×0.75 for design target." style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.4rem;cursor:help;"><input type="checkbox" id="f-ch" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> C&amp;H T<sub>max</sub> ⓘ</label>
+          <label class="tip" data-tip="Chu &amp; Huang (2005) / Itsuro (2001) Cmax — full formulation using separate dwell and stacking heights for each cargo type (transship, export, import). More precise than Tmax when cargo mix is heterogeneous. Formula: Cmax = (365 × 2 × TGS) ÷ [m·(Dt/Ht) + (1−m)·(De/He) + (1−m)·(Di/Hi)]." style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.4rem;cursor:help;"><input type="checkbox" id="f-cmax" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> C&amp;H C<sub>max</sub> (Itsuro) ⓘ</label>
+          <label class="tip" data-tip="UNCTAD Handbook formula — adds a yard utilisation factor to the capacity calculation. TEU/yr = TEU capacity × 365 × util ÷ (D̄ × P). Because it multiplies by utilisation (&lt;1), it gives a lower (more conservative) estimate than Tmax. Represents what the yard can handle at the target occupancy level." style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.4rem;cursor:help;"><input type="checkbox" id="f-unctad" checked onchange="tdUpdate()" style="accent-color:var(--cyan);"> UNCTAD Handbook ⓘ</label>
+          <label class="tip" data-tip="Frankel (1987) formula — the most conservative approach. Adds 2 standard deviations to both dwell time (T+2σ) and stacking height (H+2σ) to account for statistical variability. This ensures the terminal can handle peak-within-peak conditions. Requires extra inputs: σ of dwell, σ of stack height, storage utilisation Z, and area utilisation U." style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;cursor:help;"><input type="checkbox" id="f-frankel" onchange="tdToggleFrankel()" style="accent-color:var(--cyan);"> Frankel (adds &#963; inputs) ⓘ</label>
           <div id="frankel-extra" style="display:none;background:rgba(0,0,0,.2);border-radius:4px;padding:.6rem;border:1px solid var(--steel);">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem;">
-              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">&#963; dwell</label><input id="d-sd" type="number" value="2" min="0" max="10" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">&#963; height</label><input id="d-sh" type="number" value="0.5" min="0" max="2" step="0.25" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">Z stor. util.</label><input id="d-z" type="number" value="0.70" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
-              <div><label style="font-size:.56rem;color:var(--muted);text-transform:uppercase;">U area util.</label><input id="d-uf" type="number" value="0.65" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;"></div>
+              <div>
+                <label class="tip" data-tip="σ (sigma) of dwell time — standard deviation of container dwell in days. Reflects variability around the average. Typical value: 1–3 days. Higher σ means more unpredictable arrivals/departures, requiring more buffer yard capacity. Frankel adds 2σ to dwell for conservative sizing." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">&#963; dwell ⓘ</label>
+                <input id="d-sd" type="number" value="2" min="0" max="10" step="0.5" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+              </div>
+              <div>
+                <label class="tip" data-tip="σ (sigma) of stack height — standard deviation of actual stacking height achieved. Even if target h=4.0, in practice some stacks are shorter (low occupancy) or taller (peak). Typical: 0.5–1.0. Frankel adds 2σ to height for conservative area estimation." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">&#963; height ⓘ</label>
+                <input id="d-sh" type="number" value="0.5" min="0" max="2" step="0.25" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+              </div>
+              <div>
+                <label class="tip" data-tip="Z — Storage utilisation in the Frankel formula. The fraction of available ground slots occupied on average. Similar to yard util above but specific to the Frankel formulation. Typical range: 0.60–0.75. Lower Z = more conservative area estimate." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">Z stor. util. ⓘ</label>
+                <input id="d-z" type="number" value="0.70" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+              </div>
+              <div>
+                <label class="tip" data-tip="U — Area utilisation in the Frankel formula. The fraction of total terminal area that is usable for stacking (excludes roads, aisles, equipment turning areas). Typical: 0.55–0.70. Depends on equipment type — RTG has lower U than RMG due to wider aisles." style="font-size:.56rem;color:var(--muted);text-transform:uppercase;cursor:help;">U area util. ⓘ</label>
+                <input id="d-uf" type="number" value="0.65" min="0.3" max="0.9" step="0.05" oninput="tdUpdate()" style="width:100%;background:var(--navy2);border:1px solid var(--steel);color:var(--white);padding:.25rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.7rem;">
+              </div>
             </div>
           </div>
         </div>
