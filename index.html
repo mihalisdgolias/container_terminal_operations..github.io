@@ -415,6 +415,7 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
     <button onclick="showSection('cfs',this)">CFS</button>
     <button onclick="showSection('kpis',this)">KPIs</button>
     <button onclick="showSection('dimensioning',this)">Dimensioning</button>
+    <button onclick="showSection('pricing',this)">⚓ Pricing</button>
     <button onclick="showSection('glossary',this)">Glossary</button>
   </nav>
 </header>
@@ -4612,6 +4613,954 @@ tr.has-tip:hover td{background:rgba(0,188,212,.05);}
 </section>
 
 <!-- ===== GLOSSARY ===== -->
+<!-- ===== PORT PRICING ===== -->
+<section id="pricing">
+  <h2>Port Pricing</h2>
+  <p class="subtitle">Theory, methods, and strategic applications — from cost concepts to Ramsey pricing. Source: Meersman et al. (2014), UNCTAD (1975), Psaraftis (2005), Acciaro (2013).</p>
+
+  <!-- Intuition Road Map -->
+  <div class="panel" style="margin-bottom:1.5rem;border-top:3px solid var(--amber);">
+    <div class="sh" style="color:var(--amber);margin-bottom:.8rem;">💡 Pricing Intuition — 10 Questions Every Terminal Operator Faces</div>
+    <p class="body" style="margin-bottom:.8rem;">Before the formulas: every pricing decision follows the same business logic. Each step maps to a formal method explored in the tabs below.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.8rem;">
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">1.</span> <span style="color:var(--white);">What does it cost me?</span> <span style="color:var(--muted);">→ Fixed vs variable cost classification</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">2.</span> <span style="color:var(--white);">What's the minimum I can charge?</span> <span style="color:var(--muted);">→ Average Cost Pricing (P = TC/Q)</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">3.</span> <span style="color:var(--white);">Can I charge less for extra volume?</span> <span style="color:var(--muted);">→ Marginal Cost Pricing (P = MC)</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">4.</span> <span style="color:var(--white);">Do I want a profit cushion?</span> <span style="color:var(--muted);">→ Cost-Plus (P = AC × (1+m))</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">5.</span> <span style="color:var(--white);">Are my customers different?</span> <span style="color:var(--muted);">→ Elasticity and market segmentation</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--amber);font-size:.75rem;"><span style="color:var(--amber);font-weight:600;">6.</span> <span style="color:var(--white);">How do I charge them differently?</span> <span style="color:var(--muted);">→ Ramsey Pricing ((P−MC)/P = λ/|ε|)</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">7.</span> <span style="color:var(--white);">Is everyone showing up at once?</span> <span style="color:var(--muted);">→ Peak-Load Pricing</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">8.</span> <span style="color:var(--white);">Can I lock in big customers?</span> <span style="color:var(--muted);">→ Two-Part Tariff (F + p×Q)</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">9.</span> <span style="color:var(--white);">What does each service actually cost?</span> <span style="color:var(--muted);">→ ABC / UNCTAD cost allocation</span></div>
+      <div style="background:rgba(0,0,0,.2);padding:.5rem .7rem;border-radius:4px;border-left:3px solid var(--steel);font-size:.75rem;"><span style="color:var(--cyan);font-weight:600;">10.</span> <span style="color:var(--white);">Is congestion costing others money?</span> <span style="color:var(--muted);">→ Congestion Pricing (surcharge ≤ delay cost)</span></div>
+    </div>
+    <div style="background:rgba(0,200,100,.06);border:1px solid rgba(0,200,100,.2);border-radius:4px;padding:.7rem;font-size:.75rem;color:var(--muted);">
+      <strong style="color:var(--white);">Mars Terminal running scenario:</strong> TFC = $75M/yr · AVC = $50/TEU · Capacity = 2M TEU · Current local = 600k TEU (|ε|=0.3, captive) · Transshipment = 400k TEU (|ε|=2.5, elastic). These numbers run through every worked example in the tabs.
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('pr-services',this)">🏷️ Services &amp; Tariffs</button>
+    <button class="tab-btn" onclick="showTab('pr-costs',this)">📉 Cost Concepts</button>
+    <button class="tab-btn" onclick="showTab('pr-allocation',this)">📊 Cost Allocation</button>
+    <button class="tab-btn" onclick="showTab('pr-principles',this)">⚖️ Pricing Principles</button>
+    <button class="tab-btn" onclick="showTab('pr-methods',this)">🔧 Pricing Methods</button>
+    <button class="tab-btn" onclick="showTab('pr-diff',this)">📐 Price Differentiation</button>
+    <button class="tab-btn" onclick="showTab('pr-piraeus',this)">🏛️ Piraeus Case</button>
+  </div>
+
+  <!-- ══ TAB 1: SERVICES & TARIFFS ══ -->
+  <div id="pr-services" class="tab-content active">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">3 Domains</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Sea · Land · Delivery</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">$80–300</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">THC per TEU — global range (2024)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">$0.25/GT</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Typical pilotage rate per movement</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">ESCAP/UNDP</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Standard tariff structure (1989/2002)</div>
+      </div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Port Service Taxonomy</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;">
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--sky);">
+            <div style="font-size:.65rem;color:var(--sky);font-weight:600;margin-bottom:.3rem;">🌊 Sea-Related Services</div>
+            <div style="font-size:.75rem;color:var(--muted);">Pilotage · Towage · Mooring/Unmooring · Dredging · Breakwater access · Navigation aids · VTS</div>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.65rem;color:var(--amber);font-weight:600;margin-bottom:.3rem;">📦 Land-Related Services</div>
+            <div style="font-size:.75rem;color:var(--muted);">Stevedoring · THC · Storage · Reefer connections · Equipment hire · Container stuffing/stripping · Yard operations</div>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--green);">
+            <div style="font-size:.65rem;color:var(--green);font-weight:600;margin-bottom:.3rem;">🚛 Delivery-Related Activities</div>
+            <div style="font-size:.75rem;color:var(--muted);">Customs clearance · EDI/PCS documentation · ISPS security · Value-added logistics · Inspection services</div>
+          </div>
+        </div>
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);">
+          <strong style="color:var(--white);">Key insight:</strong> Port charges flow through the supply chain — ship operator pays directly but passes costs to the cargo owner via freight rates; the cargo owner passes them to the final consumer via product price. Port charges are typically a small fraction of final product price.
+        </div>
+      </div>
+
+      <div>
+        <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+          <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Who Charges Whom — Flow Table</div>
+          <div style="overflow-x:auto;">
+          <table class="equipment-comparison" style="font-size:.68rem;">
+            <thead><tr><th style="text-align:left;">Service</th><th style="text-align:left;">Charged by</th><th style="text-align:left;">Paid by</th><th style="text-align:left;">Ultimate bearer</th></tr></thead>
+            <tbody>
+              <tr><td style="text-align:left;color:var(--white);">Marine/tonnage dues</td><td style="text-align:left;">Port Authority</td><td style="text-align:left;">Shipping line</td><td style="text-align:left;color:var(--muted);">Cargo owner</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Pilotage</td><td style="text-align:left;">Port / Pilot org</td><td style="text-align:left;">Shipping line</td><td style="text-align:left;color:var(--muted);">Cargo owner</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Towage</td><td style="text-align:left;">Port / Tug owner</td><td style="text-align:left;">Shipping line</td><td style="text-align:left;color:var(--muted);">Cargo owner</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Berth hire</td><td style="text-align:left;">Port Authority</td><td style="text-align:left;">Shipping line</td><td style="text-align:left;color:var(--muted);">Cargo owner</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Cargo dues / wharfage</td><td style="text-align:left;">Port Authority</td><td style="text-align:left;">Consignee/consignor</td><td style="text-align:left;color:var(--muted);">Final consumer</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">THC (handling)</td><td style="text-align:left;">Terminal operator</td><td style="text-align:left;">Shipping line</td><td style="text-align:left;color:var(--muted);">Cargo owner (via THC surcharge)</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Storage / dwell</td><td style="text-align:left;">Terminal operator</td><td style="text-align:left;">Consignee</td><td style="text-align:left;color:var(--muted);">Cargo owner</td></tr>
+              <tr><td style="text-align:left;color:var(--white);">Concession / land fees</td><td style="text-align:left;">Port Authority</td><td style="text-align:left;">Terminal operator</td><td style="text-align:left;color:var(--muted);">Passed through in THC</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="font-size:.62rem;color:var(--muted);margin-top:.4rem;">Source: ESCAP/UNDP Model Port Tariff (1989/2002); Notteboom, Pallis &amp; Rodrigue (2026)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charging units + THC benchmarks -->
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-green">
+        <div class="sh" style="margin-bottom:.8rem;">Charging Units Reference</div>
+        <ul class="var-list">
+          <li><span class="vname">Pilotage</span><span class="vdesc">$/GT per movement (entry + exit = 2 movements). Rate × GT × no. movements.</span></li>
+          <li><span class="vname">Towage</span><span class="vdesc">$/tug-hour. No. tugs × hours × rate.</span></li>
+          <li><span class="vname">Harbor dues</span><span class="vdesc">Tiered $/GT. First N,000 GT at rate 1; next band at rate 2; above 50k at rate 3. Apply each tier separately — do not average.</span></li>
+          <li><span class="vname">Berth hire</span><span class="vdesc">$/GT/hour OR flat $/day. GT × rate × hours gives the GT-hour method.</span></li>
+          <li><span class="vname">THC</span><span class="vdesc">$/TEU or $/FEU. Flat rate per box move regardless of direction (load or discharge).</span></li>
+          <li><span class="vname">Storage</span><span class="vdesc">Graduated: free period (3–7 days) then $/TEU/day per tier. Apply each band to days in that band only.</span></li>
+          <li><span class="vname">Reefer</span><span class="vdesc">$/TEU/day (electricity + temperature monitoring). Typically $50–150/TEU/day on top of storage.</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="panel panel-cyan" style="margin-bottom:1rem;">
+          <div class="sh sh-cyan" style="margin-bottom:.7rem;">Regional THC Benchmarks (2024)</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:2px;">
+              <span style="font-size:.75rem;color:var(--muted);">Northern Europe (Rotterdam, Antwerp)</span>
+              <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--cyan);">$150–250/TEU</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:2px;">
+              <span style="font-size:.75rem;color:var(--muted);">Mediterranean (Piraeus, Valencia)</span>
+              <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--amber);">$100–180/TEU</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:2px;">
+              <span style="font-size:.75rem;color:var(--muted);">Asia (Singapore, Shanghai)</span>
+              <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--green);">$80–150/TEU</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:2px;">
+              <span style="font-size:.75rem;color:var(--muted);">Transshipment hubs (discount vs gateway)</span>
+              <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--red);">−30–50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.7rem;">Three Tariff Design Philosophies</div>
+          <ul class="var-list">
+            <li><span class="vname">Value-based</span><span class="vdesc">Ad valorem — price reflects cargo value. Higher-value goods pay more per tonne. Less common today.</span></li>
+            <li><span class="vname">Performance-based</span><span class="vdesc">Price linked to service quality metrics. Rebates for faster turnaround, penalities for delays. Aligns incentives.</span></li>
+            <li><span class="vname">Cost-based</span><span class="vdesc">Price reflects actual cost of service provision (ABC, FDC, MC). Most common approach globally.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Worked example Ex. 1A -->
+    <div class="panel panel-orange">
+      <div class="sh" style="margin-bottom:.8rem;">🧮 Worked Example — Full Port Call Cost (Ex. 1A)</div>
+      <p class="body" style="margin-bottom:.8rem;">A 45,000 GT vessel makes one port call. Pilotage: $0.28/GT (2 movements). Towage: 2 tugs × 2.5 hrs @ $2,000/tug-hr. Mooring: $0.08/GT per operation (2 operations). Harbor dues: first 10,000 GT @ $0.12; next 40,000 GT @ $0.09; above 50,000 @ $0.07.</p>
+      <div style="overflow-x:auto;">
+      <table class="equipment-comparison">
+        <thead><tr><th style="text-align:left;">Component</th><th style="text-align:left;">Calculation</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left;color:var(--white);">Pilotage</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">45,000 × $0.28 × 2 movements</td><td class="good">$25,200</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Towage</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">2 tugs × 2.5 hrs × $2,000/tug-hr</td><td class="good">$10,000</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Mooring/Unmooring</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">45,000 × $0.08 × 2 operations</td><td class="good">$7,200</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Harbor dues (tiered)</td><td style="text-align:left;font-size:.72rem;color:var(--muted);">10,000×$0.12 + 35,000×$0.09</td><td class="good">$4,350</td></tr>
+          <tr style="border-top:2px solid var(--steel);"><td style="text-align:left;color:var(--white);font-weight:600;">Total port dues</td><td></td><td style="color:var(--cyan);font-weight:600;">$46,750</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="g2" style="gap:1rem;margin-top:.8rem;">
+        <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);"><strong style="color:var(--white);">Storage Ex. 2A — 1 TEU for 25 days:</strong> Free 5d: $0 · Days 6–10 ($12): $60 · Days 11–20 ($18): $180 · Days 21–25 ($25): $125 → <strong style="color:var(--cyan);">Total: $365</strong></div>
+        <div style="padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);"><strong style="color:var(--white);">Berth Ex. 2 — 150,000 GT, 18 hrs:</strong> GT-hour method: 150,000 × $0.02 × 18 = <strong style="color:var(--cyan);">$54,000</strong>. Flat rate: $12,000/day × 0.75 days = <strong style="color:var(--amber);">$9,000</strong>. Pricing structure matters enormously.</div>
+      </div>
+      <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Source: Solved Examples file, Ex. 1A, 2, 2A. Rates illustrative; actual rates vary by port and tariff schedule.</p>
+    </div>
+
+    <div class="panel" style="margin-top:1rem;border-left:3px solid var(--cyan);">
+      <div class="sh sh-cyan" style="margin-bottom:.5rem;">Cross-reference</div>
+      <p style="font-size:.75rem;color:var(--muted);">Dimensioning formulas determine how many moves the terminal can handle per year — a prerequisite for capacity-based pricing and revenue forecasting. <span class="xlink" onclick="showSectionTab('dimensioning','dim-designer')">→ Terminal Designer ↗</span></p>
+    </div>
+  </div><!-- end pr-services -->
+
+  <!-- ══ TAB 2: COST CONCEPTS ══ -->
+  <div id="pr-costs" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">60–80%</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Fixed cost share of total terminal cost</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">MES ≈1.5M</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Minimum Efficient Scale (Mars Terminal)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">$175</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">SRAC at 600k TEU (break-even price)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">$87.50</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">SRAC at 2M TEU — 50% reduction</div>
+      </div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Short Run vs Long Run</div>
+        <div class="g2" style="gap:.8rem;margin-bottom:.8rem;">
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-top:3px solid var(--red);">
+            <div style="font-size:.65rem;color:var(--red);font-weight:600;margin-bottom:.3rem;">Short Run (1–3 years)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;">At least one input is <strong style="color:var(--white);">fixed</strong> (cranes, quay wall, terminal capacity). Only variable inputs adjust (labour, fuel, consumables). Subject to diminishing marginal returns. Relevant for day-to-day pricing decisions.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-top:3px solid var(--green);">
+            <div style="font-size:.65rem;color:var(--green);font-weight:600;margin-bottom:.3rem;">Long Run (5–15 years)</div>
+            <p style="font-size:.75rem;color:var(--muted);line-height:1.6;"><strong style="color:var(--white);">All inputs variable</strong> — can add berths, buy cranes, redesign yard. Subject to economies/diseconomies of scale. LRAC is the envelope of all possible SRACs. Relevant for investment and capacity planning.</p>
+          </div>
+        </div>
+
+        <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">Formula Reference</div>
+        <div class="formula-box">
+          <span class="fvar">TC</span> = TFC + TVC = TFC + (AVC × Q)<br>
+          <span class="fvar">SRAC</span> = TC/Q = TFC/Q + AVC<br>
+          <span class="fvar">AFC</span> = TFC/Q  <span class="fcomment">← declines with Q (economies of scale)</span><br>
+          <span class="fvar">LRAC</span> = TC_LR/Q  <span class="fcomment">← lower envelope of all SRACs</span><br>
+          <span class="fvar">STMC</span> = dTC/dQ  <span class="fcomment">← cost of one more unit (fixed capacity)</span><br>
+          <span class="fvar">LTMC</span> = dTC_LR/dQ  <span class="fcomment">← all inputs adjustable</span>
+        </div>
+
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(255,82,82,.08);border-left:3px solid var(--red);border-radius:4px;font-size:.75rem;color:var(--muted);">
+          <strong style="color:var(--white);">Key insight (Meersman et al. 2014):</strong> "Since important cost elements in seaports display strong economies of scale, straightforward marginal cost pricing will induce losses." TFC is 60–80% of TC. MC = AVC = $50/TEU while SRAC = $175/TEU at current volume. Pricing at MC leaves $75M in fixed costs unrecovered.
+        </div>
+      </div>
+
+      <div>
+        <!-- Fixed vs Variable costs table -->
+        <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--amber);">
+          <div class="sh" style="color:var(--amber);margin-bottom:.7rem;">Fixed vs Variable Costs — Terminal Examples</div>
+          <div style="overflow-x:auto;">
+          <table class="equipment-comparison" style="font-size:.69rem;">
+            <thead><tr><th style="text-align:left;">Fixed Costs (TFC)</th><th style="text-align:left;">Variable Costs (TVC)</th></tr></thead>
+            <tbody>
+              <tr><td style="text-align:left;color:var(--muted);">Quay wall construction &amp; maintenance</td><td style="text-align:left;color:var(--muted);">Stevedoring labour per lift</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">STS crane purchase/lease</td><td style="text-align:left;color:var(--muted);">Crane fuel/electricity</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">RTG/RMG cranes</td><td style="text-align:left;color:var(--muted);">Spreader &amp; twist-lock consumables</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">TOS licence fee</td><td style="text-align:left;color:var(--muted);">Truck/chassis fuel &amp; tyres</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">Land lease / concession fee</td><td style="text-align:left;color:var(--muted);">Reefer power per plugged unit</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">Insurance &amp; depreciation</td><td style="text-align:left;color:var(--muted);">Overtime and casual labour</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">Management &amp; admin salaries</td><td style="text-align:left;color:var(--muted);">Gate processing per truck visit</td></tr>
+              <tr><td style="text-align:left;color:var(--muted);">Channel dredging (periodic)</td><td style="text-align:left;color:var(--muted);">Usage-based maintenance</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p style="font-size:.62rem;color:var(--muted);margin-top:.4rem;">TFC typically 60–80% of TC. This is why MC &lt; AC and marginal cost pricing alone cannot cover costs.</p>
+        </div>
+
+        <!-- Mars SRAC table -->
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.7rem;">Mars Terminal — SRAC Table (TFC=$75M, AVC=$50)</div>
+          <table class="equipment-comparison">
+            <thead><tr><th>Q (TEU)</th><th>AFC = $75M/Q</th><th>AVC</th><th>SRAC</th><th>TC</th></tr></thead>
+            <tbody>
+              <tr><td>400,000</td><td>$187.50</td><td>$50</td><td>$237.50</td><td>$95.0M</td></tr>
+              <tr style="background:rgba(255,82,82,.08);"><td><strong>600,000</strong></td><td>$125.00</td><td>$50</td><td style="color:var(--red);font-weight:600;">$175.00 ← current</td><td>$105.0M</td></tr>
+              <tr><td>1,000,000</td><td>$75.00</td><td>$50</td><td>$125.00</td><td>$125.0M</td></tr>
+              <tr><td>1,500,000</td><td>$50.00</td><td>$50</td><td>$100.00 (≈MES)</td><td>$150.0M</td></tr>
+              <tr style="background:rgba(0,230,118,.06);"><td><strong>2,000,000</strong></td><td>$37.50</td><td>$50</td><td style="color:var(--green);font-weight:600;">$87.50 ← capacity</td><td>$175.0M</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:.62rem;color:var(--muted);margin-top:.4rem;">50% SRAC reduction from 600k to 2M TEU — classic natural monopoly / economies of scale.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cost curves SVG -->
+    <div class="panel" style="margin-bottom:1.5rem;">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">Cost Curves — LRAC as Lower Envelope of SRAC Curves</div>
+      <svg viewBox="0 0 580 220" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);">
+        <!-- Axes -->
+        <line x1="50" y1="10" x2="50" y2="185" stroke="#1a3a5c" stroke-width="1.5"/>
+        <line x1="50" y1="185" x2="570" y2="185" stroke="#1a3a5c" stroke-width="1.5"/>
+        <!-- Axis labels -->
+        <text x="10" y="100" font-family="monospace" font-size="8" fill="#4a6a8a" transform="rotate(-90,10,100)">Cost/TEU ($)</text>
+        <text x="300" y="210" font-family="monospace" font-size="8" fill="#4a6a8a" text-anchor="middle">Volume (TEU millions) →</text>
+        <!-- Y ticks -->
+        <text x="44" y="185" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">0</text>
+        <text x="44" y="140" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">100</text>
+        <text x="44" y="100" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">200</text>
+        <text x="44" y="55" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="end">300</text>
+        <!-- X ticks -->
+        <text x="50" y="196" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">0</text>
+        <text x="180" y="196" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">0.5</text>
+        <text x="310" y="196" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">1.0</text>
+        <text x="440" y="196" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">1.5</text>
+        <text x="560" y="196" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">2.0</text>
+        <!-- Grid -->
+        <line x1="50" y1="140" x2="570" y2="140" stroke="#0d2040" stroke-width="1" stroke-dasharray="3,4"/>
+        <line x1="50" y1="100" x2="570" y2="100" stroke="#0d2040" stroke-width="1" stroke-dasharray="3,4"/>
+        <!-- SRAC Small: U-shaped min ~200k -->
+        <path d="M 50,45 Q 100,165 180,155 Q 240,148 310,160 Q 390,180 450,185" fill="none" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="5,3" opacity=".8"/>
+        <text x="85" y="40" font-family="monospace" font-size="7" fill="#cc4400">SRAC Small</text>
+        <!-- SRAC Medium: min ~1M -->
+        <path d="M 100,80 Q 180,140 310,130 Q 390,125 480,140 Q 530,155 570,175" fill="none" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="5,3" opacity=".8"/>
+        <text x="390" y="120" font-family="monospace" font-size="7" fill="#ff9800">SRAC Medium</text>
+        <!-- SRAC Large (Mars 2M design): min ~1.5M -->
+        <path d="M 200,75 Q 310,115 440,108 Q 500,108 560,115" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="5,3" opacity=".8"/>
+        <text x="420" y="103" font-family="monospace" font-size="7" fill="#1976d2">SRAC Large</text>
+        <!-- LRAC (lower envelope - solid cyan) -->
+        <path d="M 50,45 Q 120,168 200,140 Q 310,115 440,105 Q 500,106 560,112" fill="none" stroke="#00bcd4" stroke-width="2.5"/>
+        <text x="500" y="100" font-family="monospace" font-size="8" fill="#00bcd4" font-weight="bold">LRAC</text>
+        <!-- MES marker at ~1.5M (x=440) -->
+        <circle cx="440" cy="105" r="5" fill="#00e676"/>
+        <line x1="440" y1="185" x2="440" y2="110" stroke="#00e676" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="435" y="203" font-family="monospace" font-size="7" fill="#00e676" text-anchor="middle">MES</text>
+        <!-- Mars current position at 600k (x≈180) on SRAC small -->
+        <circle cx="180" cy="155" r="5" fill="#ff5252"/>
+        <line x1="180" y1="185" x2="180" y2="160" stroke="#ff5252" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="155" y="203" font-family="monospace" font-size="7" fill="#ff5252">600k TEU</text>
+        <!-- MC = $50 horizontal line -->
+        <line x1="50" y1="165" x2="570" y2="165" stroke="#ffb300" stroke-width="1.2" stroke-dasharray="4,3" opacity=".7"/>
+        <text x="555" y="162" font-family="monospace" font-size="7" fill="#ffb300" text-anchor="end">MC=$50</text>
+        <!-- Break-even $175 line at y=100+26=~126 -->
+        <line x1="50" y1="126" x2="570" y2="126" stroke="#ff5252" stroke-width="1.2" stroke-dasharray="4,3" opacity=".7"/>
+        <text x="555" y="123" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="end">P=$175 (BE)</text>
+        <!-- Legend -->
+        <line x1="55" y1="22" x2="80" y2="22" stroke="#00bcd4" stroke-width="2.5"/><text x="84" y="25" font-family="monospace" font-size="7" fill="#7a99b8">LRAC</text>
+        <line x1="155" y1="22" x2="180" y2="22" stroke="#cc4400" stroke-width="1.5" stroke-dasharray="4,2"/><text x="184" y="25" font-family="monospace" font-size="7" fill="#7a99b8">SRACs (3 capacities)</text>
+        <circle cx="300" cy="22" r="4" fill="#00e676"/><text x="308" y="25" font-family="monospace" font-size="7" fill="#00e676">MES</text>
+        <circle cx="380" cy="22" r="4" fill="#ff5252"/><text x="388" y="25" font-family="monospace" font-size="7" fill="#ff5252">Mars now</text>
+      </svg>
+      <p style="font-size:.62rem;color:var(--muted);margin-top:.5rem;">Short run: port is stuck on ONE SRAC curve (capacity fixed). Long run: LRAC shows the best possible cost at each volume. Mars is currently on the high part of the small/medium SRAC at 600k TEU — SRAC = $175. To reach $87.50 it must operate near capacity (2M TEU) or the LRAC minimum (~1.5M TEU).</p>
+    </div>
+
+    <!-- Break-even vs MC worked example -->
+    <div class="panel panel-red">
+      <div class="sh" style="margin-bottom:.8rem;">🧮 Worked Example — Break-Even vs MC Pricing (Ex. 4)</div>
+      <p class="body" style="margin-bottom:.8rem;">Mars Terminal: TFC = $75M, AVC = $50/TEU, Q = 600,000 TEU.</p>
+      <div class="g2" style="gap:1rem;">
+        <div style="background:rgba(0,0,0,.25);padding:.8rem;border-radius:4px;border-top:3px solid var(--green);">
+          <div style="font-size:.65rem;color:var(--green);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px;">Break-Even (Average Cost) Pricing</div>
+          <div class="formula-box" style="font-size:.72rem;">
+            TC = $75M + ($50 × 600,000) = <span class="fvar">$105,000,000</span><br>
+            P = TC/Q = $105M / 600,000 = <span class="fvar">$175/TEU</span><br>
+            Revenue = $175 × 600,000 = <span class="fvar">$105M = TC ✓</span>
+          </div>
+        </div>
+        <div style="background:rgba(0,0,0,.25);padding:.8rem;border-radius:4px;border-top:3px solid var(--red);">
+          <div style="font-size:.65rem;color:var(--red);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px;">Marginal Cost Pricing (P = $50)</div>
+          <div class="formula-box" style="font-size:.72rem;">
+            Revenue = $50 × 600,000 = <span class="fvar">$30,000,000</span><br>
+            Total Cost = <span class="fvar">$105,000,000</span><br>
+            Loss = TC − Revenue = <span class="fvar" style="color:#ff5252;">−$75,000,000</span>
+          </div>
+          <p style="font-size:.72rem;color:var(--muted);margin-top:.4rem;">MC pricing covers only variable costs. The entire TFC ($75M) is unrecovered. This is the fundamental tension between efficiency (MC) and sustainability (AC).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:1rem;border-left:3px solid var(--cyan);">
+      <div class="sh sh-cyan" style="margin-bottom:.5rem;">Cross-reference</div>
+      <p style="font-size:.75rem;color:var(--muted);">SRAC and Tmax — the throughput capacity formula — are both driven by dwell time, stacking height, and fixed infrastructure costs. <span class="xlink" onclick="showSectionTab('dimensioning','dim-formulas')">→ Chu &amp; Huang Formulas ↗</span></p>
+    </div>
+  </div><!-- end pr-costs -->
+
+  <!-- ══ TAB 3: COST ALLOCATION ══ -->
+  <div id="pr-allocation" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">Stage 1</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Cost allocation precedes price setting</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">4 Centres</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Infrastructure / Equipment / Labour / Admin</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">1975</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">UNCTAD framework — still standard</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">ABC</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Bridges allocation and pricing</div>
+      </div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Two Distinct Stages — Cannot Skip Stage 1</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.8rem;">
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--cyan);">
+            <div style="font-size:.65rem;color:var(--cyan);font-weight:600;margin-bottom:.2rem;">Stage 1 — Cost Allocation</div>
+            <p style="font-size:.75rem;color:var(--muted);">"How do I organise and assign my costs to specific services and users?" Define cost centres, classify as direct or shared, map costs to services, determine who benefits.</p>
+          </div>
+          <div style="background:rgba(0,0,0,.25);padding:.7rem;border-radius:4px;border-left:3px solid var(--amber);">
+            <div style="font-size:.65rem;color:var(--amber);font-weight:600;margin-bottom:.2rem;">Stage 2 — Price Setting</div>
+            <p style="font-size:.75rem;color:var(--muted);">"Given what I know about costs, what price should I actually charge?" Apply pricing rule (MC, AC, Ramsey…), set levels, design structure, balance efficiency vs cost recovery.</p>
+          </div>
+        </div>
+
+        <div class="sh" style="margin-bottom:.6rem;color:var(--amber);">UNCTAD 4 Cost Centres (1975)</div>
+        <ul class="var-list">
+          <li><span class="vname">Infrastructure</span><span class="vdesc">Channels, breakwaters, quay walls, navigation aids. Often 60%+ of total port cost. Shared across all vessels.</span></li>
+          <li><span class="vname">Equipment</span><span class="vdesc">Cranes, vehicles, handling gear. More attributable to specific cargo operations than infrastructure.</span></li>
+          <li><span class="vname">Labour</span><span class="vdesc">Direct operational staff, stevedoring gangs. The most variable cost centre — rises and falls with throughput.</span></li>
+          <li><span class="vname">Administration</span><span class="vdesc">Overhead, management, IT, security. Allocated by proportion or revenue share.</span></li>
+        </ul>
+
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);">
+          <strong style="color:var(--white);">Why 1975 still works:</strong> UNCTAD's 1995 follow-up confirms the 1975 techniques remain "still valid." The underlying cost structure has not changed — ports remain capital-intensive with massive fixed costs and small variable costs. No superior cost allocation framework has replaced it. (Meersman et al. 2003; Notteboom, Pallis &amp; Rodrigue 2022)
+        </div>
+      </div>
+
+      <div>
+        <div class="panel" style="margin-bottom:1rem;border-top:3px solid var(--green);">
+          <div class="sh" style="color:var(--green);margin-bottom:.7rem;">UNCTAD 7-Step Charging Procedure</div>
+          <ol style="padding-left:1.2rem;font-size:.78rem;color:var(--muted);line-height:2;">
+            <li>Determine <strong style="color:var(--white);">present utilisation level</strong> of the asset</li>
+            <li>Establish <strong style="color:var(--white);">desirable utilisation level</strong></li>
+            <li>Assess whether <strong style="color:var(--white);">pricing can contribute</strong> to improved utilisation</li>
+            <li>If yes, determine <strong style="color:var(--white);">which type of charge</strong> achieves improvement</li>
+            <li>Estimate <strong style="color:var(--white);">income at various price levels</strong></li>
+            <li>Make <strong style="color:var(--white);">first estimate of basic charges</strong></li>
+            <li><strong style="color:var(--white);">Adjust</strong> for future trends</li>
+          </ol>
+        </div>
+        <div class="panel panel-amber">
+          <div class="sh" style="margin-bottom:.7rem;">Freas Formula + Cost Classification</div>
+          <p class="body" style="margin-bottom:.6rem;"><strong>Freas Formula (1940s US ports, still used):</strong> Allocate costs based on three dimensions:</p>
+          <ul class="var-list">
+            <li><span class="vname">Space occupied</span><span class="vdesc">→ storage costs</span></li>
+            <li><span class="vname">Time consumed</span><span class="vdesc">→ berth costs</span></li>
+            <li><span class="vname">Throughput handled</span><span class="vdesc">→ cargo costs</span></li>
+          </ul>
+          <div style="margin-top:.6rem;padding:.6rem;background:rgba(0,0,0,.2);border-radius:4px;font-size:.75rem;color:var(--muted);">
+            <strong style="color:var(--white);">Specific costs:</strong> Directly attributable (crane fuel per lift, pilot wages per movement).<br>
+            <strong style="color:var(--white);">Shared/General costs:</strong> Require allocation rules (administration, breakwater maintenance). Allocation keys: % crane-hours, % berth-hours, % revenue, % TEU volume.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABC and UNCTAD worked examples -->
+    <div class="g2" style="gap:1.5rem;">
+      <div class="panel panel-orange">
+        <div class="sh" style="margin-bottom:.8rem;">🧮 ABC Cost Allocation (Ex. 4B)</div>
+        <p class="body" style="margin-bottom:.6rem;">3 cost centres, 2 services (Container, Bulk). Calculate cost driver rates then allocate.</p>
+        <table class="equipment-comparison" style="font-size:.7rem;margin-bottom:.6rem;">
+          <thead><tr><th style="text-align:left;">Cost Centre</th><th>Total Cost</th><th>Container use</th><th>Bulk use</th><th>Driver rate</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;color:var(--white);">Cranes</td><td>$2,000,000</td><td>8,000 hrs</td><td>2,000 hrs</td><td class="good">$200/crane-hr</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Labour</td><td>$1,500,000</td><td>12,000 hrs</td><td>8,000 hrs</td><td class="good">$75/labour-hr</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Energy</td><td>$500,000</td><td>100,000 kWh</td><td>50,000 kWh</td><td class="good">$3.33/kWh</td></tr>
+          </tbody>
+        </table>
+        <div class="formula-box" style="font-size:.72rem;">
+          Container: (8,000×200) + (12,000×75) + (100,000×3.33) = <span class="fvar">$2,833,333</span><br>
+          Bulk: (2,000×200) + (8,000×75) + (50,000×3.33) = <span class="fvar">$1,166,667</span><br>
+          Total: $2,833,333 + $1,166,667 = <span class="fvar">$4,000,000 = TC ✓</span>
+        </div>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.4rem;">Container handles 80% of crane-hrs, 60% of labour, 67% of energy — it should bear most of the cost.</p>
+      </div>
+
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">🧮 UNCTAD Cost Centre Allocation (Ex. 11)</div>
+        <p class="body" style="margin-bottom:.6rem;">Port with $16M costs across 4 UNCTAD centres → 3 services:</p>
+        <table class="equipment-comparison" style="font-size:.68rem;margin-bottom:.6rem;">
+          <thead><tr><th style="text-align:left;">Cost Centre</th><th>Cost</th><th>Navigation %</th><th>Berth %</th><th>Cargo %</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;">Infrastructure</td><td>$8M</td><td>60%</td><td>30%</td><td>10%</td></tr>
+            <tr><td style="text-align:left;">Equipment</td><td>$3M</td><td>5%</td><td>15%</td><td>80%</td></tr>
+            <tr><td style="text-align:left;">Labour</td><td>$4M</td><td>10%</td><td>20%</td><td>70%</td></tr>
+            <tr><td style="text-align:left;">Administration</td><td>$1M</td><td>20%</td><td>30%</td><td>50%</td></tr>
+          </tbody>
+        </table>
+        <div class="formula-box" style="font-size:.72rem;">
+          Navigation: (8M×.6)+(3M×.05)+(4M×.1)+(1M×.2) = <span class="fvar">$5,550,000</span><br>
+          Berth: (8M×.3)+(3M×.15)+(4M×.2)+(1M×.3) = <span class="fvar">$3,950,000</span><br>
+          Cargo: (8M×.1)+(3M×.8)+(4M×.7)+(1M×.5) = <span class="fvar">$6,500,000</span><br>
+          <span class="fcomment">Tariff rates: Navigation $2,775/call · Berth $109.72/berth-hr · Cargo $10.83/TEU</span>
+        </div>
+      </div>
+    </div>
+  </div><!-- end pr-allocation -->
+
+  <!-- ══ TAB 4: PRICING PRINCIPLES ══ -->
+  <div id="pr-principles" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">4 Principles</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">No single principle dominates</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">P = MC</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Efficient but unsustainable alone</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">ε = ?</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Elasticity determines markup</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">Nash</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Strategic pricing game theory</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--cyan);letter-spacing:2px;margin-bottom:.5rem;">Principle 1: Cost Recovery</div>
+        <p class="body">Total revenue ≥ total costs. Two approaches:</p>
+        <ul class="var-list" style="margin-top:.5rem;">
+          <li><span class="vname">User pays</span><span class="vdesc">Activity-based: each service recovers its own costs; no cross-subsidisation. Efficient but inflexible.</span></li>
+          <li><span class="vname">System-level</span><span class="vdesc">Port-wide recovery; allows cross-subsidisation. Profitable container ops can subsidise unprofitable cruise terminal.</span></li>
+        </ul>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem;font-style:italic;">Trade-off: efficiency (user pays) vs flexibility (system-level).</p>
+      </div>
+
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--amber);letter-spacing:2px;margin-bottom:.5rem;">Principle 2: What Traffic Can Bear</div>
+        <p class="body">Price based on users' willingness to pay, exploiting demand elasticities.</p>
+        <div class="formula-box" style="margin:0.5rem 0;font-size:.75rem;">P<sub>i</sub> = MC + Markup<sub>i</sub>(ε<sub>i</sub>)</div>
+        <ul class="var-list">
+          <li><span class="vname">Local |ε|=0.3</span><span class="vdesc">Inelastic, captive → higher markup. Mars local traffic cannot easily switch to another port.</span></li>
+          <li><span class="vname">T/S |ε|=2.5</span><span class="vdesc">Elastic, footloose → competitive pricing. Transshipment ships choose between many hub alternatives.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--green);letter-spacing:2px;margin-bottom:.5rem;">Principle 3: Promote Objectives</div>
+        <p class="body">Combines cost recovery with societal/policy priorities. May require cross-subsidisation.</p>
+        <ul class="var-list" style="margin-top:.5rem;">
+          <li><span class="vname">Examples</span><span class="vdesc">Promote rail modal shift · Facilitate country exports · ESI green shipping incentives · Reduce congestion · Minimise user costs at optimal utilisation</span></li>
+          <li><span class="vname">Trade-off</span><span class="vdesc">Some services priced below cost; others above. Common in public ports with developmental mandates.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel" style="border-top:3px solid var(--red);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--red);letter-spacing:2px;margin-bottom:.5rem;">Principle 4: Strategic Pricing</div>
+        <p class="body">Price accounts for expected reactions of competing ports. Game-theoretic framework.</p>
+        <ul class="var-list" style="margin-top:.5rem;">
+          <li><span class="vname">Nash eq.</span><span class="vdesc">No port can unilaterally improve by changing price. Each port's optimal price depends on competitors' prices.</span></li>
+          <li><span class="vname">Options</span><span class="vdesc">Competition (undercut rivals) · Cooperation (tacit collusion) · Co-opetition (compete in some markets, cooperate in others)</span></li>
+          <li><span class="vname">Warning</span><span class="vdesc">Market share gains may come at cost of financial sustainability. Strategic pricing may not satisfy principles 1–3.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Price elasticity worked example -->
+    <div class="panel panel-amber">
+      <div class="sh" style="margin-bottom:.8rem;">🧮 Price Elasticity — Revenue Impact (Ex. 4A)</div>
+      <p class="body" style="margin-bottom:.8rem;">Port charges $150/TEU for local traffic, volume = 100,000 TEU/yr. |ε| = 0.4 (inelastic). Price raised 10% to $165/TEU.</p>
+      <div class="g3" style="gap:.8rem;">
+        <div style="background:rgba(0,0,0,.2);padding:.7rem;border-radius:4px;">
+          <div style="font-size:.62rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Step 1 — Volume change</div>
+          <div class="formula-box" style="font-size:.72rem;">%ΔQ = ε × %ΔP = (−0.4) × 10% = <span class="fvar">−4%</span><br>New Q = 100,000 × 0.96 = <span class="fvar">96,000 TEU</span></div>
+        </div>
+        <div style="background:rgba(0,0,0,.2);padding:.7rem;border-radius:4px;">
+          <div style="font-size:.62rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Step 2 — Revenue before &amp; after</div>
+          <div class="formula-box" style="font-size:.72rem;">Before: $150 × 100,000 = <span class="fvar">$15,000,000</span><br>After: $165 × 96,000 = <span class="fvar">$15,840,000 (+5.6%)</span></div>
+        </div>
+        <div style="background:rgba(0,0,0,.2);padding:.7rem;border-radius:4px;">
+          <div style="font-size:.62rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Key insight</div>
+          <p style="font-size:.78rem;color:var(--muted);line-height:1.6;">Inelastic demand: price increase <strong style="color:var(--green);">raises</strong> revenue. Elastic demand: price increase <strong style="color:var(--red);">reduces</strong> revenue. This is why elasticity asymmetry (local vs T/S) makes Ramsey pricing viable.</p>
+        </div>
+      </div>
+    </div>
+  </div><!-- end pr-principles -->
+
+  <!-- ══ TAB 5: PRICING METHODS ══ -->
+  <div id="pr-methods" class="tab-content">
+
+    <!-- Methods overview table -->
+    <div class="panel" style="margin-bottom:1.5rem;">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">All 7 Methods — Quick Reference</div>
+      <div style="overflow-x:auto;">
+      <table class="equipment-comparison" style="font-size:.69rem;">
+        <thead><tr><th style="text-align:left;">Method</th><th style="text-align:left;">Formula / Rule</th><th style="text-align:left;">Main advantage</th><th style="text-align:left;">Main disadvantage</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left;color:var(--white);">Marginal Cost</td><td style="text-align:left;">P = MC = dTC/dQ</td><td style="text-align:left;color:var(--muted);">Allocatively efficient; maximises welfare</td><td style="text-align:left;color:var(--red);">Does not cover TFC — loss = entire fixed costs</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Average Cost</td><td style="text-align:left;">P = TC/Q</td><td style="text-align:left;color:var(--muted);">Full cost recovery; financially sustainable</td><td style="text-align:left;color:var(--muted);">Higher than MC; may lose elastic traffic</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">ABC</td><td style="text-align:left;">Rate = Cost/Driver; Charge = usage × rate</td><td style="text-align:left;color:var(--muted);">Fair — users pay for actual resource impact</td><td style="text-align:left;color:var(--muted);">Complex data requirements; high setup cost</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Peak Load</td><td style="text-align:left;">n_pk×P_pk + n_off×P_off = TC</td><td style="text-align:left;color:var(--muted);">Reduces congestion; optimises capacity use</td><td style="text-align:left;color:var(--muted);">Complex monitoring; may shift to competitors</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Two-Part Tariff</td><td style="text-align:left;">Charge = F + p×Q</td><td style="text-align:left;color:var(--muted);">Cost recovery via F; efficient usage via p≈MC</td><td style="text-align:left;color:var(--muted);">Fixed fee burdens small/occasional users</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Cost-Plus</td><td style="text-align:left;">P = AC × (1 + m)</td><td style="text-align:left;color:var(--muted);">Simple; guaranteed surplus for reinvestment</td><td style="text-align:left;color:var(--muted);">No incentive to reduce costs; ignores market</td></tr>
+          <tr><td style="text-align:left;color:var(--white);">Ramsey</td><td style="text-align:left;">(P_i−MC)/P_i = λ/|ε_i|</td><td style="text-align:left;color:var(--muted);">Welfare-maximising given cost recovery</td><td style="text-align:left;color:var(--muted);">Requires elasticity estimates; seems unfair</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Method deep-dives -->
+    <div class="g2" style="gap:1.2rem;margin-bottom:1.5rem;">
+      <!-- MC Pricing -->
+      <div class="panel" style="border-top:3px solid var(--cyan);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--cyan);letter-spacing:2px;margin-bottom:.5rem;">1. Marginal Cost Pricing — P = MC</div>
+        <div class="formula-box" style="font-size:.75rem;">Mars: P=$50 → Revenue=$30M → Loss=<span class="fvar" style="color:#ff5252;">−$75M</span> (TFC unrecovered)</div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.5;">Allocatively efficient — price equals the cost society incurs for one more unit. Maximises total welfare. Best use: excess capacity periods; off-peak slots; competitive secondary markets.</p>
+      </div>
+      <!-- AC Pricing -->
+      <div class="panel" style="border-top:3px solid var(--amber);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--amber);letter-spacing:2px;margin-bottom:.5rem;">2. Average Cost Pricing — P = TC/Q</div>
+        <div class="formula-box" style="font-size:.75rem;">Mars: P=$175/TEU → Revenue=TC=$105M → <span class="fvar">Surplus: $0</span> (break-even)</div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.5;">Full cost recovery guaranteed. Standard for regulated utilities and public infrastructure. Price falls with volume — scale economies pass through to users. Sacrifices allocative efficiency for financial sustainability.</p>
+      </div>
+      <!-- Peak Load -->
+      <div class="panel" style="border-top:3px solid var(--green);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--green);letter-spacing:2px;margin-bottom:.5rem;">4. Peak Load Pricing</div>
+        <div class="formula-box" style="font-size:.75rem;">Revenue-neutral: n_pk × P_pk + n_off × P_off = TC<br>Ex 8: peak $13,800/day (+15%), off-peak $9,600/day (−20%)</div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.5;">Higher prices during congested periods → shifts demand to off-peak → optimises berth utilisation → reduces vessel waiting time. THC: peak $184/TEU (+15%), off-peak $128/TEU (−20%).</p>
+      </div>
+      <!-- Two-Part Tariff -->
+      <div class="panel" style="border-top:3px solid var(--red);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--red);letter-spacing:2px;margin-bottom:.5rem;">5. Two-Part Tariff — F + p×Q</div>
+        <div class="formula-box" style="font-size:.75rem;">F = $75M / 10 lines = <span class="fvar">$7.5M/line/year</span><br>p = MC = <span class="fvar">$50/TEU</span>  |  60k TEU line pays: $10.5M → <span class="fvar">$175/TEU effective = SRAC ✓</span></div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.5;">Best of both: F covers TFC (sustainability), p≈MC ensures efficient usage. Can differentiate: local lines pay higher F (guaranteed capacity), T/S pays lower F (volume-based).</p>
+      </div>
+      <!-- Cost-Plus -->
+      <div class="panel" style="border-top:3px solid var(--muted);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--muted);letter-spacing:2px;margin-bottom:.5rem;">6. Cost-Plus — P = AC × (1 + m)</div>
+        <div class="formula-box" style="font-size:.75rem;">Berth cost $500k/yr, m=15%: P = $500k × 1.15 = <span class="fvar">$575k/yr</span><br>Per call (100 calls/yr): <span class="fvar">$5,750/call</span></div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.5;">Simple and transparent. Guarantees return on investment. Used in regulated environments. Weakness: no pressure to reduce costs — inefficiency can be passed on to customers.</p>
+      </div>
+    </div>
+
+    <!-- Ramsey pricing — dedicated panel with λ explained -->
+    <div class="panel panel-cyan" style="margin-bottom:1.5rem;">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">7. Ramsey Pricing — The Key Method for Mixed-Traffic Terminals</div>
+      <div class="g2" style="gap:1.2rem;margin-bottom:1rem;">
+        <div>
+          <div class="formula-box" style="font-size:.8rem;margin-bottom:.6rem;">
+            (P<sub>i</sub> − MC) / P<sub>i</sub> = λ / |ε<sub>i</sub>|<br>
+            <span class="fcomment">Lerner Index = λ (markup dial) ÷ elasticity</span>
+          </div>
+          <p class="body"><strong>What is λ?</strong> The "markup dial" — a single number that is the same for every customer segment. It controls how aggressive the markups are across the board. A higher λ raises every price; lower λ brings prices toward MC. λ is set so that total revenue covers total cost.</p>
+          <p class="body" style="margin-top:.4rem;"><strong>The stepping-stone trick:</strong> Given the price for one segment, solve for λ. Then apply the same λ to find the price for another segment. λ acts as a bridge between segments.</p>
+        </div>
+        <div>
+          <div style="font-size:.62rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem;">How λ works in the formula</div>
+          <ul class="var-list">
+            <li><span class="vname">Same λ</span><span class="vdesc">Universal markup dial — same for all customer segments</span></li>
+            <li><span class="vname">Low |ε|</span><span class="vdesc">Captive customers (inelastic) → divide by small number → large Lerner Index → high markup</span></li>
+            <li><span class="vname">High |ε|</span><span class="vdesc">Footloose customers (elastic) → divide by large number → small Lerner Index → low markup</span></li>
+            <li><span class="vname">Result</span><span class="vdesc">Same dial setting automatically produces different prices for different customers based on how easily they can walk away</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ramsey worked example -->
+      <div class="panel panel-orange">
+        <div class="sh" style="margin-bottom:.8rem;">🧮 Ramsey Pricing — Mars Terminal (Ex. 7)</div>
+        <p class="body" style="margin-bottom:.6rem;">Local |ε|=0.3 (captive), T/S |ε|=2.5 (elastic), MC=$50 both. Local price set at $200/TEU. Find λ → find T/S price.</p>
+        <div class="g2" style="gap:.8rem;">
+          <div class="formula-box" style="font-size:.75rem;">
+            <span class="fcomment">Step 1: Solve for λ from local price</span><br>
+            (200−50)/200 = λ/0.3<br>
+            0.75 = λ/0.3 → <span class="fvar">λ = 0.225</span>
+          </div>
+          <div class="formula-box" style="font-size:.75rem;">
+            <span class="fcomment">Step 2: Apply same λ to T/S</span><br>
+            (P_T−50)/P_T = 0.225/2.5 = 0.09<br>
+            0.91 P_T = 50 → <span class="fvar">P_T ≈ $55/TEU</span>
+          </div>
+        </div>
+        <table class="equipment-comparison" style="margin-top:.6rem;font-size:.72rem;">
+          <thead><tr><th style="text-align:left;">Segment</th><th>|ε|</th><th>Lerner Index (P−MC)/P</th><th>Markup on MC</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;color:var(--white);">Local (captive)</td><td>0.3</td><td class="bad">75.0%</td><td class="bad">300%</td><td style="color:var(--red);font-weight:600;">$200/TEU</td></tr>
+            <tr><td style="text-align:left;color:var(--white);">Transshipment (elastic)</td><td>2.5</td><td class="good">9.1%</td><td class="good">10%</td><td style="color:var(--green);font-weight:600;">$55/TEU</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">λ = 0.225 is slightly above break-even (λ=0.213), generating a ~$17M surplus for reinvestment. Notice: T/S price barely changes as λ changes (elastic segment); local price is very sensitive to λ (inelastic segment).</p>
+      </div>
+    </div>
+
+    <div class="panel" style="border-left:3px solid var(--amber);">
+      <div class="sh" style="margin-bottom:.5rem;">Cross-references</div>
+      <div class="g2" style="gap:.6rem;">
+        <p style="font-size:.75rem;color:var(--muted);">Captive local vs elastic T/S mirrors the BAP priority/spot call dichotomy. <span class="xlink" onclick="showSectionTab('operations','ss-bap')">→ Berth Allocation (BAP) ↗</span></p>
+        <p style="font-size:.75rem;color:var(--muted);">Concession income (25.6% of revenue) is a direct pass-through of allocation decisions. <span class="xlink" onclick="showSectionTab('kpis','kpi-financial')">→ Financial KPIs ↗</span></p>
+      </div>
+    </div>
+  </div><!-- end pr-methods -->
+
+  <!-- ══ TAB 6: PRICE DIFFERENTIATION ══ -->
+  <div id="pr-diff" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">Two-tier</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Local (inelastic) vs T/S (elastic)</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">MR = MC</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Profit-maximising condition</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">ESI</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Environmental Ship Index pricing</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">5 Risks</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Complexities of differential pricing</div>
+      </div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Uniform vs Preferential Pricing</div>
+        <p class="body">Uniform pricing: one price P for all TEU. Simple, transparent, no discrimination. Two-tier preferential: P_local (high, inelastic) for captive customers; P_TS = α × P_local (low, α&lt;1) for elastic/footloose customers.</p>
+        <div class="formula-box" style="margin:.6rem 0;font-size:.75rem;">
+          Total Revenue = P_local × Q_local + P_TS × Q_TS<br>
+          = P_local × (Q_local + <span class="fvar">α</span> × Q_TS)<br>
+          <span class="fcomment">α = discount factor; 0 &lt; α &lt; 1. Lower α = deeper discount to T/S.</span>
+        </div>
+
+        <!-- Revenue curves SVG -->
+        <svg viewBox="0 0 380 180" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);margin-top:.5rem;">
+          <line x1="35" y1="10" x2="35" y2="155" stroke="#1a3a5c" stroke-width="1.5"/>
+          <line x1="35" y1="155" x2="365" y2="155" stroke="#1a3a5c" stroke-width="1.5"/>
+          <text x="8" y="85" font-family="monospace" font-size="7" fill="#4a6a8a" transform="rotate(-90,8,85)">Revenue</text>
+          <text x="200" y="173" font-family="monospace" font-size="7" fill="#4a6a8a" text-anchor="middle">Utilisation →</text>
+          <!-- Uniform revenue (single linear line) -->
+          <line x1="35" y1="155" x2="320" y2="40" stroke="#4a6a8a" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="295" y="35" font-family="monospace" font-size="7" fill="#4a6a8a">Uniform</text>
+          <!-- Local only (steeper - inelastic) -->
+          <line x1="35" y1="155" x2="200" y2="55" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="140" y="50" font-family="monospace" font-size="7" fill="#ff5252">Local only</text>
+          <!-- Total preferential (local + T/S) -->
+          <path d="M 35,155 Q 150,95 280,45 Q 310,38 350,32" fill="none" stroke="#00bcd4" stroke-width="2.5"/>
+          <text x="310" y="28" font-family="monospace" font-size="8" fill="#00bcd4" font-weight="bold">Preferential</text>
+          <line x1="35" y1="155" x2="35" y2="155" stroke="none"/>
+          <!-- Breakeven line -->
+          <line x1="35" y1="100" x2="365" y2="100" stroke="#ffb300" stroke-width="1" stroke-dasharray="3,3" opacity=".6"/>
+          <text x="350" y="97" font-family="monospace" font-size="6.5" fill="#ffb300" text-anchor="end">Break-even</text>
+          <text x="200" y="18" font-family="monospace" font-size="7.5" fill="#7a99b8" text-anchor="middle">Preferential revenue dominates uniform at same volume</text>
+        </svg>
+        <p style="font-size:.62rem;color:var(--muted);margin-top:.4rem;">Adding T/S at a lower price extends total volume beyond what local-only pricing achieves, while local price remains high — total revenue curve curves upward relative to uniform.</p>
+      </div>
+
+      <div>
+        <div class="panel panel-amber" style="margin-bottom:1rem;">
+          <div class="sh" style="margin-bottom:.8rem;">MR = MC — Profit Maximisation</div>
+          <p class="body">Port increases volume until marginal revenue equals marginal cost. Under preferential pricing there are two MR curves — one for each segment. The port can serve T/S volume (elastic segment) even at MR_TS close to MC because local segment's high MR already covered fixed costs.</p>
+          <div class="formula-box" style="font-size:.75rem;margin-top:.5rem;">
+            Surplus = TR − TC = (P_local × Q_local + P_TS × Q_TS) − (TFC + AVC×Q_total)<br>
+            Ex. 9: ($180×600k) + ($70×400k) − ($75M + $50×1M) = <span class="fvar">$11M surplus</span>
+          </div>
+        </div>
+        <div class="panel panel-green">
+          <div class="sh" style="margin-bottom:.8rem;">ESI Environmental Pricing</div>
+          <p class="body" style="margin-bottom:.5rem;">Beyond volume discounts — differentiation by environmental performance (Environmental Ship Index).</p>
+          <ul class="var-list">
+            <li><span class="vname">ESI ≥ 31</span><span class="vdesc">5% THC discount. Vessel meets emissions standards above MARPOL baseline.</span></li>
+            <li><span class="vname">ESI ≥ 50</span><span class="vdesc">10% THC discount. Vessel significantly exceeds standard. Used at Rotterdam, Antwerp, Hamburg.</span></li>
+            <li><span class="vname">Rationale</span><span class="vdesc">Aligns with EU ETS, IMO 2050 net-zero target; improves port's EcoPorts score; attracts green shipping lines; protects "licence to operate."</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Complexities + sensitivity -->
+    <div class="g2" style="gap:1.2rem;margin-bottom:1.5rem;">
+      <div class="panel panel-red">
+        <div class="sh" style="color:var(--red);margin-bottom:.8rem;">5 Complexities of Preferential Pricing</div>
+        <ul class="var-list">
+          <li><span class="vname">1. Congestion</span><span class="vdesc">Additional T/S traffic raises utilisation → MC rises → local traffic bears part of congestion cost they didn't cause. T/S price must internalise this externality.</span></li>
+          <li><span class="vname">2. Cross-subsidy</span><span class="vdesc">Local traffic effectively subsidises T/S development. T/S priced close to MC; local bears more of fixed cost recovery. Fairness question arises.</span></li>
+          <li><span class="vname">3. Volume risk</span><span class="vdesc">If T/S ships don't meet committed volume, port loses expected contribution to fixed costs. Minimum guarantee contracts mitigate this.</span></li>
+          <li><span class="vname">4. Dynamic lock-in</span><span class="vdesc">Today's T/S price sets tomorrow's price expectations. Increases face resistance even when justified. "Stickiness" constrains future pricing.</span></li>
+          <li><span class="vname">5. Regulatory</span><span class="vdesc">Price discrimination may be challenged under competition law. EU state aid rules apply if port is publicly owned. Must document cost basis.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-cyan">
+        <div class="sh sh-cyan" style="margin-bottom:.8rem;">Baltic Sea Evidence + Sensitivity</div>
+        <p class="body" style="margin-bottom:.7rem;"><strong>Real-world evidence (Baltic container terminals):</strong></p>
+        <ul class="var-list">
+          <li><span class="vname">Volume discounts</span><span class="vdesc">20–40% for volumes above 100,000 TEU/year — common at Helsinki, Gdansk, Riga</span></li>
+          <li><span class="vname">Two-tier structure</span><span class="vdesc">Local vs feeder vs mainliner price tiers observed across Baltic ports</span></li>
+          <li><span class="vname">Commitment contracts</span><span class="vdesc">Minimum annual volume guarantees protect against volume risk (complexity #3)</span></li>
+        </ul>
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:4px;">
+          <div style="font-size:.62rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">Sensitivity Analysis (Ex. 13)</div>
+          <ul class="var-list">
+            <li><span class="vname">Segment mix</span><span class="vdesc">As T/S grows 40%→60% of total: revenue falls (lower unit price) but variable cost stays → surplus erodes</span></li>
+            <li><span class="vname">Discount α</span><span class="vdesc">Deeper T/S discount → T/S volume rises (elastic) but at diminishing revenue gain → optimal α exists</span></li>
+            <li><span class="vname">Price shock</span><span class="vdesc">Competitor cuts T/S rates → Mars loses 15% of T/S → surplus −$1.2M (still profitable: $9.8M)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="border-left:3px solid var(--red);">
+      <div class="sh" style="margin-bottom:.5rem;">Cross-reference</div>
+      <div class="g2" style="gap:.6rem;">
+        <p style="font-size:.75rem;color:var(--muted);">Congestion externality propagates from berth to yard to gate — see the KPI causal chain. <span class="xlink" onclick="showSectionTab('kpis','kpi-hierarchy')">→ KPI Hierarchy ↗</span></p>
+        <p style="font-size:.75rem;color:var(--muted);">ESI discounts connect to green port governance tools in the Operations context. <span class="xlink" onclick="showSectionTab('operations','ss-bap')">→ Terminal Operations ↗</span></p>
+      </div>
+    </div>
+  </div><!-- end pr-diff -->
+
+  <!-- ══ TAB 7: PIRAEUS CASE STUDY ══ -->
+  <div id="pr-piraeus" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--cyan);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);">~20M pax</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Piraeus scale in the 1990s</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--red);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);">4-Step</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Complexity of pre-reform tariff algorithm</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--amber);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);">Empty &gt; Export</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">The economic absurdity that drove reform</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--green);padding:1rem;border-radius:2px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green);">2× Volume</div>
+        <div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Traffic doubled 1996→2001 after reform</div>
+      </div>
+    </div>
+
+    <div class="g2" style="gap:1.5rem;margin-bottom:1.5rem;">
+      <div class="panel panel-red">
+        <div class="sh" style="color:var(--red);margin-bottom:.8rem;">Background — The 1990s Problem</div>
+        <ul class="var-list">
+          <li><span class="vname">Scale</span><span class="vdesc">Largest port in Greece. ~20M passengers/year. Mediterranean crossroads (Europe–Asia–Africa). Revenues: ~€145M/yr. Container terminal: 65% of revenue.</span></li>
+          <li><span class="vname">T/S decline</span><span class="vdesc">Non-competitive transshipment rates. Losing traffic to Gioia Tauro (Italy) and Malta. T/S traffic fell in 1996 vs 1995.</span></li>
+          <li><span class="vname">Legacy tariff</span><span class="vdesc">4-step algorithm per container. Subsidised domestic ferry berthing. Complex, opaque structure. Political and labour constraints.</span></li>
+          <li><span class="vname">Interest problem</span><span class="vdesc">Companies pre-paid at 35% discount all year; refunds calculated after year-end with NO interest paid. Inflation ~9%. Effective T/S rate: €42–78/move vs competitors' flat €40/move.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.8rem;">🧮 The 4-Step Tariff Anomaly (Ex. 4C)</div>
+        <p class="body" style="margin-bottom:.7rem;">The pre-reform algorithm for one container:</p>
+        <ol style="padding-left:1.2rem;font-size:.78rem;color:var(--muted);line-height:1.9;">
+          <li>Base rate: €65.24 (20-ft) or €105.48 (40-ft)</li>
+          <li>Apply category discount: import 0%, export 25%, empty 30%</li>
+          <li>Add overtime surcharge: €4.87 (20-ft), €10.28 (40-ft)</li>
+          <li>Add 3% holiday/weekend surcharge to subtotal</li>
+        </ol>
+        <table class="equipment-comparison" style="margin-top:.6rem;font-size:.72rem;">
+          <thead><tr><th style="text-align:left;">20-ft container type</th><th>Total charge (weekday)</th><th>Problem</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;">Laden import</td><td>€65.24</td><td>—</td></tr>
+            <tr><td style="text-align:left;">Laden export</td><td>€48.93</td><td>—</td></tr>
+            <tr style="background:rgba(255,82,82,.1);"><td style="text-align:left;font-weight:600;">Empty</td><td style="color:var(--red);font-weight:600;">€49.27</td><td style="color:var(--red);font-size:.68rem;">Higher than laden export!</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem;"><strong style="color:var(--white);">The absurdity:</strong> An empty container requires the same crane moves as a laden export but has zero cargo value — it should always be cheaper. The complex algorithm created this inversion because the 30% empty discount was less than the 25% export discount applied to a lower subtotal when overtime/weekend surcharges were added. Pure tariff design failure.</p>
+      </div>
+    </div>
+
+    <!-- Reform solution + timeline SVG -->
+    <div class="panel" style="margin-bottom:1.5rem;">
+      <div class="sh sh-cyan" style="margin-bottom:.8rem;">The Reform Solution (1997–1999)</div>
+      <!-- Timeline SVG -->
+      <svg viewBox="0 0 560 80" style="width:100%;background:#050e1a;border-radius:4px;border:1px solid var(--steel);margin-bottom:.8rem;">
+        <line x1="40" y1="40" x2="520" y2="40" stroke="#1a3a5c" stroke-width="2"/>
+        <!-- Events -->
+        <circle cx="80" cy="40" r="6" fill="#ff5252"/>
+        <text x="80" y="25" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="middle">1990s</text>
+        <text x="80" y="58" font-family="monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">Complex tariffs</text>
+
+        <circle cx="180" cy="40" r="6" fill="#ff5252"/>
+        <text x="180" y="25" font-family="monospace" font-size="7" fill="#ff5252" text-anchor="middle">1996</text>
+        <text x="180" y="58" font-family="monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">T/S traffic falls</text>
+
+        <circle cx="280" cy="40" r="6" fill="#ffb300"/>
+        <text x="280" y="25" font-family="monospace" font-size="7" fill="#ffb300" text-anchor="middle">Nov 1997</text>
+        <text x="280" y="58" font-family="monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">New T/S flat rates</text>
+
+        <circle cx="380" cy="40" r="6" fill="#ffb300"/>
+        <text x="380" y="25" font-family="monospace" font-size="7" fill="#ffb300" text-anchor="middle">Spring 1999</text>
+        <text x="380" y="58" font-family="monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">Local reform; anomaly fixed</text>
+
+        <circle cx="480" cy="40" r="6" fill="#00e676"/>
+        <text x="480" y="25" font-family="monospace" font-size="7" fill="#00e676" text-anchor="middle">2001</text>
+        <text x="480" y="58" font-family="monospace" font-size="6.5" fill="#00e676" text-anchor="middle">Traffic ×2 vs 1996</text>
+      </svg>
+
+      <div class="g2" style="gap:1rem;">
+        <div>
+          <p class="body" style="margin-bottom:.5rem;"><strong>New T/S scale (November 1997):</strong> Flat rate per move, regardless of box size (20-ft or 40-ft), laden or empty:</p>
+          <table class="equipment-comparison" style="font-size:.72rem;">
+            <thead><tr><th>Moves/year</th><th>Rate (USD/move)</th></tr></thead>
+            <tbody>
+              <tr><td>1–5,000</td><td class="mid">$72.50</td></tr>
+              <tr><td>5,001–20,000</td><td class="mid">$59.00</td></tr>
+              <tr><td>20,001–100,000</td><td class="good">$50.50</td></tr>
+              <tr><td>&gt;100,000</td><td class="good">$43.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p class="body" style="margin-bottom:.5rem;"><strong>Simplified local rates (Spring 1999):</strong></p>
+          <table class="equipment-comparison" style="font-size:.72rem;">
+            <thead><tr><th style="text-align:left;">20-ft type</th><th>New rate</th><th>Old rate</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td style="text-align:left;">Import</td><td>€76.30</td><td>€65.24</td><td class="mid">Normalised</td></tr>
+              <tr><td style="text-align:left;">Export</td><td>€58.69</td><td>€48.93</td><td class="good">Coherent</td></tr>
+              <tr><td style="text-align:left;">Empty</td><td>€52.82</td><td>€49.27</td><td class="good">Empty &lt; Export ✓</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:.65rem;color:var(--muted);margin-top:.4rem;">The anomaly — empty &gt; laden export — was eliminated. Simple, competitive, rational.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key lesson + Mars parallels -->
+    <div class="g2" style="gap:1.5rem;">
+      <div class="panel panel-green">
+        <div class="sh" style="margin-bottom:.8rem;">Key Lesson — Psaraftis (2005)</div>
+        <blockquote style="border-left:3px solid var(--green);padding-left:.8rem;margin:0 0 .8rem;font-size:.82rem;color:var(--muted);font-style:italic;line-height:1.7;">"By necessity, this was a reform carried out in the absence of sophisticated accounting or other scientific tools, but with a view to make tariffs <strong style="color:var(--white);">simpler, more competitive, and more rational</strong>."</blockquote>
+        <ul class="var-list">
+          <li><span class="vname">Simplicity wins</span><span class="vdesc">Theoretical optimality matters less than practical comprehensibility. A simple tariff attracts more customers than a theoretically perfect one.</span></li>
+          <li><span class="vname">Data constraints</span><span class="vdesc">In practice, full cost accounting is rarely available. Work with what you have — pragmatic reform beats paralysis.</span></li>
+          <li><span class="vname">Political realism</span><span class="vdesc">Labour constraints, political pressures, and public opinion are real. Reform must work within them.</span></li>
+          <li><span class="vname">Pre-payment trap</span><span class="vdesc">Pre-paying at 35% discount with no interest (9% inflation) is a hidden 6% annual penalty on the customer. Never design this into a tariff.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-amber">
+        <div class="sh" style="margin-bottom:.8rem;">Mars Terminal Parallels</div>
+        <table class="equipment-comparison" style="font-size:.71rem;">
+          <thead><tr><th style="text-align:left;">Issue</th><th>Piraeus 1990s</th><th>Mars Terminal</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;">Local traffic</td><td>Captive Greek market</td><td>Captive Martian market</td></tr>
+            <tr><td style="text-align:left;">Transshipment</td><td>Malta, Gioia Tauro competition</td><td>Competing for Venus routes</td></tr>
+            <tr><td style="text-align:left;">Elasticity structure</td><td>Local inelastic, T/S elastic</td><td>Same pattern</td></tr>
+            <tr><td style="text-align:left;">Recommended pricing</td><td>Ramsey-style differentiation</td><td>Ramsey / two-tier</td></tr>
+            <tr><td style="text-align:left;">Key challenge</td><td>Complex legacy → simplify</td><td>Greenfield → design right</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:.8rem;padding:.7rem;background:rgba(0,0,0,.2);border-radius:4px;">
+          <div style="font-size:.62rem;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;">What Mars can learn:</div>
+          <ul style="list-style:none;font-size:.75rem;color:var(--muted);line-height:1.8;">
+            <li>✓ Keep tariff structure simple and transparent from day 1</li>
+            <li>✓ Price T/S competitively (close to MC); recover fixed costs primarily from captive local traffic</li>
+            <li>✓ Avoid complex discount scales requiring annual reconciliation</li>
+            <li>✗ Never design pre-payment with no interest when inflation is significant</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:1rem;border-left:3px solid var(--cyan);">
+      <div class="sh sh-cyan" style="margin-bottom:.5rem;">Cross-reference</div>
+      <p style="font-size:.75rem;color:var(--muted);">The Piraeus strategic pricing parallels the BAP research vs practice gap — both show how theoretical optimality gives way to operational pragmatism. <span class="xlink" onclick="showSectionTab('operations','ss-integration')">→ Operations: Integrated Planning ↗</span> &nbsp;·&nbsp; The Terminal Designer lets you build Mars, then price it. <span class="xlink" onclick="showSectionTab('dimensioning','dim-designer')">→ Terminal Designer ↗</span></p>
+    </div>
+  </div><!-- end pr-piraeus -->
+
+</section>
+
 <section id="glossary">
   <h2>Glossary of Abbreviations</h2>
   <p class="subtitle">All abbreviations and acronyms used in container terminal operations — click any term for a detailed popup explanation</p>
